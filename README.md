@@ -1,0 +1,13 @@
+# fiber-crud-demo
+
+## create new project
+go mod init fiber-crud-demo
+
+## dependencies
+go get github.com/gofiber/fiber/v2
+go get github.com/gofiber/fiber/v2/middleware/cache
+go get gorm.io/gorm
+go get gorm.io/driver/mysql
+go get github.com/joho/godotenv
+go get github.com/go-playground/validator/v10
+go get github.com/goccy/go-json

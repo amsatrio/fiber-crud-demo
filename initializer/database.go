@@ -61,5 +61,7 @@ func ConnectToDB() {
 	sqlDB.SetMaxOpenConns(100)
 	sqlDB.SetConnMaxLifetime(time.Minute)
 
+	// Migration
 	DB.AutoMigrate(&schema.MRole{})
+	DB.AutoMigrate(&schema.MBiodata{})
 }

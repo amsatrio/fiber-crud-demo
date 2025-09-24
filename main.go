@@ -10,6 +10,7 @@ import (
 	"fiber-crud-demo/initializer"
 	"fiber-crud-demo/modules/health"
 	"fiber-crud-demo/modules/hello_world"
+	"fiber-crud-demo/modules/m_biodata"
 	"fiber-crud-demo/modules/m_role"
 	"fiber-crud-demo/util"
 
@@ -100,4 +101,12 @@ func routes(app *fiber.App) {
 	m_role_api.Get(":id", m_role.MRoleIndex)
 	m_role_api.Get("", m_role.MRolePage)
 	m_role_api.Delete(":id", m_role.MRoleDelete)
+
+	// MASTER BIODATA
+	m_biodata_api := app.Group("/m-biodata")
+	m_biodata_api.Post("", m_biodata.MBiodataCreate)
+	m_biodata_api.Put("", m_biodata.MBiodataUpdate)
+	m_biodata_api.Get(":id", m_biodata.MBiodataIndex)
+	m_biodata_api.Get("", m_biodata.MBiodataPage)
+	m_biodata_api.Delete(":id", m_biodata.MBiodataDelete)
 }

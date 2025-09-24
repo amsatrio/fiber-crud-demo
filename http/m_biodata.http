@@ -1,0 +1,33 @@
+@base_url=http://localhost:8005
+
+### page
+GET {{base_url}}/m-biodata
+
+### index
+GET {{base_url}}/m-biodata/1
+
+### new
+POST {{base_url}}/m-biodata
+Content-Type: application/json
+
+{
+    "id": 1,
+    "fullname":"my-name",
+    "mobilePhone":"084321829345",
+    "isDelete":false
+}
+
+### update
+PUT {{base_url}}/m-biodata
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name":"admin",
+    "code":"admin1",
+    "level":1,
+    "isDelete":false
+}
+
+### delete
+DELETE {{base_url}}/m-biodata/1

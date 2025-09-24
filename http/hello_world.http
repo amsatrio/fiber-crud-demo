@@ -3,5 +3,19 @@
 ###
 GET {{base_url}}/hello-world
 
-###
-GET {{base_url}}/hello-world
+### path
+GET {{base_url}}/hello-world/path/tess
+
+### query
+GET {{base_url}}/hello-world/query?message=teewww
+
+### payload
+POST {{base_url}}/hello-world/payload
+Content-Type: application/json
+
+{
+    "message": "okeyas"
+}
+
+### error
+GET {{base_url}}/hello-world/error/500

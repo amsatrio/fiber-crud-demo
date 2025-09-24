@@ -41,7 +41,7 @@ func HelloWorldPayload(c *fiber.Ctx) error {
 	// parse payload
 	if err := c.BodyParser(payload); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Cannot parse JSON",
+			"error": "Cannot parse JSON, error: " + err.Error(),
 		})
 	}
 

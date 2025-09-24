@@ -18,6 +18,28 @@ definitions:
         example: "2024-02-16 10:33:10"
         type: string
     type: object
+  schema.MBiodataRequest:
+    properties:
+      fullname:
+        maxLength: 255
+        type: string
+      id:
+        type: integer
+      image:
+        items:
+          type: integer
+        type: array
+      imagePath:
+        maxLength: 255
+        type: string
+      isDelete:
+        type: boolean
+      mobilePhone:
+        maxLength: 15
+        type: string
+    required:
+    - id
+    type: object
   schema.MRoleRequest:
     properties:
       code:
@@ -32,12 +54,242 @@ definitions:
       name:
         maxLength: 20
         type: string
+    type: object
+  schema.MUserRequest:
+    properties:
+      biodataId:
+        type: integer
+      email:
+        maxLength: 100
+        type: string
+      id:
+        type: integer
+      isDelete:
+        type: boolean
+      isLocked:
+        type: boolean
+      lastLogin:
+        example: "2024-02-16 10:33:10"
+        type: string
+      loginAttempt:
+        type: integer
+      password:
+        maxLength: 255
+        type: string
+      roleId:
+        type: integer
     required:
     - id
     type: object
 info:
   contact: {}
 paths:
+  /m-biodata:
+    get:
+      consumes:
+      - application/json
+      description: Get Page MBiodata
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - default: "0"
+        description: page
+        in: query
+        name: _page
+        type: string
+      - default: "5"
+        description: size
+        in: query
+        name: _size
+        type: string
+      - description: sort
+        in: query
+        name: _sort
+        type: string
+      - description: filter
+        in: query
+        name: _filter
+        type: string
+      - description: global filter
+        in: query
+        name: _q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MBiodataPage
+      tags:
+      - mBiodata
+    post:
+      consumes:
+      - application/json
+      description: Create MBiodata
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: Add MBiodataRequest
+        in: body
+        name: mBiodata
+        required: true
+        schema:
+          $ref: '#/definitions/schema.MBiodataRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MBiodataCreate
+      tags:
+      - mBiodata
+    put:
+      consumes:
+      - application/json
+      description: Update MBiodata
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: Add MBiodataRequest
+        in: body
+        name: mBiodata
+        required: true
+        schema:
+          $ref: '#/definitions/schema.MBiodataRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MBiodataUpdate
+      tags:
+      - mBiodata
+  /m-biodata/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete MBiodata by id
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: MBiodata id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MBiodataDelete
+      tags:
+      - mBiodata
+    get:
+      consumes:
+      - application/json
+      description: Get MBiodata by id
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: MBiodata id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MBiodataIndex
+      tags:
+      - mBiodata
   /m-role:
     get:
       consumes:
@@ -244,4 +496,210 @@ paths:
       summary: MRoleIndex
       tags:
       - mRole
+  /m-user:
+    get:
+      consumes:
+      - application/json
+      description: Get Page MUser
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - default: "0"
+        description: page
+        in: query
+        name: _page
+        type: string
+      - default: "5"
+        description: size
+        in: query
+        name: _size
+        type: string
+      - description: sort
+        in: query
+        name: _sort
+        type: string
+      - description: filter
+        in: query
+        name: _filter
+        type: string
+      - description: global filter
+        in: query
+        name: _q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MUserPage
+      tags:
+      - mUser
+    post:
+      consumes:
+      - application/json
+      description: Create MUser
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: Add MUserRequest
+        in: body
+        name: mUser
+        required: true
+        schema:
+          $ref: '#/definitions/schema.MUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MUserCreate
+      tags:
+      - mUser
+    put:
+      consumes:
+      - application/json
+      description: Update MUser
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: Add MUserRequest
+        in: body
+        name: mUser
+        required: true
+        schema:
+          $ref: '#/definitions/schema.MUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MUserUpdate
+      tags:
+      - mUser
+  /m-user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete MUser by id
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: MUser id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MUserDelete
+      tags:
+      - mUser
+    get:
+      consumes:
+      - application/json
+      description: Get MUser by id
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: MUser id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MUserIndex
+      tags:
+      - mUser
 swagger: "2.0"

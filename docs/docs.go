@@ -15,6 +15,314 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/m-biodata": {
+            "get": {
+                "description": "Get Page MBiodata",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodata"
+                ],
+                "summary": "MBiodataPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "_sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "_filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "_q",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MBiodata",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodata"
+                ],
+                "summary": "MBiodataUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MBiodataRequest",
+                        "name": "mBiodata",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.MBiodataRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MBiodata",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodata"
+                ],
+                "summary": "MBiodataCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MBiodataRequest",
+                        "name": "mBiodata",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.MBiodataRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/m-biodata/{id}": {
+            "get": {
+                "description": "Get MBiodata by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodata"
+                ],
+                "summary": "MBiodataIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MBiodata id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MBiodata by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodata"
+                ],
+                "summary": "MBiodataDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MBiodata id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/m-role": {
             "get": {
                 "description": "Get Page MRole",
@@ -322,6 +630,314 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/m-user": {
+            "get": {
+                "description": "Get Page MUser",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mUser"
+                ],
+                "summary": "MUserPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "_sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "_filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "_q",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MUser",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mUser"
+                ],
+                "summary": "MUserUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MUserRequest",
+                        "name": "mUser",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.MUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MUser",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mUser"
+                ],
+                "summary": "MUserCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MUserRequest",
+                        "name": "mUser",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.MUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/m-user/{id}": {
+            "get": {
+                "description": "Get MUser by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mUser"
+                ],
+                "summary": "MUserIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MUser id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MUser by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mUser"
+                ],
+                "summary": "MUserDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MUser id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -352,11 +968,40 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.MRoleRequest": {
+        "schema.MBiodataRequest": {
             "type": "object",
             "required": [
                 "id"
             ],
+            "properties": {
+                "fullname": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "imagePath": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "mobilePhone": {
+                    "type": "string",
+                    "maxLength": 15
+                }
+            }
+        },
+        "schema.MRoleRequest": {
+            "type": "object",
             "properties": {
                 "code": {
                     "type": "string",
@@ -374,6 +1019,44 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "maxLength": 20
+                }
+            }
+        },
+        "schema.MUserRequest": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "biodataId": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "isLocked": {
+                    "type": "boolean"
+                },
+                "lastLogin": {
+                    "type": "string",
+                    "example": "2024-02-16 10:33:10"
+                },
+                "loginAttempt": {
+                    "type": "integer"
+                },
+                "password": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "roleId": {
+                    "type": "integer"
                 }
             }
         }

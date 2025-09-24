@@ -1,0 +1,38 @@
+@base_url=http://localhost:8005
+
+### page
+GET {{base_url}}/m-user
+
+### index
+GET {{base_url}}/m-user/1
+
+### new
+POST {{base_url}}/m-user
+Content-Type: application/json
+
+{
+    "id": 1,
+    "email":"admin",
+    "password":"admin",
+    "loginAttempt":1,
+    "isLocked": false,
+    "isDelete":false
+}
+
+### update
+PUT {{base_url}}/m-user
+Content-Type: application/json
+
+{
+    "id": 1,
+    "biodataId":1,
+    "roleId":1,
+    "email":"admin",
+    "password":"admin",
+    "loginAttempt":1,
+    "isLocked": false,
+    "isDelete":false
+}
+
+### delete
+DELETE {{base_url}}/m-user/1

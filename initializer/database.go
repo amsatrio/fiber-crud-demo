@@ -64,4 +64,5 @@ func ConnectToDB() {
 	// Migration
 	DB.AutoMigrate(&schema.MRole{})
 	DB.AutoMigrate(&schema.MBiodata{})
+	DB.AutoMigrate(&schema.MUser{})
 }

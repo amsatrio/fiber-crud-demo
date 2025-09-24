@@ -12,6 +12,7 @@ import (
 	"fiber-crud-demo/modules/hello_world"
 	"fiber-crud-demo/modules/m_biodata"
 	"fiber-crud-demo/modules/m_role"
+	"fiber-crud-demo/modules/m_user"
 	"fiber-crud-demo/util"
 
 	"github.com/goccy/go-json"
@@ -109,4 +110,12 @@ func routes(app *fiber.App) {
 	m_biodata_api.Get(":id", m_biodata.MBiodataIndex)
 	m_biodata_api.Get("", m_biodata.MBiodataPage)
 	m_biodata_api.Delete(":id", m_biodata.MBiodataDelete)
+
+	// MASTER USER
+	m_user_api := app.Group("/m-user")
+	m_user_api.Post("", m_user.MUserCreate)
+	m_user_api.Put("", m_user.MUserUpdate)
+	m_user_api.Get(":id", m_user.MUserIndex)
+	m_user_api.Get("", m_user.MUserPage)
+	m_user_api.Delete(":id", m_user.MUserDelete)
 }

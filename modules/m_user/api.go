@@ -1,4 +1,4 @@
-package m_biodata
+package m_user
 
 import (
 	"encoding/json"
@@ -18,24 +18,24 @@ import (
 
 var validate = validator.New()
 
-// MBiodataCreate godoc
+// MUserCreate godoc
 //
-//	@Summary		MBiodataCreate
-//	@Description	Create MBiodata
-//	@Tags			mBiodata
+//	@Summary		MUserCreate
+//	@Description	Create MUser
+//	@Tags			mUser
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			mBiodata	body		schema.MBiodataRequest	true	"Add MBiodataRequest"
+//	@Param			mUser	body		schema.MUserRequest	true	"Add MUserRequest"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-biodata [post]
-func MBiodataCreate(c *fiber.Ctx) error {
+//	@Router			/m-user [post]
+func MUserCreate(c *fiber.Ctx) error {
 
 	res := &response.Response{}
-	payload := new(schema.MBiodataRequest)
+	payload := new(schema.MUserRequest)
 
 	// parse payload
 	if err := c.BodyParser(payload); err != nil {
@@ -53,11 +53,11 @@ func MBiodataCreate(c *fiber.Ctx) error {
 	}
 
 	// insert data
-	mBiodataService := NewMBiodataServiceImpl(initializer.DB)
+	mUserService := NewMUserServiceImpl(initializer.DB)
 
-	err := mBiodataService.CreateMBiodata(payload, 0)
+	err := mUserService.CreateMUser(payload, 0)
 	if err != nil {
-		util.Log("ERROR", "controllers", "MBiodataCreate", "create data error: "+err.Error())
+		util.Log("ERROR", "controllers", "MUserCreate", "create data error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "create data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}
@@ -66,24 +66,24 @@ func MBiodataCreate(c *fiber.Ctx) error {
 	return c.Status(res.Status).JSON(res)
 }
 
-// MBiodataUpdate godoc
+// MUserUpdate godoc
 //
-//	@Summary		MBiodataUpdate
-//	@Description	Update MBiodata
-//	@Tags			mBiodata
+//	@Summary		MUserUpdate
+//	@Description	Update MUser
+//	@Tags			mUser
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			mBiodata	body		schema.MBiodataRequest	true	"Add MBiodataRequest"
+//	@Param			mUser	body		schema.MUserRequest	true	"Add MUserRequest"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-biodata [put]
-func MBiodataUpdate(c *fiber.Ctx) error {
+//	@Router			/m-user [put]
+func MUserUpdate(c *fiber.Ctx) error {
 
 	res := &response.Response{}
-	payload := new(schema.MBiodataRequest)
+	payload := new(schema.MUserRequest)
 
 	// parse payload
 	if err := c.BodyParser(payload); err != nil {
@@ -101,11 +101,11 @@ func MBiodataUpdate(c *fiber.Ctx) error {
 	}
 
 	// update data
-	mBiodataService := NewMBiodataServiceImpl(initializer.DB)
+	mUserService := NewMUserServiceImpl(initializer.DB)
 
-	err := mBiodataService.UpdateMBiodata(payload, 0)
+	err := mUserService.UpdateMUser(payload, 0)
 	if err != nil {
-		util.Log("ERROR", "controllers", "MBiodataUpdate", "update data error: "+err.Error())
+		util.Log("ERROR", "controllers", "MUserUpdate", "update data error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "update data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}
@@ -114,21 +114,21 @@ func MBiodataUpdate(c *fiber.Ctx) error {
 	return c.Status(res.Status).JSON(res)
 }
 
-// MBiodataIndex godoc
+// MUserIndex godoc
 //
-//	@Summary		MBiodataIndex
-//	@Description	Get MBiodata by id
-//	@Tags			mBiodata
+//	@Summary		MUserIndex
+//	@Description	Get MUser by id
+//	@Tags			mUser
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			id	path		int	true	"MBiodata id"
+//	@Param			id	path		int	true	"MUser id"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-biodata/{id} [get]
-func MBiodataIndex(c *fiber.Ctx) error {
+//	@Router			/m-user/{id} [get]
+func MUserIndex(c *fiber.Ctx) error {
 
 	res := &response.Response{}
 
@@ -141,39 +141,39 @@ func MBiodataIndex(c *fiber.Ctx) error {
 	}
 	idUint = uint(idUint64)
 
-	mBiodataService := NewMBiodataServiceImpl(initializer.DB)
+	mUserService := NewMUserServiceImpl(initializer.DB)
 
-	mBiodata, err := mBiodataService.GetMBiodata(idUint)
+	mUser, err := mUserService.GetMUser(idUint)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "data not found")
 		return c.Status(res.Status).JSON(res)
 	}
 
 	if err != nil {
-		util.Log("ERROR", "controllers", "MBiodataIndex", err.Error())
+		util.Log("ERROR", "controllers", "MUserIndex", err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "get data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}
 
-	res.Ok(c.Path(), mBiodata)
+	res.Ok(c.Path(), mUser)
 	return c.Status(res.Status).JSON(res)
 }
 
-// MBiodataDelete godoc
+// MUserDelete godoc
 //
-//	@Summary		MBiodataDelete
-//	@Description	Delete MBiodata by id
-//	@Tags			mBiodata
+//	@Summary		MUserDelete
+//	@Description	Delete MUser by id
+//	@Tags			mUser
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			id	path		int	true	"MBiodata id"
+//	@Param			id	path		int	true	"MUser id"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-biodata/{id} [delete]
-func MBiodataDelete(c *fiber.Ctx) error {
+//	@Router			/m-user/{id} [delete]
+func MUserDelete(c *fiber.Ctx) error {
 	res := &response.Response{}
 
 	// get id from request param
@@ -186,10 +186,10 @@ func MBiodataDelete(c *fiber.Ctx) error {
 	}
 	idUint = uint(idUint64)
 
-	mBiodataService := NewMBiodataServiceImpl(initializer.DB)
+	mUserService := NewMUserServiceImpl(initializer.DB)
 
-	// delete mBiodata
-	err = mBiodataService.DeleteMBiodata(idUint, 0)
+	// delete mUser
+	err = mUserService.DeleteMUser(idUint, 0)
 
 	if err != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "delete data error: "+err.Error())
@@ -201,11 +201,11 @@ func MBiodataDelete(c *fiber.Ctx) error {
 	return c.Status(res.Status).JSON(res)
 }
 
-// MBiodataPage godoc
+// MUserPage godoc
 //
-//	@Summary		MBiodataPage
-//	@Description	Get Page MBiodata
-//	@Tags			mBiodata
+//	@Summary		MUserPage
+//	@Description	Get Page MUser
+//	@Tags			mUser
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
@@ -218,8 +218,8 @@ func MBiodataDelete(c *fiber.Ctx) error {
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-biodata [get]
-func MBiodataPage(c *fiber.Ctx) error {
+//	@Router			/m-user [get]
+func MUserPage(c *fiber.Ctx) error {
 	res := &response.Response{}
 
 	sortRequest := c.Query("_sort", "[]")
@@ -254,20 +254,20 @@ func MBiodataPage(c *fiber.Ctx) error {
 	var sorts []request.Sort
 	jsonUnmarshalErr := json.Unmarshal([]byte(sortRequest), &sorts)
 	if jsonUnmarshalErr != nil {
-		util.Log("ERROR", "controllers", "MBiodataPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
+		util.Log("ERROR", "controllers", "MUserPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
 	}
 	var filters []request.Filter
 	jsonUnmarshalErr = json.Unmarshal([]byte(filterRequest), &filters)
 	if jsonUnmarshalErr != nil {
-		util.Log("ERROR", "controllers", "MBiodataPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
+		util.Log("ERROR", "controllers", "MUserPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
 	}
 
-	mBiodataService := NewMBiodataServiceImpl(initializer.DB)
-	result, err := mBiodataService.GetPageMBiodata(
+	mUserService := NewMUserServiceImpl(initializer.DB)
+	result, err := mUserService.GetPageMUser(
 		sorts,
 		filters,
 		searchRequest,
@@ -276,7 +276,7 @@ func MBiodataPage(c *fiber.Ctx) error {
 		sizeInt)
 
 	if err != nil {
-		util.Log("ERROR", "controllers", "MBiodataPage", "error: "+err.Error())
+		util.Log("ERROR", "controllers", "MUserPage", "error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "get data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}

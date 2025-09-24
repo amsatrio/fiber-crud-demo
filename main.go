@@ -8,6 +8,7 @@ import (
 	_ "fiber-crud-demo/docs"
 	"fiber-crud-demo/dto/response"
 	"fiber-crud-demo/initializer"
+	"fiber-crud-demo/middleware"
 	"fiber-crud-demo/modules/health"
 	"fiber-crud-demo/modules/hello_world"
 	"fiber-crud-demo/modules/m_biodata"
@@ -68,6 +69,7 @@ func main() {
 	}))
 	app.Use(cache.New())
 	app.Use(recover.New())
+	app.Use(middleware.LoggerMiddleware)
 
 	app.Get("/swagger/*", swagger.HandlerDefault) // default
 

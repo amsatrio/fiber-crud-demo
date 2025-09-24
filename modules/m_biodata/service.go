@@ -86,12 +86,12 @@ func (s *MBiodataServiceImpl) UpdateMBiodata(payload *schema.MBiodataRequest, mU
 	oldMBiodata.Fullname = payload.Fullname
 	oldMBiodata.MobilePhone = payload.MobilePhone
 	oldMBiodata.Image = payload.Image
-	oldMBiodata.ImagePath = payload.ImagePath
-	oldMBiodata.ModifiedBy = mUserId
-	oldMBiodata.ModifiedOn = dto.JSONTime{Time: time.Now()}
+	oldMBiodata.ImagePath = &payload.ImagePath
+	oldMBiodata.ModifiedBy = &mUserId
+	oldMBiodata.ModifiedOn = &dto.JSONTime{Time: time.Now()}
 	if *payload.IsDelete {
-		oldMBiodata.DeletedBy = mUserId
-		oldMBiodata.DeletedOn = dto.JSONTime{Time: time.Now()}
+		oldMBiodata.DeletedBy = &mUserId
+		oldMBiodata.DeletedOn = &dto.JSONTime{Time: time.Now()}
 		oldMBiodata.IsDelete = payload.IsDelete
 	}
 

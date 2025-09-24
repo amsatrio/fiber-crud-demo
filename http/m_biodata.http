@@ -23,9 +23,8 @@ Content-Type: application/json
 
 {
     "id": 1,
-    "name":"admin",
-    "code":"admin1",
-    "level":1,
+    "fullname":"my-name1",
+    "mobilePhone":"084321829345",
     "isDelete":false
 }
 

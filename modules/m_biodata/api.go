@@ -105,8 +105,8 @@ func MBiodataUpdate(c *fiber.Ctx) error {
 
 	err := mBiodataService.UpdateMBiodata(payload, 0)
 	if err != nil {
-		util.Log("ERROR", "controllers", "MBiodataUpdate", "create data error: "+err.Error())
-		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "create data error")
+		util.Log("ERROR", "controllers", "MBiodataUpdate", "update data error: "+err.Error())
+		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "update data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}
 

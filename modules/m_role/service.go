@@ -86,11 +86,11 @@ func (s *MRoleServiceImpl) UpdateMRole(payload *schema.MRoleRequest, mUserId uin
 	oldMRole.Name = payload.Name
 	oldMRole.Code = payload.Code
 	oldMRole.Level = payload.Level
-	oldMRole.ModifiedBy = mUserId
-	oldMRole.ModifiedOn = dto.JSONTime{Time: time.Now()}
+	oldMRole.ModifiedBy = &mUserId
+	oldMRole.ModifiedOn = &dto.JSONTime{Time: time.Now()}
 	if *payload.IsDelete {
-		oldMRole.DeletedBy = mUserId
-		oldMRole.DeletedOn = dto.JSONTime{Time: time.Now()}
+		oldMRole.DeletedBy = &mUserId
+		oldMRole.DeletedOn = &dto.JSONTime{Time: time.Now()}
 		oldMRole.IsDelete = payload.IsDelete
 	}
 

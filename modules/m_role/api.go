@@ -105,8 +105,8 @@ func MRoleUpdate(c *fiber.Ctx) error {
 
 	err := mRoleService.UpdateMRole(payload, 0)
 	if err != nil {
-		util.Log("ERROR", "controllers", "MRoleUpdate", "create data error: "+err.Error())
-		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "create data error")
+		util.Log("ERROR", "controllers", "MRoleUpdate", "update data error: "+err.Error())
+		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "update data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}
 

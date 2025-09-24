@@ -1,7 +1,7 @@
 package hello_world
 
 import (
-	"fiber-crud-demo/dto"
+	"fiber-crud-demo/dto/response"
 	"fiber-crud-demo/util"
 
 	"github.com/go-playground/validator/v10"
@@ -9,21 +9,21 @@ import (
 )
 
 func HelloWorld(c *fiber.Ctx) error {
-	res := &dto.Response{}
+	res := &response.Response{}
 	res.Ok(c.Path(), "hello world!")
 
 	return c.Status(res.Status).JSON(res)
 }
 
 func HelloWorldPath(c *fiber.Ctx) error {
-	res := &dto.Response{}
+	res := &response.Response{}
 	res.Ok(c.Path(), c.Params("message"))
 
 	return c.Status(res.Status).JSON(res)
 }
 
 func HelloWorldQuery(c *fiber.Ctx) error {
-	res := &dto.Response{}
+	res := &response.Response{}
 	res.Ok(c.Path(), c.Query("message"))
 
 	return c.Status(res.Status).JSON(res)
@@ -45,7 +45,7 @@ func HelloWorldPayload(c *fiber.Ctx) error {
 		})
 	}
 
-	res := &dto.Response{}
+	res := &response.Response{}
 
 	// validate payload
 	if err := validate.Struct(payload); err != nil {
@@ -63,7 +63,7 @@ func HelloWorldPayload(c *fiber.Ctx) error {
 
 func HelloWorldError(c *fiber.Ctx) error {
 	error_type := c.Params("type")
-	res := &dto.Response{}
+	res := &response.Response{}
 	res.Ok(c.Path(), nil)
 
 	if error_type == "503" {

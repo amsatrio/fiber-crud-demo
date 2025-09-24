@@ -1,0 +1,247 @@
+definitions:
+  response.Response:
+    properties:
+      data:
+        type: string
+      error:
+        type: string
+      message:
+        example: success
+        type: string
+      path:
+        example: /v1/m_biodata
+        type: string
+      status:
+        example: 200
+        type: integer
+      timestamp:
+        example: "2024-02-16 10:33:10"
+        type: string
+    type: object
+  schema.MRoleRequest:
+    properties:
+      code:
+        maxLength: 20
+        type: string
+      id:
+        type: integer
+      isDelete:
+        type: boolean
+      level:
+        type: integer
+      name:
+        maxLength: 20
+        type: string
+    required:
+    - id
+    type: object
+info:
+  contact: {}
+paths:
+  /m-role:
+    get:
+      consumes:
+      - application/json
+      description: Get Page MRole
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - default: "0"
+        description: page
+        in: query
+        name: _page
+        type: string
+      - default: "5"
+        description: size
+        in: query
+        name: _size
+        type: string
+      - description: sort
+        in: query
+        name: _sort
+        type: string
+      - description: filter
+        in: query
+        name: _filter
+        type: string
+      - description: global filter
+        in: query
+        name: _q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MRolePage
+      tags:
+      - mRole
+    post:
+      consumes:
+      - application/json
+      description: Create MRole
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: Add MRoleRequest
+        in: body
+        name: mRole
+        required: true
+        schema:
+          $ref: '#/definitions/schema.MRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MRoleCreate
+      tags:
+      - mRole
+    put:
+      consumes:
+      - application/json
+      description: Update MRole
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: Add MRoleRequest
+        in: body
+        name: mRole
+        required: true
+        schema:
+          $ref: '#/definitions/schema.MRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MRoleUpdate
+      tags:
+      - mRole
+  /m-role/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete MRole by id
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: MRole id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MRoleDelete
+      tags:
+      - mRole
+    get:
+      consumes:
+      - application/json
+      description: Get MRole by id
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: MRole id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MRoleIndex
+      tags:
+      - mRole
+swagger: "2.0"

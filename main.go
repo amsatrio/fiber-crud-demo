@@ -5,10 +5,12 @@ import (
 	"log"
 	"os"
 
-	"fiber-crud-demo/dto"
+	_ "fiber-crud-demo/docs"
+	"fiber-crud-demo/dto/response"
 	"fiber-crud-demo/initializer"
 	"fiber-crud-demo/modules/health"
 	"fiber-crud-demo/modules/hello_world"
+	"fiber-crud-demo/modules/m_role"
 	"fiber-crud-demo/util"
 
 	"github.com/goccy/go-json"
@@ -16,11 +18,13 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/swagger"
 )
 
 func init() {
 	initializer.LoadEnvironmentVariables()
 	initializer.LoggerInit()
+	initializer.ConnectToDB()
 }
 
 func config() fiber.Config {
@@ -44,7 +48,7 @@ func config() fiber.Config {
 				code = e.Code
 			}
 
-			res := &dto.Response{}
+			res := &response.Response{}
 			res.ErrMessage(c.Path(), code, err.Error())
 
 			return c.Status(code).JSON(res)
@@ -62,6 +66,8 @@ func main() {
 	}))
 	app.Use(cache.New())
 	app.Use(recover.New())
+
+	app.Get("/swagger/*", swagger.HandlerDefault) // default
 
 	// ### Routes
 	routes(app)
@@ -86,4 +92,12 @@ func routes(app *fiber.App) {
 	hello_world_api.Get("/query", hello_world.HelloWorldQuery)
 	hello_world_api.Post("/payload", hello_world.HelloWorldPayload)
 	hello_world_api.Get("/error/:type", hello_world.HelloWorldError)
+
+	// MASTER ROLE
+	m_role_api := app.Group("/m-role")
+	m_role_api.Post("", m_role.MRoleCreate)
+	m_role_api.Put("", m_role.MRoleUpdate)
+	m_role_api.Get(":id", m_role.MRoleIndex)
+	m_role_api.Get("", m_role.MRolePage)
+	m_role_api.Delete(":id", m_role.MRoleDelete)
 }

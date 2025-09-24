@@ -1,0 +1,34 @@
+@base_url=http://localhost:8005
+
+### page
+GET {{base_url}}/m-role
+
+### index
+GET {{base_url}}/m-role/1
+
+### new
+POST {{base_url}}/m-role
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name":"admin",
+    "code":"admin",
+    "level":1,
+    "isDelete":false
+}
+
+### update
+PUT {{base_url}}/m-role
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name":"admin",
+    "code":"admin1",
+    "level":1,
+    "isDelete":false
+}
+
+### delete
+DELETE {{base_url}}/m-role/1

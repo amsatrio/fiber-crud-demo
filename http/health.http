@@ -1,0 +1,5 @@
+@base_url=http://localhost:8005
+
+###
+GET {{base_url}}/health/status
+

@@ -2,6 +2,7 @@ package initializer
 
 import (
 	"fiber-crud-demo/dto/schema"
+	"fiber-crud-demo/internal/domain"
 	"io"
 	"log"
 	"os"
@@ -63,6 +64,6 @@ func ConnectToDB() {
 
 	// Migration
 	DB.AutoMigrate(&schema.MRole{})
-	DB.AutoMigrate(&schema.MBiodata{})
+	DB.AutoMigrate(&domain.MBiodata{})
 	DB.AutoMigrate(&schema.MUser{})
 }

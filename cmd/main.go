@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"errors"
@@ -8,10 +8,12 @@ import (
 	_ "fiber-crud-demo/docs"
 	"fiber-crud-demo/dto/response"
 	"fiber-crud-demo/initializer"
+	"fiber-crud-demo/internal/application"
+	"fiber-crud-demo/internal/infrastructure/repository"
+	"fiber-crud-demo/internal/transport/http"
 	"fiber-crud-demo/middleware"
 	"fiber-crud-demo/modules/health"
 	"fiber-crud-demo/modules/hello_world"
-	"fiber-crud-demo/modules/m_biodata"
 	"fiber-crud-demo/modules/m_role"
 	"fiber-crud-demo/modules/m_user"
 	"fiber-crud-demo/util"
@@ -106,12 +108,15 @@ func routes(app *fiber.App) {
 	m_role_api.Delete(":id", m_role.MRoleDelete)
 
 	// MASTER BIODATA
+	mBiodataRepo := repository.NewMBiodataRepository(initializer.DB)
+	mBiodataService := application.NewMBiodataService(mBiodataRepo)
+	mBiodataHandler := http.NewMBiodataHandler(mBiodataService)
 	m_biodata_api := app.Group("/m-biodata")
-	m_biodata_api.Post("", m_biodata.MBiodataCreate)
-	m_biodata_api.Put("", m_biodata.MBiodataUpdate)
-	m_biodata_api.Get(":id", m_biodata.MBiodataIndex)
-	m_biodata_api.Get("", m_biodata.MBiodataPage)
-	m_biodata_api.Delete(":id", m_biodata.MBiodataDelete)
+	m_biodata_api.Post("", mBiodataHandler.MBiodataCreate)
+	m_biodata_api.Put("", mBiodataHandler.MBiodataUpdate)
+	m_biodata_api.Get(":id", mBiodataHandler.MBiodataIndex)
+	m_biodata_api.Get("", mBiodataHandler.MBiodataPage)
+	m_biodata_api.Delete(":id", mBiodataHandler.MBiodataDelete)
 
 	// MASTER USER
 	m_user_api := app.Group("/m-user")

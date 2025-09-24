@@ -1,4 +1,4 @@
-package schema
+package domain
 
 import (
 	"fiber-crud-demo/dto"

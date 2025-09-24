@@ -1,44 +1,35 @@
-package m_biodata
+package repository
 
 import (
 	"errors"
 	"fiber-crud-demo/dto"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/dto/schema"
+	"fiber-crud-demo/internal/domain"
 	"fiber-crud-demo/util"
 	"strconv"
+	"sync"
 	"time"
 
 	"gorm.io/gorm"
 )
 
-type MBiodataService interface {
-	GetMBiodata(id uint) (*schema.MBiodata, error)
-	CreateMBiodata(mBiodata *schema.MBiodataRequest, mUserId uint) error
-	UpdateMBiodata(mBiodata *schema.MBiodataRequest, mUserId uint) error
-	DeleteMBiodata(id uint, mUserId uint) error
-	GetPageMBiodata(
-		sortRequest []request.Sort,
-		filterRequest []request.Filter,
-		searchRequest string,
-		pageInt int,
-		sizeInt64 int64,
-		sizeInt int) (*response.Page, error)
+type MBiodataRepository struct {
+	mutex sync.Mutex
+	db    *gorm.DB
 }
 
-type MBiodataServiceImpl struct {
-	db *gorm.DB
-}
-
-func NewMBiodataServiceImpl(db *gorm.DB) MBiodataService {
-	return &MBiodataServiceImpl{
+func NewMBiodataRepository(db *gorm.DB) domain.MBiodataRepository {
+	return &MBiodataRepository{
 		db: db,
 	}
 }
 
-func (s *MBiodataServiceImpl) GetMBiodata(id uint) (*schema.MBiodata, error) {
-	mBiodata := schema.MBiodata{}
+func (s *MBiodataRepository) GetMBiodata(id uint) (*domain.MBiodata, error) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	mBiodata := domain.MBiodata{}
 	result := s.db.First(&mBiodata, id)
 	if result.Error != nil {
 		return nil, result.Error
@@ -47,13 +38,15 @@ func (s *MBiodataServiceImpl) GetMBiodata(id uint) (*schema.MBiodata, error) {
 	return &mBiodata, nil
 }
 
-func (s *MBiodataServiceImpl) CreateMBiodata(payload *schema.MBiodataRequest, mUserId uint) error {
+func (s *MBiodataRepository) CreateMBiodata(payload *domain.MBiodataRequest, mUserId uint) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
 
 	mBiodata := payload.ToModelNew(mUserId)
 
 	util.Log("INFO", "service", "MBiodataService", "CreateMBiodata: ")
 
-	var oldMBiodata schema.MBiodata
+	var oldMBiodata domain.MBiodata
 
 	// find data
 	result := s.db.First(&oldMBiodata, mBiodata.Id)
@@ -69,9 +62,11 @@ func (s *MBiodataServiceImpl) CreateMBiodata(payload *schema.MBiodataRequest, mU
 	return nil
 }
 
-func (s *MBiodataServiceImpl) UpdateMBiodata(payload *schema.MBiodataRequest, mUserId uint) error {
+func (s *MBiodataRepository) UpdateMBiodata(payload *domain.MBiodataRequest, mUserId uint) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
 
-	var oldMBiodata *schema.MBiodata
+	var oldMBiodata *domain.MBiodata
 
 	// find data
 	result := s.db.First(&oldMBiodata, payload.Id)
@@ -105,8 +100,11 @@ func (s *MBiodataServiceImpl) UpdateMBiodata(payload *schema.MBiodataRequest, mU
 	return nil
 }
 
-func (s *MBiodataServiceImpl) DeleteMBiodata(id uint, mUserId uint) error {
-	var mBiodata schema.MBiodata
+func (s *MBiodataRepository) DeleteMBiodata(id uint, mUserId uint) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	var mBiodata domain.MBiodata
 	result := s.db.Delete(&mBiodata, id)
 
 	if result.Error != nil {
@@ -119,7 +117,7 @@ func (s *MBiodataServiceImpl) DeleteMBiodata(id uint, mUserId uint) error {
 	return nil
 }
 
-func (s *MBiodataServiceImpl) GetPageMBiodata(
+func (s *MBiodataRepository) GetPageMBiodata(
 	sortRequest []request.Sort,
 	filterRequest []request.Filter,
 	searchRequest string,
@@ -127,10 +125,13 @@ func (s *MBiodataServiceImpl) GetPageMBiodata(
 	sizeInt64 int64,
 	sizeInt int) (*response.Page, error) {
 
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
 	util.Log("INFO", "service", "GetPageMBiodata", "")
 
-	var mRoles []schema.MBiodata
-	var mBiodata schema.MBiodata
+	var mRoles []domain.MBiodata
+	var mBiodata domain.MBiodata
 	mRoleMap := util.GetJSONFieldTypes(mBiodata)
 
 	// Create a DB instance and build the base query

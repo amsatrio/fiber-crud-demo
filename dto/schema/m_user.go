@@ -2,6 +2,7 @@ package schema
 
 import (
 	"fiber-crud-demo/dto"
+	"fiber-crud-demo/internal/domain"
 	"time"
 )
 
@@ -22,8 +23,8 @@ type MUser struct {
 	DeletedOn    *dto.JSONTime `form:"deletedOn" json:"deletedOn" xml:"deletedOn" gorm:"type:datetime" swaggertype:"string" example:"2024-02-16 10:33:10"`
 	IsDelete     *bool         `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"type:boolean;comment:default FALSE"`
 
-	MBiodata MBiodata `gorm:"foreignKey:BiodataId"`
-	MRole    MRole    `gorm:"foreignKey:RoleId"`
+	MBiodata domain.MBiodata `gorm:"foreignKey:BiodataId"`
+	MRole    MRole           `gorm:"foreignKey:RoleId"`
 }
 
 func (MUser) TableName() string {

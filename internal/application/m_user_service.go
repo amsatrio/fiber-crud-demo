@@ -9,10 +9,10 @@ import (
 	"time"
 )
 
-type MBiodataService interface {
-	Get(id uint) (*domain.MBiodata, error)
-	Create(payload *domain.MBiodataRequest, mUserId uint) error
-	Update(payload *domain.MBiodataRequest, mUserId uint) error
+type MUserService interface {
+	Get(id uint) (*domain.MUser, error)
+	Create(payload *domain.MUserRequest, mUserId uint) error
+	Update(payload *domain.MUserRequest, mUserId uint) error
 	Delete(id uint) error
 	GetPage(
 		sortRequest []request.Sort,
@@ -23,31 +23,34 @@ type MBiodataService interface {
 		sizeInt int) (*response.Page, error)
 }
 
-type MBiodataServiceImpl struct {
-	repo domain.MBiodataRepository
+type MUserServiceImpl struct {
+	repo domain.MUserRepository
 }
 
-func NewMBiodataService(repo domain.MBiodataRepository) MBiodataService {
-	return &MBiodataServiceImpl{
+func NewMUserService(repo domain.MUserRepository) MUserService {
+	return &MUserServiceImpl{
 		repo: repo,
 	}
 }
 
-func (s *MBiodataServiceImpl) Get(id uint) (*domain.MBiodata, error) {
+func (s *MUserServiceImpl) Get(id uint) (*domain.MUser, error) {
 	return s.repo.Get(id)
 }
 
-func (s *MBiodataServiceImpl) Create(payload *domain.MBiodataRequest, mUserId uint) error {
+func (s *MUserServiceImpl) Create(payload *domain.MUserRequest, mUserId uint) error {
 	bool_true := false
-	data := &domain.MBiodata{
-		Id:          payload.Id,
-		Fullname:    payload.Fullname,
-		MobilePhone: payload.MobilePhone,
-		Image:       payload.Image,
-		ImagePath:   &payload.ImagePath,
-		CreatedOn:   dto.JSONTime{Time: time.Now()},
-		CreatedBy:   mUserId,
-		IsDelete:    &bool_true,
+	data := &domain.MUser{
+		Id:           payload.Id,
+		BiodataId:    payload.BiodataId,
+		RoleId:       payload.RoleId,
+		Email:        payload.Email,
+		Password:     payload.Password,
+		LoginAttempt: payload.LoginAttempt,
+		IsLocked:     payload.IsLocked,
+		LastLogin:    payload.LastLogin,
+		CreatedOn:    dto.JSONTime{Time: time.Now()},
+		CreatedBy:    mUserId,
+		IsDelete:     &bool_true,
 	}
 
 	if payload.Id == nil {
@@ -64,7 +67,7 @@ func (s *MBiodataServiceImpl) Create(payload *domain.MBiodataRequest, mUserId ui
 	return s.repo.Create(data)
 }
 
-func (s *MBiodataServiceImpl) Update(payload *domain.MBiodataRequest, mUserId uint) error {
+func (s *MUserServiceImpl) Update(payload *domain.MUserRequest, mUserId uint) error {
 
 	if payload.Id == nil {
 		return errors.New("invalid payload")
@@ -75,10 +78,13 @@ func (s *MBiodataServiceImpl) Update(payload *domain.MBiodataRequest, mUserId ui
 		return err
 	}
 
-	existing.Fullname = payload.Fullname
-	existing.MobilePhone = payload.MobilePhone
-	existing.Image = payload.Image
-	existing.ImagePath = &payload.ImagePath
+	existing.BiodataId = payload.BiodataId
+	existing.RoleId = payload.RoleId
+	existing.Email = payload.Email
+	existing.Password = payload.Password
+	existing.LoginAttempt = payload.LoginAttempt
+	existing.IsLocked = payload.IsLocked
+	existing.LastLogin = payload.LastLogin
 	existing.ModifiedBy = &mUserId
 	existing.ModifiedOn = &dto.JSONTime{Time: time.Now()}
 	if *payload.IsDelete {
@@ -90,7 +96,7 @@ func (s *MBiodataServiceImpl) Update(payload *domain.MBiodataRequest, mUserId ui
 	return s.repo.Create(existing)
 }
 
-func (s *MBiodataServiceImpl) Delete(id uint) error {
+func (s *MUserServiceImpl) Delete(id uint) error {
 	_, err := s.repo.Get(id)
 	if err != nil {
 		return err
@@ -99,7 +105,7 @@ func (s *MBiodataServiceImpl) Delete(id uint) error {
 	return s.repo.Delete(id)
 }
 
-func (s *MBiodataServiceImpl) GetPage(
+func (s *MUserServiceImpl) GetPage(
 	sortRequest []request.Sort,
 	filterRequest []request.Filter,
 	searchRequest string,

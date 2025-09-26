@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/initializer"
 	"fiber-crud-demo/internal/application"
 	"fiber-crud-demo/internal/domain"
 	"fiber-crud-demo/util"
@@ -18,16 +17,16 @@ import (
 )
 
 type MBiodataHandler struct {
-	mBiodataService *application.MBiodataService
+	service  application.MBiodataService
+	validate *validator.Validate
 }
 
-func NewMBiodataHandler(service *application.MBiodataService) *MBiodataHandler {
+func NewMBiodataHandler(service application.MBiodataService, validate *validator.Validate) *MBiodataHandler {
 	return &MBiodataHandler{
-		mBiodataService: service,
+		service:  service,
+		validate: validate,
 	}
 }
-
-var validate = validator.New()
 
 // MBiodataCreate godoc
 //
@@ -55,7 +54,7 @@ func (h *MBiodataHandler) MBiodataCreate(c *fiber.Ctx) error {
 	}
 
 	// validate payload
-	if err := validate.Struct(payload); err != nil {
+	if err := h.validate.Struct(payload); err != nil {
 		out, _ := util.ValidateError(err)
 		if out != nil {
 			res.ErrMessagePayload(c.Path(), fiber.StatusBadRequest, "invalid payload", out)
@@ -64,9 +63,8 @@ func (h *MBiodataHandler) MBiodataCreate(c *fiber.Ctx) error {
 	}
 
 	// insert data
-	mBiodataService := NewMBiodataServiceImpl(initializer.DB)
 
-	err := mBiodataService.CreateMBiodata(payload, 0)
+	err := h.service.Create(payload, 0)
 	if err != nil {
 		util.Log("ERROR", "controllers", "MBiodataCreate", "create data error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "create data error: "+err.Error())
@@ -85,7 +83,7 @@ func (h *MBiodataHandler) MBiodataCreate(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			mBiodata	body		domain.MBiodataRequest	true	"Add MBiodataRequest"
+//	@Param			mBiodata	body		m_biodata.MBiodataRequest	true	"Add MBiodataRequest"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
@@ -102,8 +100,8 @@ func (h *MBiodataHandler) MBiodataUpdate(c *fiber.Ctx) error {
 		return c.Status(res.Status).JSON(res)
 	}
 
-	// validate payload
-	if err := validate.Struct(payload); err != nil {
+	// h.validate payload
+	if err := h.validate.Struct(payload); err != nil {
 		out, _ := util.ValidateError(err)
 		if out != nil {
 			res.ErrMessagePayload(c.Path(), fiber.StatusBadRequest, "invalid payload", out)
@@ -112,9 +110,7 @@ func (h *MBiodataHandler) MBiodataUpdate(c *fiber.Ctx) error {
 	}
 
 	// update data
-	mBiodataService := NewMBiodataServiceImpl(initializer.DB)
-
-	err := mBiodataService.UpdateMBiodata(payload, 0)
+	err := h.service.Update(payload, 0)
 	if err != nil {
 		util.Log("ERROR", "controllers", "MBiodataUpdate", "update data error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "update data error: "+err.Error())
@@ -152,9 +148,7 @@ func (h *MBiodataHandler) MBiodataIndex(c *fiber.Ctx) error {
 	}
 	idUint = uint(idUint64)
 
-	mBiodataService := NewMBiodataServiceImpl(initializer.DB)
-
-	mBiodata, err := mBiodataService.GetMBiodata(idUint)
+	mBiodata, err := h.service.Get(idUint)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "data not found")
 		return c.Status(res.Status).JSON(res)
@@ -197,10 +191,8 @@ func (h *MBiodataHandler) MBiodataDelete(c *fiber.Ctx) error {
 	}
 	idUint = uint(idUint64)
 
-	mBiodataService := NewMBiodataServiceImpl(initializer.DB)
-
 	// delete mBiodata
-	err = mBiodataService.DeleteMBiodata(idUint, 0)
+	err = h.service.Delete(idUint)
 
 	if err != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "delete data error: "+err.Error())
@@ -277,8 +269,7 @@ func (h *MBiodataHandler) MBiodataPage(c *fiber.Ctx) error {
 		return c.Status(res.Status).JSON(res)
 	}
 
-	mBiodataService := NewMBiodataServiceImpl(initializer.DB)
-	result, err := mBiodataService.GetPageMBiodata(
+	result, err := h.service.GetPage(
 		sorts,
 		filters,
 		searchRequest,

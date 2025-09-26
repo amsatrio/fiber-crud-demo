@@ -2,30 +2,28 @@ package repository
 
 import (
 	"errors"
-	"fiber-crud-demo/dto"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
 	"fiber-crud-demo/internal/domain"
 	"fiber-crud-demo/util"
 	"strconv"
 	"sync"
-	"time"
 
 	"gorm.io/gorm"
 )
 
-type MBiodataRepository struct {
+type MBiodataRepositoryImpl struct {
 	mutex sync.Mutex
 	db    *gorm.DB
 }
 
 func NewMBiodataRepository(db *gorm.DB) domain.MBiodataRepository {
-	return &MBiodataRepository{
+	return &MBiodataRepositoryImpl{
 		db: db,
 	}
 }
 
-func (s *MBiodataRepository) GetMBiodata(id uint) (*domain.MBiodata, error) {
+func (s *MBiodataRepositoryImpl) Get(id uint) (*domain.MBiodata, error) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
@@ -38,23 +36,11 @@ func (s *MBiodataRepository) GetMBiodata(id uint) (*domain.MBiodata, error) {
 	return &mBiodata, nil
 }
 
-func (s *MBiodataRepository) CreateMBiodata(payload *domain.MBiodataRequest, mUserId uint) error {
+func (s *MBiodataRepositoryImpl) Create(mBiodata *domain.MBiodata) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	mBiodata := payload.ToModelNew(mUserId)
-
-	util.Log("INFO", "service", "MBiodataService", "CreateMBiodata: ")
-
-	var oldMBiodata domain.MBiodata
-
-	// find data
-	result := s.db.First(&oldMBiodata, mBiodata.Id)
-	if result.Error == nil {
-		return errors.New("data exist")
-	}
-
-	result = s.db.Create(&mBiodata)
+	result := s.db.Create(&mBiodata)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -62,36 +48,11 @@ func (s *MBiodataRepository) CreateMBiodata(payload *domain.MBiodataRequest, mUs
 	return nil
 }
 
-func (s *MBiodataRepository) UpdateMBiodata(payload *domain.MBiodataRequest, mUserId uint) error {
+func (s *MBiodataRepositoryImpl) Update(mBiodata *domain.MBiodata) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	var oldMBiodata *domain.MBiodata
-
-	// find data
-	result := s.db.First(&oldMBiodata, payload.Id)
-	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		return errors.New("data not found")
-	}
-	if result.Error != nil {
-		return result.Error
-	}
-
-	// update data
-	oldMBiodata.Fullname = payload.Fullname
-	oldMBiodata.MobilePhone = payload.MobilePhone
-	oldMBiodata.Image = payload.Image
-	oldMBiodata.ImagePath = &payload.ImagePath
-	oldMBiodata.ModifiedBy = &mUserId
-	oldMBiodata.ModifiedOn = &dto.JSONTime{Time: time.Now()}
-	if *payload.IsDelete {
-		oldMBiodata.DeletedBy = &mUserId
-		oldMBiodata.DeletedOn = &dto.JSONTime{Time: time.Now()}
-		oldMBiodata.IsDelete = payload.IsDelete
-	}
-
-	// update data for response
-	result = s.db.Model(&oldMBiodata).Updates(oldMBiodata)
+	result := s.db.Model(&mBiodata).Updates(mBiodata)
 
 	if result.Error != nil {
 		return result.Error
@@ -100,7 +61,7 @@ func (s *MBiodataRepository) UpdateMBiodata(payload *domain.MBiodataRequest, mUs
 	return nil
 }
 
-func (s *MBiodataRepository) DeleteMBiodata(id uint, mUserId uint) error {
+func (s *MBiodataRepositoryImpl) Delete(id uint) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
@@ -117,16 +78,13 @@ func (s *MBiodataRepository) DeleteMBiodata(id uint, mUserId uint) error {
 	return nil
 }
 
-func (s *MBiodataRepository) GetPageMBiodata(
+func (s *MBiodataRepositoryImpl) GetPage(
 	sortRequest []request.Sort,
 	filterRequest []request.Filter,
 	searchRequest string,
 	pageInt int,
 	sizeInt64 int64,
 	sizeInt int) (*response.Page, error) {
-
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
 
 	util.Log("INFO", "service", "GetPageMBiodata", "")
 

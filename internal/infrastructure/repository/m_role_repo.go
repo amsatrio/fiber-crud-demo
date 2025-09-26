@@ -1,44 +1,33 @@
-package m_role
+package repository
 
 import (
 	"errors"
-	"fiber-crud-demo/dto"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/dto/schema"
+	"fiber-crud-demo/internal/domain"
 	"fiber-crud-demo/util"
 	"strconv"
-	"time"
+	"sync"
 
 	"gorm.io/gorm"
 )
 
-type MRoleService interface {
-	GetMRole(id uint) (*schema.MRole, error)
-	CreateMRole(mRole *schema.MRoleRequest, mUserId uint) error
-	UpdateMRole(mRole *schema.MRoleRequest, mUserId uint) error
-	DeleteMRole(id uint, mUserId uint) error
-	GetPageMRole(
-		sortRequest []request.Sort,
-		filterRequest []request.Filter,
-		searchRequest string,
-		pageInt int,
-		sizeInt64 int64,
-		sizeInt int) (*response.Page, error)
+type MRoleRepositoryImpl struct {
+	mutex sync.Mutex
+	db    *gorm.DB
 }
 
-type MRoleServiceImpl struct {
-	db *gorm.DB
-}
-
-func NewMRoleServiceImpl(db *gorm.DB) MRoleService {
-	return &MRoleServiceImpl{
+func NewMRoleRepository(db *gorm.DB) domain.MRoleRepository {
+	return &MRoleRepositoryImpl{
 		db: db,
 	}
 }
 
-func (s *MRoleServiceImpl) GetMRole(id uint) (*schema.MRole, error) {
-	mRole := schema.MRole{}
+func (s *MRoleRepositoryImpl) Get(id uint) (*domain.MRole, error) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	mRole := domain.MRole{}
 	result := s.db.First(&mRole, id)
 	if result.Error != nil {
 		return nil, result.Error
@@ -47,21 +36,11 @@ func (s *MRoleServiceImpl) GetMRole(id uint) (*schema.MRole, error) {
 	return &mRole, nil
 }
 
-func (s *MRoleServiceImpl) CreateMRole(payload *schema.MRoleRequest, mUserId uint) error {
+func (s *MRoleRepositoryImpl) Create(mRole *domain.MRole) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
 
-	mRole := payload.ToModelNew(mUserId)
-
-	util.Log("INFO", "service", "MRoleService", "CreateMRole: ")
-
-	var oldMRole schema.MRole
-
-	// find data
-	result := s.db.First(&oldMRole, mRole.Id)
-	if result.Error == nil {
-		return errors.New("data exist")
-	}
-
-	result = s.db.Create(&mRole)
+	result := s.db.Create(&mRole)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -69,33 +48,11 @@ func (s *MRoleServiceImpl) CreateMRole(payload *schema.MRoleRequest, mUserId uin
 	return nil
 }
 
-func (s *MRoleServiceImpl) UpdateMRole(payload *schema.MRoleRequest, mUserId uint) error {
+func (s *MRoleRepositoryImpl) Update(mRole *domain.MRole) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
 
-	var oldMRole *schema.MRole
-
-	// find data
-	result := s.db.First(&oldMRole, payload.Id)
-	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		return errors.New("data not found")
-	}
-	if result.Error != nil {
-		return result.Error
-	}
-
-	// update data
-	oldMRole.Name = payload.Name
-	oldMRole.Code = payload.Code
-	oldMRole.Level = payload.Level
-	oldMRole.ModifiedBy = &mUserId
-	oldMRole.ModifiedOn = &dto.JSONTime{Time: time.Now()}
-	if *payload.IsDelete {
-		oldMRole.DeletedBy = &mUserId
-		oldMRole.DeletedOn = &dto.JSONTime{Time: time.Now()}
-		oldMRole.IsDelete = payload.IsDelete
-	}
-
-	// update data for response
-	result = s.db.Model(&oldMRole).Updates(oldMRole)
+	result := s.db.Model(&mRole).Updates(mRole)
 
 	if result.Error != nil {
 		return result.Error
@@ -104,8 +61,11 @@ func (s *MRoleServiceImpl) UpdateMRole(payload *schema.MRoleRequest, mUserId uin
 	return nil
 }
 
-func (s *MRoleServiceImpl) DeleteMRole(id uint, mUserId uint) error {
-	var mRole schema.MRole
+func (s *MRoleRepositoryImpl) Delete(id uint) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	var mRole domain.MRole
 	result := s.db.Delete(&mRole, id)
 
 	if result.Error != nil {
@@ -118,7 +78,7 @@ func (s *MRoleServiceImpl) DeleteMRole(id uint, mUserId uint) error {
 	return nil
 }
 
-func (s *MRoleServiceImpl) GetPageMRole(
+func (s *MRoleRepositoryImpl) GetPage(
 	sortRequest []request.Sort,
 	filterRequest []request.Filter,
 	searchRequest string,
@@ -128,8 +88,8 @@ func (s *MRoleServiceImpl) GetPageMRole(
 
 	util.Log("INFO", "service", "GetPageMRole", "")
 
-	var mRoles []schema.MRole
-	var mRole schema.MRole
+	var mRoles []domain.MRole
+	var mRole domain.MRole
 	mRoleMap := util.GetJSONFieldTypes(mRole)
 
 	// Create a DB instance and build the base query

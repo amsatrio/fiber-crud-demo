@@ -1,44 +1,33 @@
-package m_user
+package repository
 
 import (
 	"errors"
-	"fiber-crud-demo/dto"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/dto/schema"
+	"fiber-crud-demo/internal/domain"
 	"fiber-crud-demo/util"
 	"strconv"
-	"time"
+	"sync"
 
 	"gorm.io/gorm"
 )
 
-type MUserService interface {
-	GetMUser(id uint) (*schema.MUser, error)
-	CreateMUser(mUser *schema.MUserRequest, mUserId uint) error
-	UpdateMUser(mUser *schema.MUserRequest, mUserId uint) error
-	DeleteMUser(id uint, mUserId uint) error
-	GetPageMUser(
-		sortRequest []request.Sort,
-		filterRequest []request.Filter,
-		searchRequest string,
-		pageInt int,
-		sizeInt64 int64,
-		sizeInt int) (*response.Page, error)
+type MUserRepositoryImpl struct {
+	mutex sync.Mutex
+	db    *gorm.DB
 }
 
-type MUserServiceImpl struct {
-	db *gorm.DB
-}
-
-func NewMUserServiceImpl(db *gorm.DB) MUserService {
-	return &MUserServiceImpl{
+func NewMUserRepository(db *gorm.DB) domain.MUserRepository {
+	return &MUserRepositoryImpl{
 		db: db,
 	}
 }
 
-func (s *MUserServiceImpl) GetMUser(id uint) (*schema.MUser, error) {
-	mUser := schema.MUser{}
+func (s *MUserRepositoryImpl) Get(id uint) (*domain.MUser, error) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	mUser := domain.MUser{}
 	result := s.db.First(&mUser, id)
 	if result.Error != nil {
 		return nil, result.Error
@@ -47,21 +36,11 @@ func (s *MUserServiceImpl) GetMUser(id uint) (*schema.MUser, error) {
 	return &mUser, nil
 }
 
-func (s *MUserServiceImpl) CreateMUser(payload *schema.MUserRequest, mUserId uint) error {
+func (s *MUserRepositoryImpl) Create(mUser *domain.MUser) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
 
-	mUser := payload.ToModelNew(mUserId)
-
-	util.Log("INFO", "service", "MUserService", "CreateMUser: ")
-
-	var oldMUser schema.MUser
-
-	// find data
-	result := s.db.First(&oldMUser, mUser.Id)
-	if result.Error == nil {
-		return errors.New("data exist")
-	}
-
-	result = s.db.Create(&mUser)
+	result := s.db.Create(&mUser)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -69,37 +48,11 @@ func (s *MUserServiceImpl) CreateMUser(payload *schema.MUserRequest, mUserId uin
 	return nil
 }
 
-func (s *MUserServiceImpl) UpdateMUser(payload *schema.MUserRequest, mUserId uint) error {
+func (s *MUserRepositoryImpl) Update(mUser *domain.MUser) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
 
-	var oldMUser *schema.MUser
-
-	// find data
-	result := s.db.First(&oldMUser, payload.Id)
-	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		return errors.New("data not found")
-	}
-	if result.Error != nil {
-		return result.Error
-	}
-
-	// update data
-	oldMUser.BiodataId = payload.BiodataId
-	oldMUser.RoleId = payload.RoleId
-	oldMUser.Email = payload.Email
-	oldMUser.Password = payload.Password
-	oldMUser.LoginAttempt = payload.LoginAttempt
-	oldMUser.IsLocked = payload.IsLocked
-	oldMUser.LastLogin = payload.LastLogin
-	oldMUser.ModifiedBy = &mUserId
-	oldMUser.ModifiedOn = &dto.JSONTime{Time: time.Now()}
-	if *payload.IsDelete {
-		oldMUser.DeletedBy = &mUserId
-		oldMUser.DeletedOn = &dto.JSONTime{Time: time.Now()}
-		oldMUser.IsDelete = payload.IsDelete
-	}
-
-	// update data for response
-	result = s.db.Model(&oldMUser).Updates(oldMUser)
+	result := s.db.Model(&mUser).Updates(mUser)
 
 	if result.Error != nil {
 		return result.Error
@@ -108,8 +61,11 @@ func (s *MUserServiceImpl) UpdateMUser(payload *schema.MUserRequest, mUserId uin
 	return nil
 }
 
-func (s *MUserServiceImpl) DeleteMUser(id uint, mUserId uint) error {
-	var mUser schema.MUser
+func (s *MUserRepositoryImpl) Delete(id uint) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	var mUser domain.MUser
 	result := s.db.Delete(&mUser, id)
 
 	if result.Error != nil {
@@ -122,7 +78,7 @@ func (s *MUserServiceImpl) DeleteMUser(id uint, mUserId uint) error {
 	return nil
 }
 
-func (s *MUserServiceImpl) GetPageMUser(
+func (s *MUserRepositoryImpl) GetPage(
 	sortRequest []request.Sort,
 	filterRequest []request.Filter,
 	searchRequest string,
@@ -132,8 +88,8 @@ func (s *MUserServiceImpl) GetPageMUser(
 
 	util.Log("INFO", "service", "GetPageMUser", "")
 
-	var mRoles []schema.MUser
-	var mUser schema.MUser
+	var mRoles []domain.MUser
+	var mUser domain.MUser
 	mRoleMap := util.GetJSONFieldTypes(mUser)
 
 	// Create a DB instance and build the base query

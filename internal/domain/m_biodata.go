@@ -2,11 +2,12 @@ package domain
 
 import (
 	"fiber-crud-demo/dto"
-	"time"
+	"fiber-crud-demo/dto/request"
+	"fiber-crud-demo/dto/response"
 )
 
 type MBiodata struct {
-	Id          uint          `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
+	Id          *uint         `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
 	Fullname    string        `form:"fullname" json:"fullname" xml:"fullname" gorm:"size:255;type:varchar(255)" validate:"max=255"`
 	MobilePhone string        `form:"mobilePhone" json:"mobilePhone" xml:"mobilePhone" gorm:"size:15;type:varchar(15)" validate:"max=15"`
 	Image       []byte        `form:"image" json:"image" xml:"image" gorm:"type:blob"`
@@ -25,7 +26,7 @@ func (MBiodata) TableName() string {
 }
 
 type MBiodataRequest struct {
-	Id          uint   `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
+	Id          *uint  `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
 	Fullname    string `form:"fullname" json:"fullname" xml:"fullname" gorm:"size:255;type:varchar(255)" validate:"max=255"`
 	MobilePhone string `form:"mobilePhone" json:"mobilePhone" xml:"mobilePhone" gorm:"size:15;type:varchar(15)" validate:"max=15"`
 	Image       []byte `form:"image" json:"image" xml:"image" gorm:"type:blob"`
@@ -33,16 +34,16 @@ type MBiodataRequest struct {
 	IsDelete    *bool  `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"not null;type:boolean;comment:default FALSE"`
 }
 
-func (req *MBiodataRequest) ToModelNew(mUserId uint) *MBiodata {
-	bool_true := false
-	return &MBiodata{
-		Id:          req.Id,
-		Fullname:    req.Fullname,
-		MobilePhone: req.MobilePhone,
-		Image:       req.Image,
-		ImagePath:   &req.ImagePath,
-		CreatedOn:   dto.JSONTime{Time: time.Now()},
-		CreatedBy:   mUserId,
-		IsDelete:    &bool_true,
-	}
+type MBiodataRepository interface {
+	Get(id uint) (*MBiodata, error)
+	Create(data *MBiodata) error
+	Update(data *MBiodata) error
+	Delete(id uint) error
+	GetPage(
+		sortRequest []request.Sort,
+		filterRequest []request.Filter,
+		searchRequest string,
+		pageInt int,
+		sizeInt64 int64,
+		sizeInt int) (*response.Page, error)
 }

@@ -1,12 +1,12 @@
-package m_role
+package http
 
 import (
 	"encoding/json"
 	"errors"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/dto/schema"
-	"fiber-crud-demo/initializer"
+	"fiber-crud-demo/internal/application"
+	"fiber-crud-demo/internal/domain"
 	"fiber-crud-demo/util"
 	"regexp"
 	"strconv"
@@ -16,26 +16,38 @@ import (
 	"gorm.io/gorm"
 )
 
-var validate = validator.New()
+type MUserHandler struct {
+	service  application.MUserService
+	validate *validator.Validate
+}
 
-// MRoleCreate godoc
+func NewMUserHandler(service application.MUserService, validate *validator.Validate) *MUserHandler {
+	return &MUserHandler{
+		service:  service,
+		validate: validate,
+	}
+}
+
+// var validate = validator.New()
+
+// MUserCreate godoc
 //
-//	@Summary		MRoleCreate
-//	@Description	Create MRole
-//	@Tags			mRole
+//	@Summary		MUserCreate
+//	@Description	Create MUser
+//	@Tags			mUser
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			mRole	body		schema.MRoleRequest	true	"Add MRoleRequest"
+//	@Param			mUser	body		domain.MUserRequest	true	"Add MUserRequest"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-role [post]
-func MRoleCreate(c *fiber.Ctx) error {
+//	@Router			/m-user [post]
+func (h *MUserHandler) MUserCreate(c *fiber.Ctx) error {
 
 	res := &response.Response{}
-	payload := new(schema.MRoleRequest)
+	payload := new(domain.MUserRequest)
 
 	// parse payload
 	if err := c.BodyParser(payload); err != nil {
@@ -44,7 +56,7 @@ func MRoleCreate(c *fiber.Ctx) error {
 	}
 
 	// validate payload
-	if err := validate.Struct(payload); err != nil {
+	if err := h.validate.Struct(payload); err != nil {
 		out, _ := util.ValidateError(err)
 		if out != nil {
 			res.ErrMessagePayload(c.Path(), fiber.StatusBadRequest, "invalid payload", out)
@@ -53,11 +65,10 @@ func MRoleCreate(c *fiber.Ctx) error {
 	}
 
 	// insert data
-	mRoleService := NewMRoleServiceImpl(initializer.DB)
 
-	err := mRoleService.CreateMRole(payload, 0)
+	err := h.service.Create(payload, 0)
 	if err != nil {
-		util.Log("ERROR", "controllers", "MRoleCreate", "create data error: "+err.Error())
+		util.Log("ERROR", "controllers", "MUserCreate", "create data error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "create data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}
@@ -66,24 +77,24 @@ func MRoleCreate(c *fiber.Ctx) error {
 	return c.Status(res.Status).JSON(res)
 }
 
-// MRoleUpdate godoc
+// MUserUpdate godoc
 //
-//	@Summary		MRoleUpdate
-//	@Description	Update MRole
-//	@Tags			mRole
+//	@Summary		MUserUpdate
+//	@Description	Update MUser
+//	@Tags			mUser
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			mRole	body		schema.MRoleRequest	true	"Add MRoleRequest"
+//	@Param			mUser	body		m_user.MUserRequest	true	"Add MUserRequest"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-role [put]
-func MRoleUpdate(c *fiber.Ctx) error {
+//	@Router			/m-user [put]
+func (h *MUserHandler) MUserUpdate(c *fiber.Ctx) error {
 
 	res := &response.Response{}
-	payload := new(schema.MRoleRequest)
+	payload := new(domain.MUserRequest)
 
 	// parse payload
 	if err := c.BodyParser(payload); err != nil {
@@ -92,7 +103,7 @@ func MRoleUpdate(c *fiber.Ctx) error {
 	}
 
 	// validate payload
-	if err := validate.Struct(payload); err != nil {
+	if err := h.validate.Struct(payload); err != nil {
 		out, _ := util.ValidateError(err)
 		if out != nil {
 			res.ErrMessagePayload(c.Path(), fiber.StatusBadRequest, "invalid payload", out)
@@ -101,11 +112,9 @@ func MRoleUpdate(c *fiber.Ctx) error {
 	}
 
 	// update data
-	mRoleService := NewMRoleServiceImpl(initializer.DB)
-
-	err := mRoleService.UpdateMRole(payload, 0)
+	err := h.service.Update(payload, 0)
 	if err != nil {
-		util.Log("ERROR", "controllers", "MRoleUpdate", "update data error: "+err.Error())
+		util.Log("ERROR", "controllers", "MUserUpdate", "update data error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "update data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}
@@ -114,21 +123,21 @@ func MRoleUpdate(c *fiber.Ctx) error {
 	return c.Status(res.Status).JSON(res)
 }
 
-// MRoleIndex godoc
+// MUserIndex godoc
 //
-//	@Summary		MRoleIndex
-//	@Description	Get MRole by id
-//	@Tags			mRole
+//	@Summary		MUserIndex
+//	@Description	Get MUser by id
+//	@Tags			mUser
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			id	path		int	true	"MRole id"
+//	@Param			id	path		int	true	"MUser id"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-role/{id} [get]
-func MRoleIndex(c *fiber.Ctx) error {
+//	@Router			/m-user/{id} [get]
+func (h *MUserHandler) MUserIndex(c *fiber.Ctx) error {
 
 	res := &response.Response{}
 
@@ -141,39 +150,37 @@ func MRoleIndex(c *fiber.Ctx) error {
 	}
 	idUint = uint(idUint64)
 
-	mRoleService := NewMRoleServiceImpl(initializer.DB)
-
-	mRole, err := mRoleService.GetMRole(idUint)
+	mUser, err := h.service.Get(idUint)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "data not found")
 		return c.Status(res.Status).JSON(res)
 	}
 
 	if err != nil {
-		util.Log("ERROR", "controllers", "MRoleIndex", err.Error())
+		util.Log("ERROR", "controllers", "MUserIndex", err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "get data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}
 
-	res.Ok(c.Path(), mRole)
+	res.Ok(c.Path(), mUser)
 	return c.Status(res.Status).JSON(res)
 }
 
-// MRoleDelete godoc
+// MUserDelete godoc
 //
-//	@Summary		MRoleDelete
-//	@Description	Delete MRole by id
-//	@Tags			mRole
+//	@Summary		MUserDelete
+//	@Description	Delete MUser by id
+//	@Tags			mUser
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			id	path		int	true	"MRole id"
+//	@Param			id	path		int	true	"MUser id"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-role/{id} [delete]
-func MRoleDelete(c *fiber.Ctx) error {
+//	@Router			/m-user/{id} [delete]
+func (h *MUserHandler) MUserDelete(c *fiber.Ctx) error {
 	res := &response.Response{}
 
 	// get id from request param
@@ -186,10 +193,8 @@ func MRoleDelete(c *fiber.Ctx) error {
 	}
 	idUint = uint(idUint64)
 
-	mRoleService := NewMRoleServiceImpl(initializer.DB)
-
-	// delete mRole
-	err = mRoleService.DeleteMRole(idUint, 0)
+	// delete mUser
+	err = h.service.Delete(idUint)
 
 	if err != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "delete data error: "+err.Error())
@@ -201,11 +206,11 @@ func MRoleDelete(c *fiber.Ctx) error {
 	return c.Status(res.Status).JSON(res)
 }
 
-// MRolePage godoc
+// MUserPage godoc
 //
-//	@Summary		MRolePage
-//	@Description	Get Page MRole
-//	@Tags			mRole
+//	@Summary		MUserPage
+//	@Description	Get Page MUser
+//	@Tags			mUser
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
@@ -218,8 +223,8 @@ func MRoleDelete(c *fiber.Ctx) error {
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-role [get]
-func MRolePage(c *fiber.Ctx) error {
+//	@Router			/m-user [get]
+func (h *MUserHandler) MUserPage(c *fiber.Ctx) error {
 	res := &response.Response{}
 
 	sortRequest := c.Query("_sort", "[]")
@@ -254,20 +259,19 @@ func MRolePage(c *fiber.Ctx) error {
 	var sorts []request.Sort
 	jsonUnmarshalErr := json.Unmarshal([]byte(sortRequest), &sorts)
 	if jsonUnmarshalErr != nil {
-		util.Log("ERROR", "controllers", "MRolePage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
+		util.Log("ERROR", "controllers", "MUserPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
 	}
 	var filters []request.Filter
 	jsonUnmarshalErr = json.Unmarshal([]byte(filterRequest), &filters)
 	if jsonUnmarshalErr != nil {
-		util.Log("ERROR", "controllers", "MRolePage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
+		util.Log("ERROR", "controllers", "MUserPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
 	}
 
-	mRoleService := NewMRoleServiceImpl(initializer.DB)
-	result, err := mRoleService.GetPageMRole(
+	result, err := h.service.GetPage(
 		sorts,
 		filters,
 		searchRequest,
@@ -276,7 +280,7 @@ func MRolePage(c *fiber.Ctx) error {
 		sizeInt)
 
 	if err != nil {
-		util.Log("ERROR", "controllers", "MRolePage", "error: "+err.Error())
+		util.Log("ERROR", "controllers", "MUserPage", "error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "get data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}

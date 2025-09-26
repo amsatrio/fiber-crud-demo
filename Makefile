@@ -5,7 +5,7 @@
 .SILENT: dev
 .SILENT: air
 
-BINARY_NAME=fiber-audio-management
+BINARY_NAME=fiber-crud-demo
 
 build:
 	mkdir -p bin

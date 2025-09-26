@@ -1,13 +1,13 @@
-package schema
+package domain
 
 import (
 	"fiber-crud-demo/dto"
-	"fiber-crud-demo/internal/domain"
-	"time"
+	"fiber-crud-demo/dto/request"
+	"fiber-crud-demo/dto/response"
 )
 
 type MUser struct {
-	Id           uint          `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" binding:"required"`
+	Id           *uint         `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" binding:"required"`
 	BiodataId    *uint         `form:"biodataId" json:"biodataId" xml:"biodataId" gorm:"type:bigint"`
 	RoleId       *uint         `form:"roleId" json:"roleId" xml:"roleId" gorm:"type:bigint"`
 	Email        string        `form:"email" json:"email" xml:"email" gorm:"size:100;type:varchar(100)" binding:"max=100"`
@@ -23,8 +23,8 @@ type MUser struct {
 	DeletedOn    *dto.JSONTime `form:"deletedOn" json:"deletedOn" xml:"deletedOn" gorm:"type:datetime" swaggertype:"string" example:"2024-02-16 10:33:10"`
 	IsDelete     *bool         `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"type:boolean;comment:default FALSE"`
 
-	MBiodata domain.MBiodata `gorm:"foreignKey:BiodataId"`
-	MRole    MRole           `gorm:"foreignKey:RoleId"`
+	MBiodata MBiodata `gorm:"foreignKey:BiodataId"`
+	MRole    MRole    `gorm:"foreignKey:RoleId"`
 }
 
 func (MUser) TableName() string {
@@ -32,7 +32,7 @@ func (MUser) TableName() string {
 }
 
 type MUserRequest struct {
-	Id           uint          `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" binding:"required"`
+	Id           *uint         `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" binding:"required"`
 	BiodataId    *uint         `form:"biodataId" json:"biodataId" xml:"biodataId" gorm:"type:bigint"`
 	RoleId       *uint         `form:"roleId" json:"roleId" xml:"roleId" gorm:"type:bigint"`
 	Email        string        `form:"email" json:"email" xml:"email" gorm:"size:100;type:varchar(100)" binding:"max=100"`
@@ -43,19 +43,16 @@ type MUserRequest struct {
 	IsDelete     *bool         `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"type:boolean;comment:default FALSE"`
 }
 
-func (req *MUserRequest) ToModelNew(mUserId uint) *MUser {
-	bool_true := false
-	return &MUser{
-		Id:           req.Id,
-		BiodataId:    req.BiodataId,
-		RoleId:       req.RoleId,
-		Email:        req.Email,
-		Password:     req.Password,
-		LoginAttempt: req.LoginAttempt,
-		IsLocked:     req.IsLocked,
-		LastLogin:    req.LastLogin,
-		CreatedOn:    dto.JSONTime{Time: time.Now()},
-		CreatedBy:    mUserId,
-		IsDelete:     &bool_true,
-	}
+type MUserRepository interface {
+	Get(id uint) (*MUser, error)
+	Create(data *MUser) error
+	Update(data *MUser) error
+	Delete(id uint) error
+	GetPage(
+		sortRequest []request.Sort,
+		filterRequest []request.Filter,
+		searchRequest string,
+		pageInt int,
+		sizeInt64 int64,
+		sizeInt int) (*response.Page, error)
 }

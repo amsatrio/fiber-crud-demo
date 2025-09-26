@@ -1,12 +1,13 @@
-package schema
+package domain
 
 import (
 	"fiber-crud-demo/dto"
-	"time"
+	"fiber-crud-demo/dto/request"
+	"fiber-crud-demo/dto/response"
 )
 
 type MRole struct {
-	Id         uint          `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
+	Id         *uint         `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
 	Name       string        `form:"name" json:"name" xml:"name" gorm:"size:20;type:varchar(20)" validate:"max=20"`
 	Code       string        `form:"code" json:"code" xml:"code" gorm:"size:20;type:varchar(20)" validate:"max=20"`
 	Level      int           `form:"level" json:"level" xml:"level" gorm:"type:tinyint"`
@@ -24,22 +25,23 @@ func (MRole) TableName() string {
 }
 
 type MRoleRequest struct {
-	Id       uint   `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment"`
+	Id       *uint  `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment"`
 	Name     string `form:"name" json:"name" xml:"name" gorm:"size:20;type:varchar(20)" validate:"max=20"`
 	Code     string `form:"code" json:"code" xml:"code" gorm:"size:20;type:varchar(20)" validate:"max=20"`
 	Level    int    `form:"level" json:"level" xml:"level" gorm:"type:tinyint"`
 	IsDelete *bool  `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"type:boolean;comment:default FALSE"`
 }
 
-func (req *MRoleRequest) ToModelNew(mUserId uint) *MRole {
-	bool_true := false
-	return &MRole{
-		Id:        req.Id,
-		Name:      req.Name,
-		Code:      req.Code,
-		Level:     req.Level,
-		CreatedOn: dto.JSONTime{Time: time.Now()},
-		CreatedBy: mUserId,
-		IsDelete:  &bool_true,
-	}
+type MRoleRepository interface {
+	Get(id uint) (*MRole, error)
+	Create(data *MRole) error
+	Update(data *MRole) error
+	Delete(id uint) error
+	GetPage(
+		sortRequest []request.Sort,
+		filterRequest []request.Filter,
+		searchRequest string,
+		pageInt int,
+		sizeInt64 int64,
+		sizeInt int) (*response.Page, error)
 }

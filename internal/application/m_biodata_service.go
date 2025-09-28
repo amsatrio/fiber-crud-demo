@@ -87,7 +87,7 @@ func (s *MBiodataServiceImpl) Update(payload *domain.MBiodataRequest, mUserId ui
 		existing.IsDelete = payload.IsDelete
 	}
 
-	return s.repo.Create(existing)
+	return s.repo.Update(existing)
 }
 
 func (s *MBiodataServiceImpl) Delete(id uint) error {

@@ -1292,7 +1292,7 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string",
-                    "maxLength": 20
+                    "maxLength": 100
                 }
             }
         },

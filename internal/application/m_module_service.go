@@ -81,7 +81,7 @@ func (s *MModuleServiceImpl) Update(payload *domain.MModuleRequest, mUserId uint
 		existing.IsDelete = payload.IsDelete
 	}
 
-	return s.repo.Create(existing)
+	return s.repo.Update(existing)
 }
 
 func (s *MModuleServiceImpl) Delete(id uint) error {

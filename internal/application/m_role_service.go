@@ -85,7 +85,7 @@ func (s *MRoleServiceImpl) Update(payload *domain.MRoleRequest, mUserId uint) er
 		existing.IsDelete = payload.IsDelete
 	}
 
-	return s.repo.Create(existing)
+	return s.repo.Update(existing)
 }
 
 func (s *MRoleServiceImpl) Delete(id uint) error {

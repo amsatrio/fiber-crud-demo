@@ -93,7 +93,7 @@ func (s *MUserServiceImpl) Update(payload *domain.MUserRequest, mUserId uint) er
 		existing.IsDelete = payload.IsDelete
 	}
 
-	return s.repo.Create(existing)
+	return s.repo.Update(existing)
 }
 
 func (s *MUserServiceImpl) Delete(id uint) error {

@@ -28,7 +28,7 @@ definitions:
       isDelete:
         type: boolean
       name:
-        maxLength: 20
+        maxLength: 100
         type: string
     type: object
   domain.MRoleRequest:

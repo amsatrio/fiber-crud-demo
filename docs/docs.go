@@ -122,7 +122,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.MBiodataRequest"
+                            "$ref": "#/definitions/domain.MBiodataRequest"
                         }
                     }
                 ],
@@ -179,7 +179,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.MBiodataRequest"
+                            "$ref": "#/definitions/domain.MBiodataRequest"
                         }
                     }
                 ],
@@ -323,6 +323,314 @@ const docTemplate = `{
                 }
             }
         },
+        "/m-module": {
+            "get": {
+                "description": "Get Page MModule",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mModule"
+                ],
+                "summary": "MModulePage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "_sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "_filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "_q",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MModule",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mModule"
+                ],
+                "summary": "MModuleUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MModuleRequest",
+                        "name": "mModule",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.MModuleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MModule",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mModule"
+                ],
+                "summary": "MModuleCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MModuleRequest",
+                        "name": "mModule",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.MModuleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/m-module/{id}": {
+            "get": {
+                "description": "Get MModule by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mModule"
+                ],
+                "summary": "MModuleIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MModule id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MModule by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mModule"
+                ],
+                "summary": "MModuleDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MModule id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/m-role": {
             "get": {
                 "description": "Get Page MRole",
@@ -430,7 +738,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.MRoleRequest"
+                            "$ref": "#/definitions/domain.MRoleRequest"
                         }
                     }
                 ],
@@ -487,7 +795,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.MRoleRequest"
+                            "$ref": "#/definitions/domain.MRoleRequest"
                         }
                     }
                 ],
@@ -738,7 +1046,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.MUserRequest"
+                            "$ref": "#/definitions/domain.MUserRequest"
                         }
                     }
                 ],
@@ -795,7 +1103,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.MUserRequest"
+                            "$ref": "#/definitions/domain.MUserRequest"
                         }
                     }
                 ],
@@ -941,34 +1249,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "response.Response": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "type": "string"
-                },
-                "error": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string",
-                    "example": "success"
-                },
-                "path": {
-                    "type": "string",
-                    "example": "/v1/m_biodata"
-                },
-                "status": {
-                    "type": "integer",
-                    "example": 200
-                },
-                "timestamp": {
-                    "type": "string",
-                    "example": "2024-02-16 10:33:10"
-                }
-            }
-        },
-        "schema.MBiodataRequest": {
+        "domain.MBiodataRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -1000,7 +1281,22 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.MRoleRequest": {
+        "domain.MModuleRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 20
+                }
+            }
+        },
+        "domain.MRoleRequest": {
             "type": "object",
             "properties": {
                 "code": {
@@ -1022,7 +1318,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.MUserRequest": {
+        "domain.MUserRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -1057,6 +1353,33 @@ const docTemplate = `{
                 },
                 "roleId": {
                     "type": "integer"
+                }
+            }
+        },
+        "response.Response": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "path": {
+                    "type": "string",
+                    "example": "/v1/m_biodata"
+                },
+                "status": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2024-02-16 10:33:10"
                 }
             }
         }

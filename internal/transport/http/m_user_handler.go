@@ -85,7 +85,7 @@ func (h *MUserHandler) MUserCreate(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			mUser	body		m_user.MUserRequest	true	"Add MUserRequest"
+//	@Param			mUser	body		domain.MUserRequest	true	"Add MUserRequest"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response

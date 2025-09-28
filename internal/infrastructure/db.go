@@ -65,4 +65,5 @@ func InitializeDatabase() {
 	DB.AutoMigrate(&domain.MRole{})
 	DB.AutoMigrate(&domain.MBiodata{})
 	DB.AutoMigrate(&domain.MUser{})
+	DB.AutoMigrate(&domain.MModule{})
 }

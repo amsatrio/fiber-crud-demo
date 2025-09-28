@@ -83,7 +83,7 @@ func (h *MRoleHandler) MRoleCreate(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			mRole	body		m_role.MRoleRequest	true	"Add MRoleRequest"
+//	@Param			mRole	body		domain.MRoleRequest	true	"Add MRoleRequest"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response

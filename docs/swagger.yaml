@@ -1,24 +1,5 @@
 definitions:
-  response.Response:
-    properties:
-      data:
-        type: string
-      error:
-        type: string
-      message:
-        example: success
-        type: string
-      path:
-        example: /v1/m_biodata
-        type: string
-      status:
-        example: 200
-        type: integer
-      timestamp:
-        example: "2024-02-16 10:33:10"
-        type: string
-    type: object
-  schema.MBiodataRequest:
+  domain.MBiodataRequest:
     properties:
       fullname:
         maxLength: 255
@@ -40,7 +21,17 @@ definitions:
     required:
     - id
     type: object
-  schema.MRoleRequest:
+  domain.MModuleRequest:
+    properties:
+      id:
+        type: integer
+      isDelete:
+        type: boolean
+      name:
+        maxLength: 20
+        type: string
+    type: object
+  domain.MRoleRequest:
     properties:
       code:
         maxLength: 20
@@ -55,7 +46,7 @@ definitions:
         maxLength: 20
         type: string
     type: object
-  schema.MUserRequest:
+  domain.MUserRequest:
     properties:
       biodataId:
         type: integer
@@ -80,6 +71,25 @@ definitions:
         type: integer
     required:
     - id
+    type: object
+  response.Response:
+    properties:
+      data:
+        type: string
+      error:
+        type: string
+      message:
+        example: success
+        type: string
+      path:
+        example: /v1/m_biodata
+        type: string
+      status:
+        example: 200
+        type: integer
+      timestamp:
+        example: "2024-02-16 10:33:10"
+        type: string
     type: object
 info:
   contact: {}
@@ -154,7 +164,7 @@ paths:
         name: mBiodata
         required: true
         schema:
-          $ref: '#/definitions/schema.MBiodataRequest'
+          $ref: '#/definitions/domain.MBiodataRequest'
       produces:
       - application/json
       responses:
@@ -192,7 +202,7 @@ paths:
         name: mBiodata
         required: true
         schema:
-          $ref: '#/definitions/schema.MBiodataRequest'
+          $ref: '#/definitions/domain.MBiodataRequest'
       produces:
       - application/json
       responses:
@@ -290,6 +300,212 @@ paths:
       summary: MBiodataIndex
       tags:
       - mBiodata
+  /m-module:
+    get:
+      consumes:
+      - application/json
+      description: Get Page MModule
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - default: "0"
+        description: page
+        in: query
+        name: _page
+        type: string
+      - default: "5"
+        description: size
+        in: query
+        name: _size
+        type: string
+      - description: sort
+        in: query
+        name: _sort
+        type: string
+      - description: filter
+        in: query
+        name: _filter
+        type: string
+      - description: global filter
+        in: query
+        name: _q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MModulePage
+      tags:
+      - mModule
+    post:
+      consumes:
+      - application/json
+      description: Create MModule
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: Add MModuleRequest
+        in: body
+        name: mModule
+        required: true
+        schema:
+          $ref: '#/definitions/domain.MModuleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MModuleCreate
+      tags:
+      - mModule
+    put:
+      consumes:
+      - application/json
+      description: Update MModule
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: Add MModuleRequest
+        in: body
+        name: mModule
+        required: true
+        schema:
+          $ref: '#/definitions/domain.MModuleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MModuleUpdate
+      tags:
+      - mModule
+  /m-module/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete MModule by id
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: MModule id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MModuleDelete
+      tags:
+      - mModule
+    get:
+      consumes:
+      - application/json
+      description: Get MModule by id
+      parameters:
+      - default: gzip
+        description: gzip
+        in: header
+        name: Accept-Encoding
+        type: string
+      - description: MModule id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: MModuleIndex
+      tags:
+      - mModule
   /m-role:
     get:
       consumes:
@@ -360,7 +576,7 @@ paths:
         name: mRole
         required: true
         schema:
-          $ref: '#/definitions/schema.MRoleRequest'
+          $ref: '#/definitions/domain.MRoleRequest'
       produces:
       - application/json
       responses:
@@ -398,7 +614,7 @@ paths:
         name: mRole
         required: true
         schema:
-          $ref: '#/definitions/schema.MRoleRequest'
+          $ref: '#/definitions/domain.MRoleRequest'
       produces:
       - application/json
       responses:
@@ -566,7 +782,7 @@ paths:
         name: mUser
         required: true
         schema:
-          $ref: '#/definitions/schema.MUserRequest'
+          $ref: '#/definitions/domain.MUserRequest'
       produces:
       - application/json
       responses:
@@ -604,7 +820,7 @@ paths:
         name: mUser
         required: true
         schema:
-          $ref: '#/definitions/schema.MUserRequest'
+          $ref: '#/definitions/domain.MUserRequest'
       produces:
       - application/json
       responses:

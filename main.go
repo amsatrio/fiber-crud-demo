@@ -134,4 +134,15 @@ func routes(app *fiber.App) {
 	m_user_api.Get(":id", mUserHandler.MUserIndex)
 	m_user_api.Get("", mUserHandler.MUserPage)
 	m_user_api.Delete(":id", mUserHandler.MUserDelete)
+
+	// MASTER MODULE
+	mModuleRepo := repository.NewMModuleRepository(infrastructure.DB)
+	mModuleService := application.NewMModuleService(mModuleRepo)
+	mModuleHandler := http.NewMModuleHandler(mModuleService, validate)
+	m_module_api := app.Group("/m-module")
+	m_module_api.Post("", mModuleHandler.MModuleCreate)
+	m_module_api.Put("", mModuleHandler.MModuleUpdate)
+	m_module_api.Get(":id", mModuleHandler.MModuleIndex)
+	m_module_api.Get("", mModuleHandler.MModulePage)
+	m_module_api.Delete(":id", mModuleHandler.MModuleDelete)
 }

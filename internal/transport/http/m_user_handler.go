@@ -214,11 +214,11 @@ func (h *MUserHandler) MUserDelete(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			_page	query		string	false	"page" default(0)
-//	@Param			_size	query		string	false	"size" default(5)
-//	@Param			_sort	query		string	false	"sort"
-//	@Param			_filter	query		string	false	"filter"
-//	@Param			_q	query		string	false	"global filter"
+//	@Param			page	query		string	false	"page" default(0)
+//	@Param			size	query		string	false	"size" default(5)
+//	@Param			sort	query		string	false	"sort"
+//	@Param			filter	query		string	false	"filter"
+//	@Param			search	query		string	false	"global filter"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
@@ -227,11 +227,11 @@ func (h *MUserHandler) MUserDelete(c *fiber.Ctx) error {
 func (h *MUserHandler) MUserPage(c *fiber.Ctx) error {
 	res := &response.Response{}
 
-	sortRequest := c.Query("_sort", "[]")
-	pageRequest := c.Query("_page", "0")
-	sizeRequest := c.Query("_size", "10")
-	filterRequest := c.Query("_filter", "[]")
-	searchRequest := c.Query("_q", "")
+	sortRequest := c.Query("sort", "[]")
+	pageRequest := c.Query("page", "0")
+	sizeRequest := c.Query("size", "5")
+	filterRequest := c.Query("filter", "[]")
+	searchRequest := c.Query("search", "")
 
 	pageInt, errorPageInt := strconv.Atoi(pageRequest)
 	sizeInt64, errorLimitInt64 := strconv.ParseInt(sizeRequest, 10, 64)

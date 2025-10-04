@@ -62,9 +62,13 @@ func (h *MBiodataHandler) MBiodataCreate(c *fiber.Ctx) error {
 		}
 	}
 
-	// insert data
+	image, err := c.FormFile("image")
+	if err == nil && image != nil {
+		payload.Image = image
+	}
 
-	err := h.service.Create(payload, 0)
+	// insert data
+	err = h.service.Create(payload, 0)
 	if err != nil {
 		util.Log("ERROR", "controllers", "MBiodataCreate", "create data error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "create data error: "+err.Error())
@@ -109,8 +113,13 @@ func (h *MBiodataHandler) MBiodataUpdate(c *fiber.Ctx) error {
 		}
 	}
 
+	image, err := c.FormFile("image")
+	if err == nil && image != nil {
+		payload.Image = image
+	}
+
 	// update data
-	err := h.service.Update(payload, 0)
+	err = h.service.Update(payload, 0)
 	if err != nil {
 		util.Log("ERROR", "controllers", "MBiodataUpdate", "update data error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "update data error: "+err.Error())
@@ -212,11 +221,11 @@ func (h *MBiodataHandler) MBiodataDelete(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			_page	query		string	false	"page" default(0)
-//	@Param			_size	query		string	false	"size" default(5)
-//	@Param			_sort	query		string	false	"sort"
-//	@Param			_filter	query		string	false	"filter"
-//	@Param			_q	query		string	false	"global filter"
+//	@Param			page	query		string	false	"page" default(0)
+//	@Param			size	query		string	false	"size" default(5)
+//	@Param			sort	query		string	false	"sort"
+//	@Param			filter	query		string	false	"filter"
+//	@Param			search	query		string	false	"global filter"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
@@ -225,11 +234,11 @@ func (h *MBiodataHandler) MBiodataDelete(c *fiber.Ctx) error {
 func (h *MBiodataHandler) MBiodataPage(c *fiber.Ctx) error {
 	res := &response.Response{}
 
-	sortRequest := c.Query("_sort", "[]")
-	pageRequest := c.Query("_page", "0")
-	sizeRequest := c.Query("_size", "10")
-	filterRequest := c.Query("_filter", "[]")
-	searchRequest := c.Query("_q", "")
+	sortRequest := c.Query("sort", "[]")
+	pageRequest := c.Query("page", "0")
+	sizeRequest := c.Query("size", "5")
+	filterRequest := c.Query("filter", "[]")
+	searchRequest := c.Query("search", "")
 
 	pageInt, errorPageInt := strconv.Atoi(pageRequest)
 	sizeInt64, errorLimitInt64 := strconv.ParseInt(sizeRequest, 10, 64)

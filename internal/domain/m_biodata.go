@@ -4,6 +4,7 @@ import (
 	"fiber-crud-demo/dto"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
+	"mime/multipart"
 )
 
 type MBiodata struct {
@@ -26,12 +27,12 @@ func (MBiodata) TableName() string {
 }
 
 type MBiodataRequest struct {
-	Id          *uint  `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
-	Fullname    string `form:"fullname" json:"fullname" xml:"fullname" gorm:"size:255;type:varchar(255)" validate:"max=255"`
-	MobilePhone string `form:"mobilePhone" json:"mobilePhone" xml:"mobilePhone" gorm:"size:15;type:varchar(15)" validate:"max=15"`
-	Image       []byte `form:"image" json:"image" xml:"image" gorm:"type:blob"`
-	ImagePath   string `form:"imagePath" json:"imagePath" xml:"imagePath" gorm:"size:255;type:varchar(255)" validate:"max=255"`
-	IsDelete    *bool  `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"not null;type:boolean;comment:default FALSE"`
+	Id          *uint                 `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
+	Fullname    string                `form:"fullname" json:"fullname" xml:"fullname" gorm:"size:255;type:varchar(255)" validate:"max=255"`
+	MobilePhone string                `form:"mobilePhone" json:"mobilePhone" xml:"mobilePhone" gorm:"size:15;type:varchar(15)" validate:"max=15"`
+	Image       *multipart.FileHeader `form:"image" json:"image" xml:"image" gorm:"type:blob"`
+	ImagePath   *string               `form:"imagePath" json:"imagePath" xml:"imagePath"`
+	IsDelete    *bool                 `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"not null;type:boolean;comment:default FALSE"`
 }
 
 type MBiodataRepository interface {

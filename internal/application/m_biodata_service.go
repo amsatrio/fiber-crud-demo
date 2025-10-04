@@ -6,6 +6,9 @@ import (
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
 	"fiber-crud-demo/internal/domain"
+	"fmt"
+	"io"
+	"strconv"
 	"time"
 )
 
@@ -24,17 +27,42 @@ type MBiodataService interface {
 }
 
 type MBiodataServiceImpl struct {
-	repo domain.MBiodataRepository
+	repo     domain.MBiodataRepository
+	fileRepo domain.MFileRepository
 }
 
-func NewMBiodataService(repo domain.MBiodataRepository) MBiodataService {
+func NewMBiodataService(repo domain.MBiodataRepository, fileRepo domain.MFileRepository) MBiodataService {
 	return &MBiodataServiceImpl{
-		repo: repo,
+		repo:     repo,
+		fileRepo: fileRepo,
 	}
 }
 
 func (s *MBiodataServiceImpl) Get(id uint) (*domain.MBiodata, error) {
-	return s.repo.Get(id)
+	existing, err := s.repo.Get(id)
+	if err != nil {
+		return nil, err
+	}
+
+	if existing.ImagePath != nil && *existing.ImagePath != "" {
+		parsed, err := strconv.ParseUint(*existing.ImagePath, 10, 0)
+		if err != nil {
+			return nil, err
+		}
+		fileId := uint(parsed)
+		s, err := s.fileRepo.Stream(fileId)
+		if err != nil {
+			return nil, err
+		}
+
+		defer s.Close()
+		existing.Image, err = io.ReadAll(s)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return existing, nil
 }
 
 func (s *MBiodataServiceImpl) Create(payload *domain.MBiodataRequest, mUserId uint) error {
@@ -43,11 +71,20 @@ func (s *MBiodataServiceImpl) Create(payload *domain.MBiodataRequest, mUserId ui
 		Id:          payload.Id,
 		Fullname:    payload.Fullname,
 		MobilePhone: payload.MobilePhone,
-		Image:       payload.Image,
-		ImagePath:   &payload.ImagePath,
+		Image:       nil,
+		ImagePath:   payload.ImagePath,
 		CreatedOn:   dto.JSONTime{Time: time.Now()},
 		CreatedBy:   mUserId,
 		IsDelete:    &bool_true,
+	}
+
+	id := time.Now().Unix()
+	if payload.Image != nil {
+		err := s.fileRepo.Upload(payload.Image, id)
+		if err == nil {
+			idString := fmt.Sprintf("%d", id)
+			data.ImagePath = &idString
+		}
 	}
 
 	if payload.Id == nil {
@@ -75,10 +112,29 @@ func (s *MBiodataServiceImpl) Update(payload *domain.MBiodataRequest, mUserId ui
 		return err
 	}
 
+	id := time.Now().Unix()
+	idString := ""
+	if payload.Image != nil {
+		// delete existing file
+		if existing.ImagePath != nil && *existing.ImagePath != "" {
+			err = s.fileRepo.Delete(*existing.ImagePath)
+			if err != nil {
+				fmt.Printf("%v", err)
+				return err
+			}
+		}
+
+		err := s.fileRepo.Upload(payload.Image, id)
+		if err != nil {
+			fmt.Printf("%v", err)
+			return err
+		}
+		idString = fmt.Sprintf("%d", id)
+		existing.ImagePath = &idString
+	}
+
 	existing.Fullname = payload.Fullname
 	existing.MobilePhone = payload.MobilePhone
-	existing.Image = payload.Image
-	existing.ImagePath = &payload.ImagePath
 	existing.ModifiedBy = &mUserId
 	existing.ModifiedOn = &dto.JSONTime{Time: time.Now()}
 	if *payload.IsDelete {

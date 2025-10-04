@@ -21,7 +21,6 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/swagger"
@@ -70,7 +69,7 @@ func main() {
 		AllowOrigins: "*",
 		AllowHeaders: "*",
 	}))
-	app.Use(cache.New())
+	// app.Use(cache.New())
 	app.Use(recover.New())
 	app.Use(middleware.LoggerMiddleware)
 
@@ -88,6 +87,8 @@ func main() {
 }
 
 func routes(app *fiber.App) {
+	mFileRepo := repository.NewMFileRepository()
+
 	// HEALTH
 	health_api := app.Group("/health")
 	health_api.Get("/status", health.Status)
@@ -115,7 +116,7 @@ func routes(app *fiber.App) {
 
 	// MASTER BIODATA
 	mBiodataRepo := repository.NewMBiodataRepository(infrastructure.DB)
-	mBiodataService := application.NewMBiodataService(mBiodataRepo)
+	mBiodataService := application.NewMBiodataService(mBiodataRepo, mFileRepo)
 	mBiodataHandler := http.NewMBiodataHandler(mBiodataService, validate)
 	m_biodata_api := app.Group("/m-biodata")
 	m_biodata_api.Post("", mBiodataHandler.MBiodataCreate)

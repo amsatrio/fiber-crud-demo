@@ -40,7 +40,7 @@ func (s *MModuleServiceImpl) Get(id uint) (*domain.MModule, error) {
 func (s *MModuleServiceImpl) Create(payload *domain.MModuleRequest, mUserId uint) error {
 	bool_true := false
 	data := &domain.MModule{
-		Id:        payload.Id,
+		Id:        0,
 		Name:      payload.Name,
 		CreatedOn: dto.JSONTime{Time: time.Now()},
 		CreatedBy: mUserId,
@@ -56,7 +56,7 @@ func (s *MModuleServiceImpl) Create(payload *domain.MModuleRequest, mUserId uint
 		return errors.New("data exists")
 	}
 
-	data.Id = nil
+	data.Id = *payload.Id
 
 	return s.repo.Create(data)
 }
@@ -75,6 +75,9 @@ func (s *MModuleServiceImpl) Update(payload *domain.MModuleRequest, mUserId uint
 	existing.Name = payload.Name
 	existing.ModifiedBy = &mUserId
 	existing.ModifiedOn = &dto.JSONTime{Time: time.Now()}
+	existing.DeletedBy = nil
+	existing.DeletedOn = nil
+	existing.IsDelete = payload.IsDelete
 	if *payload.IsDelete {
 		existing.DeletedBy = &mUserId
 		existing.DeletedOn = &dto.JSONTime{Time: time.Now()}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <!-- Bootstrap CSS -->
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="/public/css/data_table/dataTables.bootstrap5.min.css" rel="stylesheet">
+   <!-- jQuery -->
+    <script src="/public/js/jquery-3.7.1.js"></script>
+    <style>
+        .table-responsive {
+            margin-top: 20px;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1100;
+        }
+    </style>
+</head>
+
+  <body>
+    {{embed}}
+    <!-- Bootstrap JS -->
+    <script src="/public/js/bootstrap.bundle.js"></script>
+    <!-- DataTables JS -->
+    <script src="/public/js/data_table/jquery.dataTables.min.js"></script>
+    <script src="/public/js/data_table/dataTables.bootstrap5.min.js"></script>
+
+  </body>
+</html>

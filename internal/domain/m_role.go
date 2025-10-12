@@ -7,7 +7,7 @@ import (
 )
 
 type MRole struct {
-	Id         *uint         `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
+	Id         uint          `form:"id" json:"id" xml:"id" gorm:"primary_key;autoIncrement;not null;type:bigint;comment:Auto increment" validate:"required"`
 	Name       string        `form:"name" json:"name" xml:"name" gorm:"size:20;type:varchar(20)" validate:"max=20"`
 	Code       string        `form:"code" json:"code" xml:"code" gorm:"size:20;type:varchar(20)" validate:"max=20"`
 	Level      int           `form:"level" json:"level" xml:"level" gorm:"type:tinyint"`

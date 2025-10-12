@@ -8,7 +8,7 @@ import (
 )
 
 type MBiodata struct {
-	Id          *uint         `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
+	Id          uint          `form:"id" json:"id" xml:"id" gorm:"primary_key;autoIncrement;not null;type:bigint;comment:Auto increment" validate:"required"`
 	Fullname    string        `form:"fullname" json:"fullname" xml:"fullname" gorm:"size:255;type:varchar(255)" validate:"max=255"`
 	MobilePhone string        `form:"mobilePhone" json:"mobilePhone" xml:"mobilePhone" gorm:"size:15;type:varchar(15)" validate:"max=15"`
 	Image       []byte        `form:"image" json:"image" xml:"image" gorm:"type:blob"`
@@ -27,9 +27,9 @@ func (MBiodata) TableName() string {
 }
 
 type MBiodataRequest struct {
-	Id          *uint                 `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
-	Fullname    string                `form:"fullname" json:"fullname" xml:"fullname" gorm:"size:255;type:varchar(255)" validate:"max=255"`
-	MobilePhone string                `form:"mobilePhone" json:"mobilePhone" xml:"mobilePhone" gorm:"size:15;type:varchar(15)" validate:"max=15"`
+	Id          *uint                 `form:"id" json:"id" xml:"id"`
+	Fullname    string                `form:"fullname" json:"fullname" xml:"fullname" validate:"max=255"`
+	MobilePhone string                `form:"mobilePhone" json:"mobilePhone" xml:"mobilePhone" validate:"max=15"`
 	Image       *multipart.FileHeader `form:"image" json:"image" xml:"image" gorm:"type:blob"`
 	ImagePath   *string               `form:"imagePath" json:"imagePath" xml:"imagePath"`
 	IsDelete    *bool                 `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"not null;type:boolean;comment:default FALSE"`

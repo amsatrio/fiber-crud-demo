@@ -34,7 +34,7 @@ func (m *MFileRepositoryImpl) Stream(id uint) (io.ReadCloser, error) {
 }
 
 // Upload implements domain.MFileRepository.
-func (m *MFileRepositoryImpl) Upload(file *multipart.FileHeader, id int64) error {
+func (m *MFileRepositoryImpl) Upload(file *multipart.FileHeader, id int64, mUserId uint) error {
 	var b bytes.Buffer
 	writer := multipart.NewWriter(&b)
 
@@ -54,7 +54,7 @@ func (m *MFileRepositoryImpl) Upload(file *multipart.FileHeader, id int64) error
 		return err
 	}
 
-	writer.WriteField("user_id", fmt.Sprintf("%d", 0))
+	writer.WriteField("user_id", fmt.Sprintf("%d", mUserId))
 	writer.WriteField("module_id", os.Getenv("MODULE_ID"))
 	writer.WriteField("id", fmt.Sprintf("%d", id))
 

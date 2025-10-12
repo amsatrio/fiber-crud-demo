@@ -1,0 +1,44 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">{{.ModalTitle}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <form id="biodataForm">
+                <input type="hidden" id="id" name="id">
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullname" name="fullname" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mobile Phone</label>
+                    <input type="text" class="form-control" id="mobilePhone" name="mobilePhone" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Image</label>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpeg"
+                        onchange="loadFile(event)">
+                    <img id="imagePreview" style="height: 100%; width: 100%;" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Image Path</label>
+                    <input type="text" class="form-control" id="imagePath" name="imagePath" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Is Deleted</label>
+                    <!-- <input type="text" class="form-control" id="isDelete" name="isDelete" required> -->
+                    <select class="form-select" id="isDelete" name="isDelete" required>
+                        <option value="false">False</option>
+                        <option value="true">True</option>
+                    </select>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+        </div>
+    </div>
+</div>

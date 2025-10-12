@@ -40,7 +40,7 @@ func (s *MUserServiceImpl) Get(id uint) (*domain.MUser, error) {
 func (s *MUserServiceImpl) Create(payload *domain.MUserRequest, mUserId uint) error {
 	bool_true := false
 	data := &domain.MUser{
-		Id:           payload.Id,
+		Id:           0,
 		BiodataId:    payload.BiodataId,
 		RoleId:       payload.RoleId,
 		Email:        payload.Email,
@@ -62,7 +62,7 @@ func (s *MUserServiceImpl) Create(payload *domain.MUserRequest, mUserId uint) er
 		return errors.New("data exists")
 	}
 
-	data.Id = nil
+	data.Id = *payload.Id
 
 	return s.repo.Create(data)
 }
@@ -87,6 +87,9 @@ func (s *MUserServiceImpl) Update(payload *domain.MUserRequest, mUserId uint) er
 	existing.LastLogin = payload.LastLogin
 	existing.ModifiedBy = &mUserId
 	existing.ModifiedOn = &dto.JSONTime{Time: time.Now()}
+	existing.DeletedBy = nil
+	existing.DeletedOn = nil
+	existing.IsDelete = payload.IsDelete
 	if *payload.IsDelete {
 		existing.DeletedBy = &mUserId
 		existing.DeletedOn = &dto.JSONTime{Time: time.Now()}

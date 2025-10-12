@@ -7,7 +7,7 @@ import (
 )
 
 type MUser struct {
-	Id           *uint         `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" binding:"required"`
+	Id           uint          `form:"id" json:"id" xml:"id" gorm:"primary_key;autoIncrement;not null;type:bigint;comment:Auto increment" binding:"required"`
 	BiodataId    *uint         `form:"biodataId" json:"biodataId" xml:"biodataId" gorm:"type:bigint"`
 	RoleId       *uint         `form:"roleId" json:"roleId" xml:"roleId" gorm:"type:bigint"`
 	Email        string        `form:"email" json:"email" xml:"email" gorm:"size:100;type:varchar(100)" binding:"max=100"`

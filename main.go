@@ -12,6 +12,7 @@ import (
 	"fiber-crud-demo/internal/infrastructure"
 	"fiber-crud-demo/internal/infrastructure/repository"
 	"fiber-crud-demo/internal/transport/http"
+	"fiber-crud-demo/internal/transport/web"
 	"fiber-crud-demo/middleware"
 	"fiber-crud-demo/modules/health"
 	"fiber-crud-demo/modules/hello_world"
@@ -24,6 +25,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/swagger"
+	"github.com/gofiber/template/html/v2"
 )
 
 func init() {
@@ -33,6 +35,7 @@ func init() {
 }
 
 func config() fiber.Config {
+	htmlEngine := html.New("./web/templates", ".html")
 	return fiber.Config{
 		Prefork:               true,
 		CaseSensitive:         true,
@@ -58,6 +61,8 @@ func config() fiber.Config {
 
 			return c.Status(code).JSON(res)
 		},
+		Views:       htmlEngine,
+		ViewsLayout: "layouts/main",
 	}
 }
 
@@ -74,6 +79,8 @@ func main() {
 	app.Use(middleware.LoggerMiddleware)
 
 	app.Get("/swagger/*", swagger.HandlerDefault) // default
+
+	app.Static("/public", "./web/public")
 
 	// ### Routes
 	routes(app)
@@ -100,6 +107,11 @@ func routes(app *fiber.App) {
 	hello_world_api.Get("/query", hello_world.HelloWorldQuery)
 	hello_world_api.Post("/payload", hello_world.HelloWorldPayload)
 	hello_world_api.Get("/error/:type", hello_world.HelloWorldError)
+
+	// WEB MASTER BIODATA
+	mBiodataWebHandler := web.NewMBiodataWebHandler()
+	m_biodata_web := app.Group("/web/m-biodata")
+	m_biodata_web.Get("", mBiodataWebHandler.MBiodataWebIndex)
 
 	var validate = validator.New()
 

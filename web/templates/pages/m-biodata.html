@@ -1,0 +1,521 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {{template "components/sidebar" .}}
+        </div>
+        <div class="col">
+            {{template "components/header" .}}
+        </div>
+
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row justify-content-between">
+        <div class="col">
+            <h3>{{.Title}}</h3>
+        </div>
+        <div class="col text-end">
+            <button class="btn btn-primary" id="addNewBiodata">Create</button>
+            <button class="btn btn-primary" id="toggleFilterBiodata">Filter</button>
+            <button class="btn btn-primary">Export</button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table id="biodataTable" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Mobile Phone</th>
+                            <th>Image Path</th>
+                            <th>Is Deleted</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filterModalLabel">Filter Options</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="filterForm">
+                    <div id="filterFields">
+                        <div class="row mb-3 align-items-end">
+                            <div class="col">
+                                <label class="form-label">Field</label>
+                                <select class="form-select" name="field" required>
+                                    <option value="fullName">Full Name</option>
+                                    <option value="mobilePhone">Mobile Phone</option>
+                                    <option value="isDelete">Is Deleted</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Match Mode</label>
+                                <select class="form-select" name="matchMode" required>
+                                    <option value="CONTAINS">Contains</option>
+                                    <option value="EQUALS">Equals</option>
+                                    <option value="NOT">Not</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Value</label>
+                                <input type="text" class="form-control" name="value" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-link" id="addFilter">+ Add Another Filter</button>
+                    <div class="mb-3">
+                        <label class="form-label">Filter Mode</label>
+                        <select class="form-select" name="mode" required>
+                            <option value="AND">AND</option>
+                            <option value="OR">OR</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="applyFilters">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal for Add/Edit/View -->
+<div class="modal fade" id="biodataModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Biodata Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="biodataForm">
+                    <input type="hidden" id="id" name="id">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="fullname" name="fullname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mobile Phone</label>
+                        <input type="text" class="form-control" id="mobilePhone" name="mobilePhone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Image</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpeg"
+                            onchange="loadFile(event)">
+                        <img id="imagePreview" style="height: 100%; width: 100%;" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Image Path</label>
+                        <input type="text" class="form-control" id="imagePath" name="imagePath" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Is Deleted</label>
+                        <!-- <input type="text" class="form-control" id="isDelete" name="isDelete" required> -->
+                        <select class="form-select" id="isDelete" name="isDelete" required>
+                            <option value="false">False</option>
+                            <option value="true">True</option>
+                        </select>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById('addFilter').addEventListener('click', function() {
+        const filterFields = document.getElementById('filterFields');
+        const newFilterRow = document.createElement('div');
+        newFilterRow.className = 'row mb-3 align-items-end';
+        newFilterRow.innerHTML = `
+            <div class="col">
+                <label class="form-label">Field</label>
+                <select class="form-select" name="field" required>
+                    <option value="fullName">Full Name</option>
+                    <option value="mobilePhone">Mobile Phone</option>
+                    <option value="isDelete">Is Deleted</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <div class="col">
+                <label class="form-label">Match Mode</label>
+                <select class="form-select" name="matchMode" required>
+                    <option value="CONTAINS">Contains</option>
+                    <option value="EQUALS">Equals</option>
+                    <option value="NOT">Not</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <div class="col">
+                <label class="form-label">Value</label>
+                <input type="text" class="form-control" name="value" required>
+            </div>
+        `;
+        filterFields.appendChild(newFilterRow);
+    });
+    document.getElementById('applyFilters').addEventListener('click', function() {
+
+    });
+</script>
+
+<script>
+    let baseUrl = 'http://localhost:8005/m-biodata'
+
+    const loadFile = function (event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById('imagePreview');
+            output.src = reader.result;
+            // console.log(event.target.files[0].name)
+            output.name = event.target.files[0].name
+        };
+        reader.readAsDataURL(event.target.files[0]);
+
+        createFileURL(event)
+    };
+
+    function createFileURL(event) {
+        var reader = new FileReader();
+        const src = event.target.files[0]
+        reader.readAsDataURL(src);
+        reader.onload = function () {
+            const url = URL.createObjectURL(src);
+
+            const imagePath = document.getElementById('imagePath');
+            imagePath.value = url
+            // console.log(url)
+            URL.revokeObjectURL(src) // free memory
+        }
+    }
+
+    $(document).ready(function () {
+        // Initialize toasts
+        var successToast = new bootstrap.Toast(document.getElementById('successToast'));
+        var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+        var loadingToast = new bootstrap.Toast(document.getElementById('loadingToast'));
+
+        // Helper function to show toasts
+        function showSuccessToast(message) {
+            $('#successToastBody').text(message || 'Operation completed successfully!');
+            successToast.show();
+        }
+
+        function showErrorToast(message) {
+            $('#errorToastBody').text(message || 'An error occurred!');
+            errorToast.show();
+        }
+
+        function showLoadingToast() {
+            loadingToast.show();
+        }
+
+        function hideLoadingToast() {
+            loadingToast.hide();
+        }
+
+        // $.fn.dataTable.ext.errMode = 'throw';
+
+        // Override window.alert with our toast
+        window.alert = function (message) {
+            showErrorToast(message);
+        };
+
+        // Global variable to store DataTable instance
+        var biodataTable;
+
+        // Initialize DataTable with server-side processing
+        biodataTable = $('#biodataTable').DataTable({
+            processing: true,
+            serverSide: true,
+            // searching: false, // Disable default search
+            ajax: {
+                url: baseUrl,
+                type: 'GET',
+                data: function (d) {
+                    // console.log(JSON.stringify(d))
+
+                    const search = d.search.value || ''
+
+                    const order = []
+                    for (let i = 0; i < d.order.length; i++) {
+                        order[i] = {
+                            "id": d.columns[d.order[i].column].data,
+                            "desc": d.order[i].dir == "desc"
+                        }
+                    }
+                    // console.log(JSON.stringify(order))
+                    const orderUri = JSON.stringify(order);
+
+                    const query = {
+                        page: d.start / d.length,
+                        size: d.length,
+                        sort: orderUri
+                    };
+
+                    if (search != '') {
+                        query.search = search
+                    }
+
+                    return query;
+                },
+                dataType: 'json',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    showLoadingToast();
+                    xhr.setRequestHeader('Accept', 'application/json');
+                },
+                // error: function () {
+                //     showErrorToast('Error fetch records: ' + error);
+                // },
+                complete: function () {
+                    hideLoadingToast();
+                },
+                dataFilter: function (data) {
+                    var json = JSON.parse(data);
+                    json.recordsTotal = json.data.totalElements;
+                    json.recordsFiltered = json.data.totalElements;
+                    json.data = json.data.content;
+                    return JSON.stringify(json);
+                }
+            },
+            initComplete: function (settings, json) {
+                if (json && json.error) {
+                    showErrorToast(json.error);
+                }
+            },
+            columns: [
+                { data: 'id' },
+                { data: 'fullname' },
+                { data: 'mobilePhone' },
+                { data: 'imagePath' },
+                // { data: 'createdOn' },
+                {
+                    data: 'isDelete',
+                    render: function (data, type, row) {
+                        return row.isDelete ?
+                            '<span class="badge bg-secondary">True</span>' :
+                            '<span class="badge bg-success">False</span>';
+                    }
+                },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return `
+                                <button class="btn btn-info btn-sm view-btn" data-id="${row.id}">View</button>
+                                <button class="btn btn-warning btn-sm edit-btn" data-id="${row.id}">Edit</button>
+                                <button class="btn btn-danger btn-sm delete-btn" data-id="${row.id}">Delete</button>
+                            `;
+                    }
+                }
+            ],
+            language: {
+                paginate: {
+                    first: '<<',
+                    last: '>>',
+                    previous: '<',
+                    next: '>'
+                },
+                emptyTable: 'No data available',
+                info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                infoEmpty: 'Showing 0 to 0 of 0 entries'
+            },
+            pageLength: 5, // Default page size
+            lengthMenu: [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]], // Pagination options
+            layout: {
+                // topStart: 'pageLength',
+                topEnd: 'search',
+                bottomStart: null,
+                bottomEnd: 'paging',
+                topStart: function () {
+                    let toolbar = document.createElement('div');
+                    toolbar.innerHTML = '<b>Custom tool bar! Text/images etc.</b>';
+
+                    return toolbar;
+                }
+            }
+        });
+
+        // // Apply column filtering
+        // $('#biodataTable thead tr:eq(0) th input').on('keyup change', function () {
+        //     console.log("test")
+        //     var index = $(this).parent().index();
+        //     console.log("index: " + index + ", value: " + this.value, ", column: " + JSON.stringify(biodataTable.column(index)))
+        //     biodataTable.column(index).search(this.value).draw();
+        // });
+
+        $('#toggleFilterBiodata').on('click', function(){
+            $('#filterModal').modal('show');
+        })
+
+
+        // Add New Biodata Button
+        $('#addNewBiodata').on('click', function () {
+            // Reset form
+            $('#id').val('');
+            $('#fullname').val('');
+            $('#mobilePhone').val('');
+            $('#image').val('');
+            $('#imagePreview').attr('src', '');
+            $('#imagePath').val('');
+            $('#isDelete').val('false');
+
+            // Set modal title
+            $('#modalTitle').text('Add New Biodata');
+
+            // Enable form fields
+            $('#fullname, #mobilePhone, #image, #imagePath, #isDelete').prop('disabled', false);
+            $('#saveChanges').show();
+
+            // Show modal
+            $('#biodataModal').modal('show');
+        });
+
+        // View/Edit Modal Handling
+        $('#biodataTable').on('click', '.view-btn, .edit-btn', function () {
+            var id = $(this).data('id');
+            var isEdit = $(this).hasClass('edit-btn');
+
+            // Fetch specific biodata details
+            $.ajax({
+                url: `${baseUrl}/${id}`,
+                method: 'GET',
+                success: function (response) {
+                    $('#id').val(response.data.id);
+                    $('#fullname').val(response.data.fullname);
+                    $('#mobilePhone').val(response.data.mobilePhone);
+                    $('#imagePreview').attr('src', "");
+                    if (response.data.image && response.data.image.length > 0) {
+                        $('#imagePreview').attr('src', "data:image/jpeg;base64," + response.data.image);
+                    }
+                    $('#imagePath').val(response.data.imagePath);
+                    $('#isDelete').val(response.data.isDelete ? 'true' : 'false');
+
+                    // Set modal title
+                    $('#modalTitle').text(isEdit ? 'Edit Biodata' : 'View Biodata');
+
+                    // Disable/enable form fields based on view/edit
+                    $('#fullname, #mobilePhone, #image, #imagePath, #isDelete').prop('disabled', !isEdit);
+                    $('#saveChanges').toggle(isEdit);
+
+                    $('#biodataModal').modal('show');
+                },
+                error: function () {
+                    showErrorToast('Error view record: ' + error);
+                },
+            });
+        });
+
+        // Delete Handling
+        $('#biodataTable').on('click', '.delete-btn', function () {
+            var id = $(this).data('id');
+            if (confirm('Are you sure you want to delete this record?')) {
+                $.ajax({
+                    url: `${baseUrl}/${id}`,
+                    method: 'DELETE',
+                    beforeSend: function () {
+                        showLoadingToast();
+                    },
+                    success: function (response) {
+                        biodataTable.ajax.reload();
+                        showSuccessToast('Record deleted successfully');
+                    },
+                    error: function () {
+                        showErrorToast('Error deleting record: ' + error);
+                    },
+                    complete: function () {
+                        hideLoadingToast();
+                    }
+                });
+            }
+        });
+
+        // Save Changes (Add/Edit)
+        $('#saveChanges').on('click', function () {
+            var id = $('#id').val();
+
+            // Create FormData object
+            var formData = new FormData();
+            formData.append('id', id ? Number(id) : 0);
+            formData.append('fullname', $('#fullname').val());
+            formData.append('mobilePhone', $('#mobilePhone').val());
+            formData.append('isDelete', $('#isDelete').val() === "true");
+            // formData.append('imagePath', $('#imagePath').val() || null);
+
+            var imageDataUrl = $('#imagePreview').attr('src');
+            if (imageDataUrl != undefined) {
+                if (imageDataUrl.startsWith('data:')) {
+                    var blob = dataURLtoBlob(imageDataUrl);
+                    console.log(blob)
+                    formData.append('image', blob, $('#imagePreview').attr('name'));
+                }
+            }
+
+
+            // Determine if it's an add or edit operation
+            var method = id ? 'PUT' : 'POST';
+            var url = `${baseUrl}`;
+
+            $.ajax({
+                url: url,
+                method: method,
+                contentType: false, // Important for multipart/form-data
+                processData: false, // Important for multipart/form-data
+                data: formData,
+                beforeSend: function () {
+                    showLoadingToast();
+                },
+                success: function (response) {
+                    biodataTable.ajax.reload();
+                    $('#biodataModal').modal('hide');
+                    showSuccessToast('Record saved successfully');
+                },
+                error: function (error) {
+                    showErrorToast('Error saving record: ' + JSON.stringify(error));
+                },
+                complete: function () {
+                    hideLoadingToast();
+                }
+            });
+        });
+    });
+
+    function dataURLtoBlob(dataurl) {
+        var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], { type: mime });
+    }
+</script>
+{{template "components/toast" .}}
+{{template "components/footer" .}}

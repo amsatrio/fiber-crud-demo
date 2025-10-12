@@ -1,0 +1,38 @@
+<!-- Toast Container -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <!-- Success Toast -->
+    <div id="successToast" class="toast" role="alert" data-bs-delay="5000">
+        <div class="toast-header bg-success text-white">
+            <strong class="me-auto">Success</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+        </div>
+        <div id="successToastBody" class="toast-body">
+            Operation completed successfully!
+        </div>
+    </div>
+
+    <!-- Error Toast -->
+    <div id="errorToast" class="toast" role="alert" data-bs-delay="5000">
+        <div class="toast-header bg-danger text-white">
+            <strong class="me-auto">Error</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+        </div>
+        <div id="errorToastBody" class="toast-body">
+            An error occurred!
+        </div>
+    </div>
+
+    <!-- Loading Toast -->
+    <div id="loadingToast" class="toast" role="alert">
+        <div class="toast-header bg-info text-white">
+            <strong class="me-auto">Loading</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">
+            <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            Processing your request...
+        </div>
+    </div>
+</div>

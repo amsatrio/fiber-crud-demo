@@ -1,7 +1,6 @@
 package infrastructure
 
 import (
-	"fiber-crud-demo/internal/domain"
 	"io"
 	"log"
 	"os"
@@ -62,8 +61,8 @@ func InitializeDatabase() {
 	sqlDB.SetConnMaxLifetime(time.Minute)
 
 	// Migration
-	DB.AutoMigrate(&domain.MRole{})
-	DB.AutoMigrate(&domain.MBiodata{})
-	DB.AutoMigrate(&domain.MUser{})
-	DB.AutoMigrate(&domain.MModule{})
+	// DB.AutoMigrate(&domain.MRole{})
+	// DB.AutoMigrate(&domain.MBiodata{})
+	// DB.AutoMigrate(&domain.MUser{})
+	// DB.AutoMigrate(&domain.MModule{})
 }

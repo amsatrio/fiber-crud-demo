@@ -68,7 +68,7 @@ func (s *MBiodataServiceImpl) Get(id uint) (*domain.MBiodata, error) {
 func (s *MBiodataServiceImpl) Create(payload *domain.MBiodataRequest, mUserId uint) error {
 	bool_true := false
 	data := &domain.MBiodata{
-		Id:          payload.Id,
+		Id:          0,
 		Fullname:    payload.Fullname,
 		MobilePhone: payload.MobilePhone,
 		Image:       nil,
@@ -80,7 +80,7 @@ func (s *MBiodataServiceImpl) Create(payload *domain.MBiodataRequest, mUserId ui
 
 	id := time.Now().Unix()
 	if payload.Image != nil {
-		err := s.fileRepo.Upload(payload.Image, id)
+		err := s.fileRepo.Upload(payload.Image, id, mUserId)
 		if err == nil {
 			idString := fmt.Sprintf("%d", id)
 			data.ImagePath = &idString
@@ -96,7 +96,7 @@ func (s *MBiodataServiceImpl) Create(payload *domain.MBiodataRequest, mUserId ui
 		return errors.New("data exists")
 	}
 
-	data.Id = nil
+	data.Id = *payload.Id
 
 	return s.repo.Create(data)
 }
@@ -124,7 +124,7 @@ func (s *MBiodataServiceImpl) Update(payload *domain.MBiodataRequest, mUserId ui
 			}
 		}
 
-		err := s.fileRepo.Upload(payload.Image, id)
+		err := s.fileRepo.Upload(payload.Image, id, mUserId)
 		if err != nil {
 			fmt.Printf("%v", err)
 			return err
@@ -137,6 +137,9 @@ func (s *MBiodataServiceImpl) Update(payload *domain.MBiodataRequest, mUserId ui
 	existing.MobilePhone = payload.MobilePhone
 	existing.ModifiedBy = &mUserId
 	existing.ModifiedOn = &dto.JSONTime{Time: time.Now()}
+	existing.IsDelete = payload.IsDelete
+	existing.DeletedBy = nil
+	existing.DeletedOn = nil
 	if *payload.IsDelete {
 		existing.DeletedBy = &mUserId
 		existing.DeletedOn = &dto.JSONTime{Time: time.Now()}

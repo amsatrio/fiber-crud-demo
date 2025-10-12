@@ -7,7 +7,7 @@ import (
 )
 
 type MModule struct {
-	Id         *uint         `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment" validate:"required"`
+	Id         uint          `form:"id" json:"id" xml:"id" gorm:"primary_key;autoIncrement;not null;type:bigint;comment:Auto increment" validate:"required"`
 	Name       string        `form:"name" json:"name" xml:"name" gorm:"size:100;type:varchar(100)" validate:"max=100"`
 	CreatedBy  uint          `form:"createdBy" json:"createdBy" xml:"createdBy" gorm:"not null;type:bigint"`
 	CreatedOn  dto.JSONTime  `form:"createdOn" json:"createdOn" xml:"createdOn" gorm:"type:datetime" swaggertype:"string" example:"2024-02-16 10:33:10"`

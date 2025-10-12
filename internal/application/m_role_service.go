@@ -40,7 +40,7 @@ func (s *MRoleServiceImpl) Get(id uint) (*domain.MRole, error) {
 func (s *MRoleServiceImpl) Create(payload *domain.MRoleRequest, mUserId uint) error {
 	bool_true := false
 	data := &domain.MRole{
-		Id:        payload.Id,
+		Id:        0,
 		Name:      payload.Name,
 		Code:      payload.Code,
 		Level:     payload.Level,
@@ -58,7 +58,7 @@ func (s *MRoleServiceImpl) Create(payload *domain.MRoleRequest, mUserId uint) er
 		return errors.New("data exists")
 	}
 
-	data.Id = nil
+	data.Id = *payload.Id
 
 	return s.repo.Create(data)
 }
@@ -79,6 +79,9 @@ func (s *MRoleServiceImpl) Update(payload *domain.MRoleRequest, mUserId uint) er
 	existing.Level = payload.Level
 	existing.ModifiedBy = &mUserId
 	existing.ModifiedOn = &dto.JSONTime{Time: time.Now()}
+	existing.DeletedBy = nil
+	existing.DeletedOn = nil
+	existing.IsDelete = payload.IsDelete
 	if *payload.IsDelete {
 		existing.DeletedBy = &mUserId
 		existing.DeletedOn = &dto.JSONTime{Time: time.Now()}

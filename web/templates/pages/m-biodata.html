@@ -59,7 +59,7 @@
                             <div class="col">
                                 <label class="form-label">Field</label>
                                 <select class="form-select" name="field" required>
-                                    <option value="fullName">Full Name</option>
+                                    <option value="fullname">Full Name</option>
                                     <option value="mobilePhone">Mobile Phone</option>
                                     <option value="isDelete">Is Deleted</option>
                                     <!-- Add more options as needed -->
@@ -92,7 +92,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="applyFilters">Apply Filters</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="applyFilters">Apply
+                    Filters</button>
             </div>
         </div>
     </div>
@@ -149,7 +150,7 @@
 
 
 <script>
-    document.getElementById('addFilter').addEventListener('click', function() {
+    document.getElementById('addFilter').addEventListener('click', function () {
         const filterFields = document.getElementById('filterFields');
         const newFilterRow = document.createElement('div');
         newFilterRow.className = 'row mb-3 align-items-end';
@@ -157,7 +158,7 @@
             <div class="col">
                 <label class="form-label">Field</label>
                 <select class="form-select" name="field" required>
-                    <option value="fullName">Full Name</option>
+                    <option value="fullname">Full Name</option>
                     <option value="mobilePhone">Mobile Phone</option>
                     <option value="isDelete">Is Deleted</option>
                     <!-- Add more options as needed -->
@@ -179,13 +180,42 @@
         `;
         filterFields.appendChild(newFilterRow);
     });
-    document.getElementById('applyFilters').addEventListener('click', function() {
-
-    });
 </script>
 
 <script>
+    // Global variable to store DataTable instance
+    var biodataTable;
+
     let baseUrl = 'http://localhost:8005/m-biodata'
+
+    let filters = [];
+
+    document.getElementById('applyFilters').addEventListener('click', function () {
+        filters = [];
+
+        const filterFields = document.querySelectorAll('#filterFields .row');
+
+        const form = document.getElementById('filterForm');
+
+        filterFields.forEach(fieldRow => {
+            const field = fieldRow.querySelector('select[name="field"]').value;
+            const matchMode = fieldRow.querySelector('select[name="matchMode"]').value;
+            const value = fieldRow.querySelector('input[name="value"]').value;
+
+            filters.push({
+                id: field,
+                matchMode: matchMode,
+                value: value,
+                dataType: "TEXT",
+            });
+        });
+
+        const filterMode = document.querySelector('select[name="mode"]').value;
+
+        console.log(filters)
+
+        biodataTable.ajax.reload();
+    });
 
     const loadFile = function (event) {
         const reader = new FileReader();
@@ -246,9 +276,6 @@
             showErrorToast(message);
         };
 
-        // Global variable to store DataTable instance
-        var biodataTable;
-
         // Initialize DataTable with server-side processing
         biodataTable = $('#biodataTable').DataTable({
             processing: true,
@@ -275,7 +302,8 @@
                     const query = {
                         page: d.start / d.length,
                         size: d.length,
-                        sort: orderUri
+                        sort: orderUri,
+                        filter: JSON.stringify(filters)
                     };
 
                     if (search != '') {
@@ -369,7 +397,7 @@
         //     biodataTable.column(index).search(this.value).draw();
         // });
 
-        $('#toggleFilterBiodata').on('click', function(){
+        $('#toggleFilterBiodata').on('click', function () {
             $('#filterModal').modal('show');
         })
 
@@ -425,7 +453,7 @@
 
                     $('#biodataModal').modal('show');
                 },
-                error: function () {
+                error: function (error) {
                     showErrorToast('Error view record: ' + error);
                 },
             });

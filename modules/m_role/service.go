@@ -1,18 +1,17 @@
-package application
+package m_role
 
 import (
 	"errors"
 	"fiber-crud-demo/dto"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/internal/domain"
 	"time"
 )
 
-type MUserService interface {
-	Get(id uint) (*domain.MUser, error)
-	Create(payload *domain.MUserRequest, mUserId uint) error
-	Update(payload *domain.MUserRequest, mUserId uint) error
+type MRoleService interface {
+	Get(id uint) (*MRole, error)
+	Create(payload *MRoleRequest, mUserId uint) error
+	Update(payload *MRoleRequest, mUserId uint) error
 	Delete(id uint) error
 	GetPage(
 		sortRequest []request.Sort,
@@ -23,34 +22,30 @@ type MUserService interface {
 		sizeInt int) (*response.Page, error)
 }
 
-type MUserServiceImpl struct {
-	repo domain.MUserRepository
+type MRoleServiceImpl struct {
+	repo MRoleRepository
 }
 
-func NewMUserService(repo domain.MUserRepository) MUserService {
-	return &MUserServiceImpl{
+func NewMRoleService(repo MRoleRepository) MRoleService {
+	return &MRoleServiceImpl{
 		repo: repo,
 	}
 }
 
-func (s *MUserServiceImpl) Get(id uint) (*domain.MUser, error) {
+func (s *MRoleServiceImpl) Get(id uint) (*MRole, error) {
 	return s.repo.Get(id)
 }
 
-func (s *MUserServiceImpl) Create(payload *domain.MUserRequest, mUserId uint) error {
+func (s *MRoleServiceImpl) Create(payload *MRoleRequest, mUserId uint) error {
 	bool_true := false
-	data := &domain.MUser{
-		Id:           0,
-		BiodataId:    payload.BiodataId,
-		RoleId:       payload.RoleId,
-		Email:        payload.Email,
-		Password:     payload.Password,
-		LoginAttempt: payload.LoginAttempt,
-		IsLocked:     payload.IsLocked,
-		LastLogin:    payload.LastLogin,
-		CreatedOn:    dto.JSONTime{Time: time.Now()},
-		CreatedBy:    mUserId,
-		IsDelete:     &bool_true,
+	data := &MRole{
+		Id:        0,
+		Name:      payload.Name,
+		Code:      payload.Code,
+		Level:     payload.Level,
+		CreatedOn: dto.JSONTime{Time: time.Now()},
+		CreatedBy: mUserId,
+		IsDelete:  &bool_true,
 	}
 
 	if payload.Id == nil {
@@ -67,7 +62,7 @@ func (s *MUserServiceImpl) Create(payload *domain.MUserRequest, mUserId uint) er
 	return s.repo.Create(data)
 }
 
-func (s *MUserServiceImpl) Update(payload *domain.MUserRequest, mUserId uint) error {
+func (s *MRoleServiceImpl) Update(payload *MRoleRequest, mUserId uint) error {
 
 	if payload.Id == nil {
 		return errors.New("invalid payload")
@@ -78,13 +73,9 @@ func (s *MUserServiceImpl) Update(payload *domain.MUserRequest, mUserId uint) er
 		return err
 	}
 
-	existing.BiodataId = payload.BiodataId
-	existing.RoleId = payload.RoleId
-	existing.Email = payload.Email
-	existing.Password = payload.Password
-	existing.LoginAttempt = payload.LoginAttempt
-	existing.IsLocked = payload.IsLocked
-	existing.LastLogin = payload.LastLogin
+	existing.Name = payload.Name
+	existing.Code = payload.Code
+	existing.Level = payload.Level
 	existing.ModifiedBy = &mUserId
 	existing.ModifiedOn = &dto.JSONTime{Time: time.Now()}
 	existing.DeletedBy = nil
@@ -99,7 +90,7 @@ func (s *MUserServiceImpl) Update(payload *domain.MUserRequest, mUserId uint) er
 	return s.repo.Update(existing)
 }
 
-func (s *MUserServiceImpl) Delete(id uint) error {
+func (s *MRoleServiceImpl) Delete(id uint) error {
 	_, err := s.repo.Get(id)
 	if err != nil {
 		return err
@@ -108,7 +99,7 @@ func (s *MUserServiceImpl) Delete(id uint) error {
 	return s.repo.Delete(id)
 }
 
-func (s *MUserServiceImpl) GetPage(
+func (s *MRoleServiceImpl) GetPage(
 	sortRequest []request.Sort,
 	filterRequest []request.Filter,
 	searchRequest string,

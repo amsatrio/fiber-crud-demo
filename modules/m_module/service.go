@@ -1,18 +1,17 @@
-package application
+package m_module
 
 import (
 	"errors"
 	"fiber-crud-demo/dto"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/internal/domain"
 	"time"
 )
 
-type MRoleService interface {
-	Get(id uint) (*domain.MRole, error)
-	Create(payload *domain.MRoleRequest, mUserId uint) error
-	Update(payload *domain.MRoleRequest, mUserId uint) error
+type MModuleService interface {
+	Get(id uint) (*MModule, error)
+	Create(payload *MModuleRequest, mUserId uint) error
+	Update(payload *MModuleRequest, mUserId uint) error
 	Delete(id uint) error
 	GetPage(
 		sortRequest []request.Sort,
@@ -23,27 +22,25 @@ type MRoleService interface {
 		sizeInt int) (*response.Page, error)
 }
 
-type MRoleServiceImpl struct {
-	repo domain.MRoleRepository
+type MModuleServiceImpl struct {
+	repo MModuleRepository
 }
 
-func NewMRoleService(repo domain.MRoleRepository) MRoleService {
-	return &MRoleServiceImpl{
+func NewMModuleService(repo MModuleRepository) MModuleService {
+	return &MModuleServiceImpl{
 		repo: repo,
 	}
 }
 
-func (s *MRoleServiceImpl) Get(id uint) (*domain.MRole, error) {
+func (s *MModuleServiceImpl) Get(id uint) (*MModule, error) {
 	return s.repo.Get(id)
 }
 
-func (s *MRoleServiceImpl) Create(payload *domain.MRoleRequest, mUserId uint) error {
+func (s *MModuleServiceImpl) Create(payload *MModuleRequest, mUserId uint) error {
 	bool_true := false
-	data := &domain.MRole{
+	data := &MModule{
 		Id:        0,
 		Name:      payload.Name,
-		Code:      payload.Code,
-		Level:     payload.Level,
 		CreatedOn: dto.JSONTime{Time: time.Now()},
 		CreatedBy: mUserId,
 		IsDelete:  &bool_true,
@@ -63,7 +60,7 @@ func (s *MRoleServiceImpl) Create(payload *domain.MRoleRequest, mUserId uint) er
 	return s.repo.Create(data)
 }
 
-func (s *MRoleServiceImpl) Update(payload *domain.MRoleRequest, mUserId uint) error {
+func (s *MModuleServiceImpl) Update(payload *MModuleRequest, mUserId uint) error {
 
 	if payload.Id == nil {
 		return errors.New("invalid payload")
@@ -75,8 +72,6 @@ func (s *MRoleServiceImpl) Update(payload *domain.MRoleRequest, mUserId uint) er
 	}
 
 	existing.Name = payload.Name
-	existing.Code = payload.Code
-	existing.Level = payload.Level
 	existing.ModifiedBy = &mUserId
 	existing.ModifiedOn = &dto.JSONTime{Time: time.Now()}
 	existing.DeletedBy = nil
@@ -91,7 +86,7 @@ func (s *MRoleServiceImpl) Update(payload *domain.MRoleRequest, mUserId uint) er
 	return s.repo.Update(existing)
 }
 
-func (s *MRoleServiceImpl) Delete(id uint) error {
+func (s *MModuleServiceImpl) Delete(id uint) error {
 	_, err := s.repo.Get(id)
 	if err != nil {
 		return err
@@ -100,7 +95,7 @@ func (s *MRoleServiceImpl) Delete(id uint) error {
 	return s.repo.Delete(id)
 }
 
-func (s *MRoleServiceImpl) GetPage(
+func (s *MModuleServiceImpl) GetPage(
 	sortRequest []request.Sort,
 	filterRequest []request.Filter,
 	searchRequest string,

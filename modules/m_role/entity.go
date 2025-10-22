@@ -1,9 +1,7 @@
-package domain
+package m_role
 
 import (
 	"fiber-crud-demo/dto"
-	"fiber-crud-demo/dto/request"
-	"fiber-crud-demo/dto/response"
 )
 
 type MRole struct {
@@ -30,18 +28,4 @@ type MRoleRequest struct {
 	Code     string `form:"code" json:"code" xml:"code" gorm:"size:20;type:varchar(20)" validate:"max=20"`
 	Level    int    `form:"level" json:"level" xml:"level" gorm:"type:tinyint"`
 	IsDelete *bool  `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"type:boolean;comment:default FALSE"`
-}
-
-type MRoleRepository interface {
-	Get(id uint) (*MRole, error)
-	Create(data *MRole) error
-	Update(data *MRole) error
-	Delete(id uint) error
-	GetPage(
-		sortRequest []request.Sort,
-		filterRequest []request.Filter,
-		searchRequest string,
-		pageInt int,
-		sizeInt64 int64,
-		sizeInt int) (*response.Page, error)
 }

@@ -1,4 +1,4 @@
-package infrastructure
+package initializer
 
 import (
 	"io"
@@ -61,8 +61,8 @@ func InitializeDatabase() {
 	sqlDB.SetConnMaxLifetime(time.Minute)
 
 	// Migration
-	// DB.AutoMigrate(&domain.MRole{})
-	// DB.AutoMigrate(&domain.MBiodata{})
-	// DB.AutoMigrate(&domain.MUser{})
-	// DB.AutoMigrate(&domain.MModule{})
+	// DB.AutoMigrate(&m_role.MRole{})
+	// DB.AutoMigrate(&m_biodata.MBiodata{})
+	// DB.AutoMigrate(&m_user.MUser{})
+	// DB.AutoMigrate(&m_module.MModule{})
 }

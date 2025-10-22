@@ -1,9 +1,7 @@
-package domain
+package m_module
 
 import (
 	"fiber-crud-demo/dto"
-	"fiber-crud-demo/dto/request"
-	"fiber-crud-demo/dto/response"
 )
 
 type MModule struct {
@@ -26,18 +24,4 @@ type MModuleRequest struct {
 	Id       *uint  `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment"`
 	Name     string `form:"name" json:"name" xml:"name" validate:"max=100"`
 	IsDelete *bool  `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"type:boolean;comment:default FALSE"`
-}
-
-type MModuleRepository interface {
-	Get(id uint) (*MModule, error)
-	Create(data *MModule) error
-	Update(data *MModule) error
-	Delete(id uint) error
-	GetPage(
-		sortRequest []request.Sort,
-		filterRequest []request.Filter,
-		searchRequest string,
-		pageInt int,
-		sizeInt64 int64,
-		sizeInt int) (*response.Page, error)
 }

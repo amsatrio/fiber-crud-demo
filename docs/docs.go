@@ -40,32 +40,32 @@ const docTemplate = `{
                         "type": "string",
                         "default": "0",
                         "description": "page",
-                        "name": "_page",
+                        "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "default": "5",
                         "description": "size",
-                        "name": "_size",
+                        "name": "size",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "sort",
-                        "name": "_sort",
+                        "name": "sort",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "filter",
-                        "name": "_filter",
+                        "name": "filter",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "global filter",
-                        "name": "_q",
+                        "name": "search",
                         "in": "query"
                     }
                 ],
@@ -122,7 +122,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.MBiodataRequest"
+                            "$ref": "#/definitions/m_biodata.MBiodataRequest"
                         }
                     }
                 ],
@@ -179,7 +179,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.MBiodataRequest"
+                            "$ref": "#/definitions/m_biodata.MBiodataRequest"
                         }
                     }
                 ],
@@ -348,32 +348,32 @@ const docTemplate = `{
                         "type": "string",
                         "default": "0",
                         "description": "page",
-                        "name": "_page",
+                        "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "default": "5",
                         "description": "size",
-                        "name": "_size",
+                        "name": "size",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "sort",
-                        "name": "_sort",
+                        "name": "sort",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "filter",
-                        "name": "_filter",
+                        "name": "filter",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "global filter",
-                        "name": "_q",
+                        "name": "search",
                         "in": "query"
                     }
                 ],
@@ -430,7 +430,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.MModuleRequest"
+                            "$ref": "#/definitions/m_module.MModuleRequest"
                         }
                     }
                 ],
@@ -487,7 +487,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.MModuleRequest"
+                            "$ref": "#/definitions/m_module.MModuleRequest"
                         }
                     }
                 ],
@@ -656,32 +656,32 @@ const docTemplate = `{
                         "type": "string",
                         "default": "0",
                         "description": "page",
-                        "name": "_page",
+                        "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "default": "5",
                         "description": "size",
-                        "name": "_size",
+                        "name": "size",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "sort",
-                        "name": "_sort",
+                        "name": "sort",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "filter",
-                        "name": "_filter",
+                        "name": "filter",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "global filter",
-                        "name": "_q",
+                        "name": "search",
                         "in": "query"
                     }
                 ],
@@ -738,7 +738,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.MRoleRequest"
+                            "$ref": "#/definitions/m_role.MRoleRequest"
                         }
                     }
                 ],
@@ -795,7 +795,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.MRoleRequest"
+                            "$ref": "#/definitions/m_role.MRoleRequest"
                         }
                     }
                 ],
@@ -964,32 +964,32 @@ const docTemplate = `{
                         "type": "string",
                         "default": "0",
                         "description": "page",
-                        "name": "_page",
+                        "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "default": "5",
                         "description": "size",
-                        "name": "_size",
+                        "name": "size",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "sort",
-                        "name": "_sort",
+                        "name": "sort",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "filter",
-                        "name": "_filter",
+                        "name": "filter",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "global filter",
-                        "name": "_q",
+                        "name": "search",
                         "in": "query"
                     }
                 ],
@@ -1046,7 +1046,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.MUserRequest"
+                            "$ref": "#/definitions/m_user.MUserRequest"
                         }
                     }
                 ],
@@ -1103,7 +1103,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.MUserRequest"
+                            "$ref": "#/definitions/m_user.MUserRequest"
                         }
                     }
                 ],
@@ -1249,39 +1249,10 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "domain.MBiodataRequest": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "fullname": {
-                    "type": "string",
-                    "maxLength": 255
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "image": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
-                },
-                "imagePath": {
-                    "type": "string",
-                    "maxLength": 255
-                },
-                "isDelete": {
-                    "type": "boolean"
-                },
-                "mobilePhone": {
-                    "type": "string",
-                    "maxLength": 15
-                }
-            }
+        "m_biodata.MBiodataRequest": {
+            "type": "object"
         },
-        "domain.MModuleRequest": {
+        "m_module.MModuleRequest": {
             "type": "object",
             "properties": {
                 "id": {
@@ -1296,7 +1267,7 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.MRoleRequest": {
+        "m_role.MRoleRequest": {
             "type": "object",
             "properties": {
                 "code": {
@@ -1318,7 +1289,7 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.MUserRequest": {
+        "m_user.MUserRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -1396,8 +1367,8 @@ var SwaggerInfo = &swag.Spec{
 	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
-	LeftDelim:        "{{",
-	RightDelim:       "}}",
+	
+	
 }
 
 func init() {

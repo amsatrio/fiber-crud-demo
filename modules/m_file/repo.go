@@ -1,27 +1,30 @@
-package repository
+package m_file
 
 import (
 	"bytes"
-	"fiber-crud-demo/internal/domain"
 	"fiber-crud-demo/util"
 	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
 	"os"
-	"sync"
 	"time"
 )
 
-type MFileRepositoryImpl struct {
-	mutex sync.Mutex
+type MFileRepository interface {
+	Delete(id string) error
+	Upload(file *multipart.FileHeader, id int64, mUserId uint) error
+	Stream(id uint) (io.ReadCloser, error)
 }
 
-func NewMFileRepository() domain.MFileRepository {
+type MFileRepositoryImpl struct {
+}
+
+func NewMFileRepository() MFileRepository {
 	return &MFileRepositoryImpl{}
 }
 
-// Stream implements domain.MFileRepository.
+// Stream implements MFileRepository.
 func (m *MFileRepositoryImpl) Stream(id uint) (io.ReadCloser, error) {
 	resp, err := http.Get(fmt.Sprintf("%s/%s/%d", os.Getenv("FILE_MANAGEMENT_HOST"), "m-file/file/stream", id))
 	if err != nil {
@@ -33,7 +36,7 @@ func (m *MFileRepositoryImpl) Stream(id uint) (io.ReadCloser, error) {
 	return resp.Body, nil
 }
 
-// Upload implements domain.MFileRepository.
+// Upload implements MFileRepository.
 func (m *MFileRepositoryImpl) Upload(file *multipart.FileHeader, id int64, mUserId uint) error {
 	var b bytes.Buffer
 	writer := multipart.NewWriter(&b)

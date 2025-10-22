@@ -8,14 +8,14 @@ import (
 	_ "fiber-crud-demo/docs"
 	"fiber-crud-demo/dto/response"
 	"fiber-crud-demo/initializer"
-	"fiber-crud-demo/internal/application"
-	"fiber-crud-demo/internal/infrastructure"
-	"fiber-crud-demo/internal/infrastructure/repository"
-	"fiber-crud-demo/internal/transport/http"
-	"fiber-crud-demo/internal/transport/web"
 	"fiber-crud-demo/middleware"
 	"fiber-crud-demo/modules/health"
 	"fiber-crud-demo/modules/hello_world"
+	"fiber-crud-demo/modules/m_biodata"
+	"fiber-crud-demo/modules/m_file"
+	"fiber-crud-demo/modules/m_module"
+	"fiber-crud-demo/modules/m_role"
+	"fiber-crud-demo/modules/m_user"
 
 	"fiber-crud-demo/util"
 
@@ -31,7 +31,7 @@ import (
 func init() {
 	initializer.LoadEnvironmentVariables()
 	initializer.LoggerInit()
-	infrastructure.InitializeDatabase()
+	initializer.InitializeDatabase()
 }
 
 func config() fiber.Config {
@@ -94,7 +94,7 @@ func main() {
 }
 
 func routes(app *fiber.App) {
-	mFileRepo := repository.NewMFileRepository()
+	mFileRepo := m_file.NewMFileRepository()
 
 	// HEALTH
 	health_api := app.Group("/health")
@@ -109,16 +109,16 @@ func routes(app *fiber.App) {
 	hello_world_api.Get("/error/:type", hello_world.HelloWorldError)
 
 	// WEB MASTER BIODATA
-	mBiodataWebHandler := web.NewMBiodataWebHandler()
+	mBiodataWebHandler := m_biodata.NewMBiodataWebHandler()
 	m_biodata_web := app.Group("/web/m-biodata")
 	m_biodata_web.Get("", mBiodataWebHandler.MBiodataWebIndex)
 
 	var validate = validator.New()
 
 	// MASTER ROLE
-	mRoleRepo := repository.NewMRoleRepository(infrastructure.DB)
-	mRoleService := application.NewMRoleService(mRoleRepo)
-	mRoleHandler := http.NewMRoleHandler(mRoleService, validate)
+	mRoleRepo := m_role.NewMRoleRepository(initializer.DB)
+	mRoleService := m_role.NewMRoleService(mRoleRepo)
+	mRoleHandler := m_role.NewMRoleHandler(mRoleService, validate)
 	m_role_api := app.Group("/m-role")
 	m_role_api.Post("", mRoleHandler.MRoleCreate)
 	m_role_api.Put("", mRoleHandler.MRoleUpdate)
@@ -127,9 +127,9 @@ func routes(app *fiber.App) {
 	m_role_api.Delete(":id", mRoleHandler.MRoleDelete)
 
 	// MASTER BIODATA
-	mBiodataRepo := repository.NewMBiodataRepository(infrastructure.DB)
-	mBiodataService := application.NewMBiodataService(mBiodataRepo, mFileRepo)
-	mBiodataHandler := http.NewMBiodataHandler(mBiodataService, validate)
+	mBiodataRepo := m_biodata.NewMBiodataRepository(initializer.DB)
+	mBiodataService := m_biodata.NewMBiodataService(mBiodataRepo, mFileRepo)
+	mBiodataHandler := m_biodata.NewMBiodataHandler(mBiodataService, validate)
 	m_biodata_api := app.Group("/m-biodata")
 	m_biodata_api.Post("", mBiodataHandler.MBiodataCreate)
 	m_biodata_api.Put("", mBiodataHandler.MBiodataUpdate)
@@ -138,9 +138,9 @@ func routes(app *fiber.App) {
 	m_biodata_api.Delete(":id", mBiodataHandler.MBiodataDelete)
 
 	// MASTER USER
-	mUserRepo := repository.NewMUserRepository(infrastructure.DB)
-	mUserService := application.NewMUserService(mUserRepo)
-	mUserHandler := http.NewMUserHandler(mUserService, validate)
+	mUserRepo := m_user.NewMUserRepository(initializer.DB)
+	mUserService := m_user.NewMUserService(mUserRepo)
+	mUserHandler := m_user.NewMUserHandler(mUserService, validate)
 	m_user_api := app.Group("/m-user")
 	m_user_api.Post("", mUserHandler.MUserCreate)
 	m_user_api.Put("", mUserHandler.MUserUpdate)
@@ -149,9 +149,9 @@ func routes(app *fiber.App) {
 	m_user_api.Delete(":id", mUserHandler.MUserDelete)
 
 	// MASTER MODULE
-	mModuleRepo := repository.NewMModuleRepository(infrastructure.DB)
-	mModuleService := application.NewMModuleService(mModuleRepo)
-	mModuleHandler := http.NewMModuleHandler(mModuleService, validate)
+	mModuleRepo := m_module.NewMModuleRepository(initializer.DB)
+	mModuleService := m_module.NewMModuleService(mModuleRepo)
+	mModuleHandler := m_module.NewMModuleHandler(mModuleService, validate)
 	m_module_api := app.Group("/m-module")
 	m_module_api.Post("", mModuleHandler.MModuleCreate)
 	m_module_api.Put("", mModuleHandler.MModuleUpdate)

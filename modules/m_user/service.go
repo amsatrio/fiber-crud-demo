@@ -1,18 +1,17 @@
-package application
+package m_user
 
 import (
 	"errors"
 	"fiber-crud-demo/dto"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/internal/domain"
 	"time"
 )
 
-type MModuleService interface {
-	Get(id uint) (*domain.MModule, error)
-	Create(payload *domain.MModuleRequest, mUserId uint) error
-	Update(payload *domain.MModuleRequest, mUserId uint) error
+type MUserService interface {
+	Get(id uint) (*MUser, error)
+	Create(payload *MUserRequest, mUserId uint) error
+	Update(payload *MUserRequest, mUserId uint) error
 	Delete(id uint) error
 	GetPage(
 		sortRequest []request.Sort,
@@ -23,28 +22,34 @@ type MModuleService interface {
 		sizeInt int) (*response.Page, error)
 }
 
-type MModuleServiceImpl struct {
-	repo domain.MModuleRepository
+type MUserServiceImpl struct {
+	repo MUserRepository
 }
 
-func NewMModuleService(repo domain.MModuleRepository) MModuleService {
-	return &MModuleServiceImpl{
+func NewMUserService(repo MUserRepository) MUserService {
+	return &MUserServiceImpl{
 		repo: repo,
 	}
 }
 
-func (s *MModuleServiceImpl) Get(id uint) (*domain.MModule, error) {
+func (s *MUserServiceImpl) Get(id uint) (*MUser, error) {
 	return s.repo.Get(id)
 }
 
-func (s *MModuleServiceImpl) Create(payload *domain.MModuleRequest, mUserId uint) error {
+func (s *MUserServiceImpl) Create(payload *MUserRequest, mUserId uint) error {
 	bool_true := false
-	data := &domain.MModule{
-		Id:        0,
-		Name:      payload.Name,
-		CreatedOn: dto.JSONTime{Time: time.Now()},
-		CreatedBy: mUserId,
-		IsDelete:  &bool_true,
+	data := &MUser{
+		Id:           0,
+		BiodataId:    payload.BiodataId,
+		RoleId:       payload.RoleId,
+		Email:        payload.Email,
+		Password:     payload.Password,
+		LoginAttempt: payload.LoginAttempt,
+		IsLocked:     payload.IsLocked,
+		LastLogin:    payload.LastLogin,
+		CreatedOn:    dto.JSONTime{Time: time.Now()},
+		CreatedBy:    mUserId,
+		IsDelete:     &bool_true,
 	}
 
 	if payload.Id == nil {
@@ -61,7 +66,7 @@ func (s *MModuleServiceImpl) Create(payload *domain.MModuleRequest, mUserId uint
 	return s.repo.Create(data)
 }
 
-func (s *MModuleServiceImpl) Update(payload *domain.MModuleRequest, mUserId uint) error {
+func (s *MUserServiceImpl) Update(payload *MUserRequest, mUserId uint) error {
 
 	if payload.Id == nil {
 		return errors.New("invalid payload")
@@ -72,7 +77,13 @@ func (s *MModuleServiceImpl) Update(payload *domain.MModuleRequest, mUserId uint
 		return err
 	}
 
-	existing.Name = payload.Name
+	existing.BiodataId = payload.BiodataId
+	existing.RoleId = payload.RoleId
+	existing.Email = payload.Email
+	existing.Password = payload.Password
+	existing.LoginAttempt = payload.LoginAttempt
+	existing.IsLocked = payload.IsLocked
+	existing.LastLogin = payload.LastLogin
 	existing.ModifiedBy = &mUserId
 	existing.ModifiedOn = &dto.JSONTime{Time: time.Now()}
 	existing.DeletedBy = nil
@@ -87,7 +98,7 @@ func (s *MModuleServiceImpl) Update(payload *domain.MModuleRequest, mUserId uint
 	return s.repo.Update(existing)
 }
 
-func (s *MModuleServiceImpl) Delete(id uint) error {
+func (s *MUserServiceImpl) Delete(id uint) error {
 	_, err := s.repo.Get(id)
 	if err != nil {
 		return err
@@ -96,7 +107,7 @@ func (s *MModuleServiceImpl) Delete(id uint) error {
 	return s.repo.Delete(id)
 }
 
-func (s *MModuleServiceImpl) GetPage(
+func (s *MUserServiceImpl) GetPage(
 	sortRequest []request.Sort,
 	filterRequest []request.Filter,
 	searchRequest string,

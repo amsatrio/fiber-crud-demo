@@ -1,4 +1,4 @@
-package web
+package m_biodata
 
 import (
 	"github.com/gofiber/fiber/v2"

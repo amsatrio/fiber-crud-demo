@@ -1,10 +1,9 @@
-package repository
+package m_user
 
 import (
 	"errors"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/internal/domain"
 	"fiber-crud-demo/util"
 	"strconv"
 	"sync"
@@ -12,22 +11,36 @@ import (
 	"gorm.io/gorm"
 )
 
+type MUserRepository interface {
+	Get(id uint) (*MUser, error)
+	Create(data *MUser) error
+	Update(data *MUser) error
+	Delete(id uint) error
+	GetPage(
+		sortRequest []request.Sort,
+		filterRequest []request.Filter,
+		searchRequest string,
+		pageInt int,
+		sizeInt64 int64,
+		sizeInt int) (*response.Page, error)
+}
+
 type MUserRepositoryImpl struct {
 	mutex sync.Mutex
 	db    *gorm.DB
 }
 
-func NewMUserRepository(db *gorm.DB) domain.MUserRepository {
+func NewMUserRepository(db *gorm.DB) MUserRepository {
 	return &MUserRepositoryImpl{
 		db: db,
 	}
 }
 
-func (s *MUserRepositoryImpl) Get(id uint) (*domain.MUser, error) {
+func (s *MUserRepositoryImpl) Get(id uint) (*MUser, error) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	mUser := domain.MUser{}
+	mUser := MUser{}
 	result := s.db.First(&mUser, id)
 	if result.Error != nil {
 		return nil, result.Error
@@ -36,7 +49,7 @@ func (s *MUserRepositoryImpl) Get(id uint) (*domain.MUser, error) {
 	return &mUser, nil
 }
 
-func (s *MUserRepositoryImpl) Create(mUser *domain.MUser) error {
+func (s *MUserRepositoryImpl) Create(mUser *MUser) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
@@ -48,7 +61,7 @@ func (s *MUserRepositoryImpl) Create(mUser *domain.MUser) error {
 	return nil
 }
 
-func (s *MUserRepositoryImpl) Update(mUser *domain.MUser) error {
+func (s *MUserRepositoryImpl) Update(mUser *MUser) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
@@ -65,7 +78,7 @@ func (s *MUserRepositoryImpl) Delete(id uint) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	var mUser domain.MUser
+	var mUser MUser
 	result := s.db.Delete(&mUser, id)
 
 	if result.Error != nil {
@@ -88,8 +101,8 @@ func (s *MUserRepositoryImpl) GetPage(
 
 	util.Log("INFO", "service", "GetPageMUser", "")
 
-	var mRoles []domain.MUser
-	var mUser domain.MUser
+	var mRoles []MUser
+	var mUser MUser
 	mRoleMap := util.GetJSONFieldTypes(mUser)
 
 	// Create a DB instance and build the base query

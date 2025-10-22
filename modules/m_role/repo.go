@@ -1,10 +1,9 @@
-package repository
+package m_role
 
 import (
 	"errors"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/internal/domain"
 	"fiber-crud-demo/util"
 	"strconv"
 	"sync"
@@ -12,35 +11,49 @@ import (
 	"gorm.io/gorm"
 )
 
-type MBiodataRepositoryImpl struct {
+type MRoleRepository interface {
+	Get(id uint) (*MRole, error)
+	Create(data *MRole) error
+	Update(data *MRole) error
+	Delete(id uint) error
+	GetPage(
+		sortRequest []request.Sort,
+		filterRequest []request.Filter,
+		searchRequest string,
+		pageInt int,
+		sizeInt64 int64,
+		sizeInt int) (*response.Page, error)
+}
+
+type MRoleRepositoryImpl struct {
 	mutex sync.Mutex
 	db    *gorm.DB
 }
 
-func NewMBiodataRepository(db *gorm.DB) domain.MBiodataRepository {
-	return &MBiodataRepositoryImpl{
+func NewMRoleRepository(db *gorm.DB) MRoleRepository {
+	return &MRoleRepositoryImpl{
 		db: db,
 	}
 }
 
-func (s *MBiodataRepositoryImpl) Get(id uint) (*domain.MBiodata, error) {
+func (s *MRoleRepositoryImpl) Get(id uint) (*MRole, error) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	mBiodata := domain.MBiodata{}
-	result := s.db.First(&mBiodata, id)
+	mRole := MRole{}
+	result := s.db.First(&mRole, id)
 	if result.Error != nil {
 		return nil, result.Error
 	}
 
-	return &mBiodata, nil
+	return &mRole, nil
 }
 
-func (s *MBiodataRepositoryImpl) Create(mBiodata *domain.MBiodata) error {
+func (s *MRoleRepositoryImpl) Create(mRole *MRole) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	result := s.db.Create(&mBiodata)
+	result := s.db.Create(&mRole)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -48,11 +61,11 @@ func (s *MBiodataRepositoryImpl) Create(mBiodata *domain.MBiodata) error {
 	return nil
 }
 
-func (s *MBiodataRepositoryImpl) Update(mBiodata *domain.MBiodata) error {
+func (s *MRoleRepositoryImpl) Update(mRole *MRole) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	result := s.db.Model(&mBiodata).Updates(mBiodata)
+	result := s.db.Model(&mRole).Updates(mRole)
 
 	if result.Error != nil {
 		return result.Error
@@ -61,12 +74,12 @@ func (s *MBiodataRepositoryImpl) Update(mBiodata *domain.MBiodata) error {
 	return nil
 }
 
-func (s *MBiodataRepositoryImpl) Delete(id uint) error {
+func (s *MRoleRepositoryImpl) Delete(id uint) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	var mBiodata domain.MBiodata
-	result := s.db.Delete(&mBiodata, id)
+	var mRole MRole
+	result := s.db.Delete(&mRole, id)
 
 	if result.Error != nil {
 		return result.Error
@@ -78,7 +91,7 @@ func (s *MBiodataRepositoryImpl) Delete(id uint) error {
 	return nil
 }
 
-func (s *MBiodataRepositoryImpl) GetPage(
+func (s *MRoleRepositoryImpl) GetPage(
 	sortRequest []request.Sort,
 	filterRequest []request.Filter,
 	searchRequest string,
@@ -86,11 +99,11 @@ func (s *MBiodataRepositoryImpl) GetPage(
 	sizeInt64 int64,
 	sizeInt int) (*response.Page, error) {
 
-	util.Log("INFO", "service", "GetPageMBiodata", "")
+	util.Log("INFO", "service", "GetPageMRole", "")
 
-	var mRoles []domain.MBiodata
-	var mBiodata domain.MBiodata
-	mRoleMap := util.GetJSONFieldTypes(mBiodata)
+	var mRoles []MRole
+	var mRole MRole
+	mRoleMap := util.GetJSONFieldTypes(mRole)
 
 	// Create a DB instance and build the base query
 	db := s.db
@@ -104,12 +117,12 @@ func (s *MBiodataRepositoryImpl) GetPage(
 	// apply global search
 	db = util.ApplyGlobalSearch(db, searchRequest, mRoleMap)
 
-	util.Log("INFO", "service", "GetPageMBiodata", "")
+	util.Log("INFO", "service", "GetPageMRole", "")
 
 	// Calculate the total data size without considering _size
 	totalElements := db.Find(&mRoles).RowsAffected
 
-	util.Log("INFO", "service", "GetPageMBiodata", "")
+	util.Log("INFO", "service", "GetPageMRole", "")
 
 	// Calculate the total number of pages
 	totalPages := totalElements / sizeInt64
@@ -157,7 +170,7 @@ func (s *MBiodataRepositoryImpl) GetPage(
 		Empty:            sort.Empty,
 	}
 
-	util.Log("INFO", "service", "GetPageMBiodata", "sort is empty: "+strconv.FormatBool(sort.Empty))
+	util.Log("INFO", "service", "GetPageMRole", "sort is empty: "+strconv.FormatBool(sort.Empty))
 
 	return &page, nil
 }

@@ -1,9 +1,7 @@
-package domain
+package m_biodata
 
 import (
 	"fiber-crud-demo/dto"
-	"fiber-crud-demo/dto/request"
-	"fiber-crud-demo/dto/response"
 	"mime/multipart"
 )
 
@@ -33,18 +31,4 @@ type MBiodataRequest struct {
 	Image       *multipart.FileHeader `form:"image" json:"image" xml:"image" gorm:"type:blob"`
 	ImagePath   *string               `form:"imagePath" json:"imagePath" xml:"imagePath"`
 	IsDelete    *bool                 `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"not null;type:boolean;comment:default FALSE"`
-}
-
-type MBiodataRepository interface {
-	Get(id uint) (*MBiodata, error)
-	Create(data *MBiodata) error
-	Update(data *MBiodata) error
-	Delete(id uint) error
-	GetPage(
-		sortRequest []request.Sort,
-		filterRequest []request.Filter,
-		searchRequest string,
-		pageInt int,
-		sizeInt64 int64,
-		sizeInt int) (*response.Page, error)
 }

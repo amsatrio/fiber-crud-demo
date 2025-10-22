@@ -1,9 +1,9 @@
-package domain
+package m_user
 
 import (
 	"fiber-crud-demo/dto"
-	"fiber-crud-demo/dto/request"
-	"fiber-crud-demo/dto/response"
+	"fiber-crud-demo/modules/m_biodata"
+	"fiber-crud-demo/modules/m_role"
 )
 
 type MUser struct {
@@ -23,8 +23,8 @@ type MUser struct {
 	DeletedOn    *dto.JSONTime `form:"deletedOn" json:"deletedOn" xml:"deletedOn" gorm:"type:datetime" swaggertype:"string" example:"2024-02-16 10:33:10"`
 	IsDelete     *bool         `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"type:boolean;comment:default FALSE"`
 
-	MBiodata *MBiodata `gorm:"foreignKey:BiodataId"`
-	MRole    *MRole    `gorm:"foreignKey:RoleId"`
+	MBiodata *m_biodata.MBiodata `gorm:"foreignKey:BiodataId"`
+	MRole    *m_role.MRole       `gorm:"foreignKey:RoleId"`
 }
 
 func (MUser) TableName() string {
@@ -41,18 +41,4 @@ type MUserRequest struct {
 	IsLocked     bool          `form:"isLocked" json:"isLocked" xml:"isLocked" gorm:"type:boolean"`
 	LastLogin    *dto.JSONTime `form:"lastLogin" json:"lastLogin" xml:"lastLogin" gorm:"type:datetime" swaggertype:"string" example:"2024-02-16 10:33:10"`
 	IsDelete     *bool         `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"type:boolean;comment:default FALSE"`
-}
-
-type MUserRepository interface {
-	Get(id uint) (*MUser, error)
-	Create(data *MUser) error
-	Update(data *MUser) error
-	Delete(id uint) error
-	GetPage(
-		sortRequest []request.Sort,
-		filterRequest []request.Filter,
-		searchRequest string,
-		pageInt int,
-		sizeInt64 int64,
-		sizeInt int) (*response.Page, error)
 }

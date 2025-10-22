@@ -1,27 +1,7 @@
 definitions:
-  domain.MBiodataRequest:
-    properties:
-      fullname:
-        maxLength: 255
-        type: string
-      id:
-        type: integer
-      image:
-        items:
-          type: integer
-        type: array
-      imagePath:
-        maxLength: 255
-        type: string
-      isDelete:
-        type: boolean
-      mobilePhone:
-        maxLength: 15
-        type: string
-    required:
-    - id
+  m_biodata.MBiodataRequest:
     type: object
-  domain.MModuleRequest:
+  m_module.MModuleRequest:
     properties:
       id:
         type: integer
@@ -31,7 +11,7 @@ definitions:
         maxLength: 100
         type: string
     type: object
-  domain.MRoleRequest:
+  m_role.MRoleRequest:
     properties:
       code:
         maxLength: 20
@@ -46,7 +26,7 @@ definitions:
         maxLength: 20
         type: string
     type: object
-  domain.MUserRequest:
+  m_user.MUserRequest:
     properties:
       biodataId:
         type: integer
@@ -108,24 +88,24 @@ paths:
       - default: "0"
         description: page
         in: query
-        name: _page
+        name: page
         type: string
       - default: "5"
         description: size
         in: query
-        name: _size
+        name: size
         type: string
       - description: sort
         in: query
-        name: _sort
+        name: sort
         type: string
       - description: filter
         in: query
-        name: _filter
+        name: filter
         type: string
       - description: global filter
         in: query
-        name: _q
+        name: search
         type: string
       produces:
       - application/json
@@ -164,7 +144,7 @@ paths:
         name: mBiodata
         required: true
         schema:
-          $ref: '#/definitions/domain.MBiodataRequest'
+          $ref: '#/definitions/m_biodata.MBiodataRequest'
       produces:
       - application/json
       responses:
@@ -202,7 +182,7 @@ paths:
         name: mBiodata
         required: true
         schema:
-          $ref: '#/definitions/domain.MBiodataRequest'
+          $ref: '#/definitions/m_biodata.MBiodataRequest'
       produces:
       - application/json
       responses:
@@ -314,24 +294,24 @@ paths:
       - default: "0"
         description: page
         in: query
-        name: _page
+        name: page
         type: string
       - default: "5"
         description: size
         in: query
-        name: _size
+        name: size
         type: string
       - description: sort
         in: query
-        name: _sort
+        name: sort
         type: string
       - description: filter
         in: query
-        name: _filter
+        name: filter
         type: string
       - description: global filter
         in: query
-        name: _q
+        name: search
         type: string
       produces:
       - application/json
@@ -370,7 +350,7 @@ paths:
         name: mModule
         required: true
         schema:
-          $ref: '#/definitions/domain.MModuleRequest'
+          $ref: '#/definitions/m_module.MModuleRequest'
       produces:
       - application/json
       responses:
@@ -408,7 +388,7 @@ paths:
         name: mModule
         required: true
         schema:
-          $ref: '#/definitions/domain.MModuleRequest'
+          $ref: '#/definitions/m_module.MModuleRequest'
       produces:
       - application/json
       responses:
@@ -520,24 +500,24 @@ paths:
       - default: "0"
         description: page
         in: query
-        name: _page
+        name: page
         type: string
       - default: "5"
         description: size
         in: query
-        name: _size
+        name: size
         type: string
       - description: sort
         in: query
-        name: _sort
+        name: sort
         type: string
       - description: filter
         in: query
-        name: _filter
+        name: filter
         type: string
       - description: global filter
         in: query
-        name: _q
+        name: search
         type: string
       produces:
       - application/json
@@ -576,7 +556,7 @@ paths:
         name: mRole
         required: true
         schema:
-          $ref: '#/definitions/domain.MRoleRequest'
+          $ref: '#/definitions/m_role.MRoleRequest'
       produces:
       - application/json
       responses:
@@ -614,7 +594,7 @@ paths:
         name: mRole
         required: true
         schema:
-          $ref: '#/definitions/domain.MRoleRequest'
+          $ref: '#/definitions/m_role.MRoleRequest'
       produces:
       - application/json
       responses:
@@ -726,24 +706,24 @@ paths:
       - default: "0"
         description: page
         in: query
-        name: _page
+        name: page
         type: string
       - default: "5"
         description: size
         in: query
-        name: _size
+        name: size
         type: string
       - description: sort
         in: query
-        name: _sort
+        name: sort
         type: string
       - description: filter
         in: query
-        name: _filter
+        name: filter
         type: string
       - description: global filter
         in: query
-        name: _q
+        name: search
         type: string
       produces:
       - application/json
@@ -782,7 +762,7 @@ paths:
         name: mUser
         required: true
         schema:
-          $ref: '#/definitions/domain.MUserRequest'
+          $ref: '#/definitions/m_user.MUserRequest'
       produces:
       - application/json
       responses:
@@ -820,7 +800,7 @@ paths:
         name: mUser
         required: true
         schema:
-          $ref: '#/definitions/domain.MUserRequest'
+          $ref: '#/definitions/m_user.MUserRequest'
       produces:
       - application/json
       responses:

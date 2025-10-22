@@ -1,10 +1,9 @@
-package repository
+package m_module
 
 import (
 	"errors"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/internal/domain"
 	"fiber-crud-demo/util"
 	"strconv"
 	"sync"
@@ -12,22 +11,35 @@ import (
 	"gorm.io/gorm"
 )
 
+type MModuleRepository interface {
+	Get(id uint) (*MModule, error)
+	Create(data *MModule) error
+	Update(data *MModule) error
+	Delete(id uint) error
+	GetPage(
+		sortRequest []request.Sort,
+		filterRequest []request.Filter,
+		searchRequest string,
+		pageInt int,
+		sizeInt64 int64,
+		sizeInt int) (*response.Page, error)
+}
 type MModuleRepositoryImpl struct {
 	mutex sync.Mutex
 	db    *gorm.DB
 }
 
-func NewMModuleRepository(db *gorm.DB) domain.MModuleRepository {
+func NewMModuleRepository(db *gorm.DB) MModuleRepository {
 	return &MModuleRepositoryImpl{
 		db: db,
 	}
 }
 
-func (s *MModuleRepositoryImpl) Get(id uint) (*domain.MModule, error) {
+func (s *MModuleRepositoryImpl) Get(id uint) (*MModule, error) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	mModule := domain.MModule{}
+	mModule := MModule{}
 	result := s.db.First(&mModule, id)
 	if result.Error != nil {
 		return nil, result.Error
@@ -36,7 +48,7 @@ func (s *MModuleRepositoryImpl) Get(id uint) (*domain.MModule, error) {
 	return &mModule, nil
 }
 
-func (s *MModuleRepositoryImpl) Create(mModule *domain.MModule) error {
+func (s *MModuleRepositoryImpl) Create(mModule *MModule) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
@@ -48,7 +60,7 @@ func (s *MModuleRepositoryImpl) Create(mModule *domain.MModule) error {
 	return nil
 }
 
-func (s *MModuleRepositoryImpl) Update(mModule *domain.MModule) error {
+func (s *MModuleRepositoryImpl) Update(mModule *MModule) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
@@ -65,7 +77,7 @@ func (s *MModuleRepositoryImpl) Delete(id uint) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
-	var mModule domain.MModule
+	var mModule MModule
 	result := s.db.Delete(&mModule, id)
 
 	if result.Error != nil {
@@ -88,8 +100,8 @@ func (s *MModuleRepositoryImpl) GetPage(
 
 	util.Log("INFO", "service", "GetPageMModule", "")
 
-	var mModules []domain.MModule
-	var mModule domain.MModule
+	var mModules []MModule
+	var mModule MModule
 	mModuleMap := util.GetJSONFieldTypes(mModule)
 
 	// Create a DB instance and build the base query

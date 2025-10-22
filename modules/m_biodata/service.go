@@ -1,11 +1,11 @@
-package application
+package m_biodata
 
 import (
 	"errors"
 	"fiber-crud-demo/dto"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/internal/domain"
+	"fiber-crud-demo/modules/m_file"
 	"fmt"
 	"io"
 	"strconv"
@@ -13,9 +13,9 @@ import (
 )
 
 type MBiodataService interface {
-	Get(id uint) (*domain.MBiodata, error)
-	Create(payload *domain.MBiodataRequest, mUserId uint) error
-	Update(payload *domain.MBiodataRequest, mUserId uint) error
+	Get(id uint) (*MBiodata, error)
+	Create(payload *MBiodataRequest, mUserId uint) error
+	Update(payload *MBiodataRequest, mUserId uint) error
 	Delete(id uint) error
 	GetPage(
 		sortRequest []request.Sort,
@@ -27,18 +27,18 @@ type MBiodataService interface {
 }
 
 type MBiodataServiceImpl struct {
-	repo     domain.MBiodataRepository
-	fileRepo domain.MFileRepository
+	repo     MBiodataRepository
+	fileRepo m_file.MFileRepository
 }
 
-func NewMBiodataService(repo domain.MBiodataRepository, fileRepo domain.MFileRepository) MBiodataService {
+func NewMBiodataService(repo MBiodataRepository, fileRepo m_file.MFileRepository) MBiodataService {
 	return &MBiodataServiceImpl{
 		repo:     repo,
 		fileRepo: fileRepo,
 	}
 }
 
-func (s *MBiodataServiceImpl) Get(id uint) (*domain.MBiodata, error) {
+func (s *MBiodataServiceImpl) Get(id uint) (*MBiodata, error) {
 	existing, err := s.repo.Get(id)
 	if err != nil {
 		return nil, err
@@ -65,9 +65,9 @@ func (s *MBiodataServiceImpl) Get(id uint) (*domain.MBiodata, error) {
 	return existing, nil
 }
 
-func (s *MBiodataServiceImpl) Create(payload *domain.MBiodataRequest, mUserId uint) error {
+func (s *MBiodataServiceImpl) Create(payload *MBiodataRequest, mUserId uint) error {
 	bool_true := false
-	data := &domain.MBiodata{
+	data := &MBiodata{
 		Id:          0,
 		Fullname:    payload.Fullname,
 		MobilePhone: payload.MobilePhone,
@@ -101,7 +101,7 @@ func (s *MBiodataServiceImpl) Create(payload *domain.MBiodataRequest, mUserId ui
 	return s.repo.Create(data)
 }
 
-func (s *MBiodataServiceImpl) Update(payload *domain.MBiodataRequest, mUserId uint) error {
+func (s *MBiodataServiceImpl) Update(payload *MBiodataRequest, mUserId uint) error {
 
 	if payload.Id == nil {
 		return errors.New("invalid payload")

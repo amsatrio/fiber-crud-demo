@@ -1,12 +1,10 @@
-package http
+package m_biodata
 
 import (
 	"encoding/json"
 	"errors"
 	"fiber-crud-demo/dto/request"
 	"fiber-crud-demo/dto/response"
-	"fiber-crud-demo/internal/application"
-	"fiber-crud-demo/internal/domain"
 	"fiber-crud-demo/util"
 	"regexp"
 	"strconv"
@@ -16,36 +14,36 @@ import (
 	"gorm.io/gorm"
 )
 
-type MRoleHandler struct {
-	service  application.MRoleService
+type MBiodataHandler struct {
+	service  MBiodataService
 	validate *validator.Validate
 }
 
-func NewMRoleHandler(service application.MRoleService, validate *validator.Validate) *MRoleHandler {
-	return &MRoleHandler{
+func NewMBiodataHandler(service MBiodataService, validate *validator.Validate) *MBiodataHandler {
+	return &MBiodataHandler{
 		service:  service,
 		validate: validate,
 	}
 }
 
-// MRoleCreate godoc
+// MBiodataCreate godoc
 //
-//	@Summary		MRoleCreate
-//	@Description	Create MRole
-//	@Tags			mRole
+//	@Summary		MBiodataCreate
+//	@Description	Create MBiodata
+//	@Tags			mBiodata
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			mRole	body		domain.MRoleRequest	true	"Add MRoleRequest"
+//	@Param			mBiodata	body		MBiodataRequest	true	"Add MBiodataRequest"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-role [post]
-func (h *MRoleHandler) MRoleCreate(c *fiber.Ctx) error {
+//	@Router			/m-biodata [post]
+func (h *MBiodataHandler) MBiodataCreate(c *fiber.Ctx) error {
 
 	res := &response.Response{}
-	payload := new(domain.MRoleRequest)
+	payload := new(MBiodataRequest)
 
 	// parse payload
 	if err := c.BodyParser(payload); err != nil {
@@ -62,11 +60,15 @@ func (h *MRoleHandler) MRoleCreate(c *fiber.Ctx) error {
 		}
 	}
 
-	// insert data
+	image, err := c.FormFile("image")
+	if err == nil && image != nil {
+		payload.Image = image
+	}
 
-	err := h.service.Create(payload, 0)
+	// insert data
+	err = h.service.Create(payload, 0)
 	if err != nil {
-		util.Log("ERROR", "controllers", "MRoleCreate", "create data error: "+err.Error())
+		util.Log("ERROR", "controllers", "MBiodataCreate", "create data error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "create data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}
@@ -75,24 +77,24 @@ func (h *MRoleHandler) MRoleCreate(c *fiber.Ctx) error {
 	return c.Status(res.Status).JSON(res)
 }
 
-// MRoleUpdate godoc
+// MBiodataUpdate godoc
 //
-//	@Summary		MRoleUpdate
-//	@Description	Update MRole
-//	@Tags			mRole
+//	@Summary		MBiodataUpdate
+//	@Description	Update MBiodata
+//	@Tags			mBiodata
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			mRole	body		domain.MRoleRequest	true	"Add MRoleRequest"
+//	@Param			mBiodata	body		MBiodataRequest	true	"Add MBiodataRequest"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-role [put]
-func (h *MRoleHandler) MRoleUpdate(c *fiber.Ctx) error {
+//	@Router			/m-biodata [put]
+func (h *MBiodataHandler) MBiodataUpdate(c *fiber.Ctx) error {
 
 	res := &response.Response{}
-	payload := new(domain.MRoleRequest)
+	payload := new(MBiodataRequest)
 
 	// parse payload
 	if err := c.BodyParser(payload); err != nil {
@@ -100,7 +102,7 @@ func (h *MRoleHandler) MRoleUpdate(c *fiber.Ctx) error {
 		return c.Status(res.Status).JSON(res)
 	}
 
-	// validate payload
+	// h.validate payload
 	if err := h.validate.Struct(payload); err != nil {
 		out, _ := util.ValidateError(err)
 		if out != nil {
@@ -109,10 +111,15 @@ func (h *MRoleHandler) MRoleUpdate(c *fiber.Ctx) error {
 		}
 	}
 
+	image, err := c.FormFile("image")
+	if err == nil && image != nil {
+		payload.Image = image
+	}
+
 	// update data
-	err := h.service.Update(payload, 0)
+	err = h.service.Update(payload, 0)
 	if err != nil {
-		util.Log("ERROR", "controllers", "MRoleUpdate", "update data error: "+err.Error())
+		util.Log("ERROR", "controllers", "MBiodataUpdate", "update data error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "update data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}
@@ -121,21 +128,21 @@ func (h *MRoleHandler) MRoleUpdate(c *fiber.Ctx) error {
 	return c.Status(res.Status).JSON(res)
 }
 
-// MRoleIndex godoc
+// MBiodataIndex godoc
 //
-//	@Summary		MRoleIndex
-//	@Description	Get MRole by id
-//	@Tags			mRole
+//	@Summary		MBiodataIndex
+//	@Description	Get MBiodata by id
+//	@Tags			mBiodata
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			id	path		int	true	"MRole id"
+//	@Param			id	path		int	true	"MBiodata id"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-role/{id} [get]
-func (h *MRoleHandler) MRoleIndex(c *fiber.Ctx) error {
+//	@Router			/m-biodata/{id} [get]
+func (h *MBiodataHandler) MBiodataIndex(c *fiber.Ctx) error {
 
 	res := &response.Response{}
 
@@ -148,37 +155,37 @@ func (h *MRoleHandler) MRoleIndex(c *fiber.Ctx) error {
 	}
 	idUint = uint(idUint64)
 
-	mRole, err := h.service.Get(idUint)
+	mBiodata, err := h.service.Get(idUint)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "data not found")
 		return c.Status(res.Status).JSON(res)
 	}
 
 	if err != nil {
-		util.Log("ERROR", "controllers", "MRoleIndex", err.Error())
+		util.Log("ERROR", "controllers", "MBiodataIndex", err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "get data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}
 
-	res.Ok(c.Path(), mRole)
+	res.Ok(c.Path(), mBiodata)
 	return c.Status(res.Status).JSON(res)
 }
 
-// MRoleDelete godoc
+// MBiodataDelete godoc
 //
-//	@Summary		MRoleDelete
-//	@Description	Delete MRole by id
-//	@Tags			mRole
+//	@Summary		MBiodataDelete
+//	@Description	Delete MBiodata by id
+//	@Tags			mBiodata
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
-//	@Param			id	path		int	true	"MRole id"
+//	@Param			id	path		int	true	"MBiodata id"
 //	@Success		200	{object}	response.Response
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-role/{id} [delete]
-func (h *MRoleHandler) MRoleDelete(c *fiber.Ctx) error {
+//	@Router			/m-biodata/{id} [delete]
+func (h *MBiodataHandler) MBiodataDelete(c *fiber.Ctx) error {
 	res := &response.Response{}
 
 	// get id from request param
@@ -191,7 +198,7 @@ func (h *MRoleHandler) MRoleDelete(c *fiber.Ctx) error {
 	}
 	idUint = uint(idUint64)
 
-	// delete mRole
+	// delete mBiodata
 	err = h.service.Delete(idUint)
 
 	if err != nil {
@@ -204,11 +211,11 @@ func (h *MRoleHandler) MRoleDelete(c *fiber.Ctx) error {
 	return c.Status(res.Status).JSON(res)
 }
 
-// MRolePage godoc
+// MBiodataPage godoc
 //
-//	@Summary		MRolePage
-//	@Description	Get Page MRole
-//	@Tags			mRole
+//	@Summary		MBiodataPage
+//	@Description	Get Page MBiodata
+//	@Tags			mBiodata
 //	@Accept			json
 //	@Produce		json
 //	@Param			Accept-Encoding	header	string	false	"gzip" default(gzip)
@@ -221,8 +228,8 @@ func (h *MRoleHandler) MRoleDelete(c *fiber.Ctx) error {
 //	@Failure		400	{object}	response.Response
 //	@Failure		404	{object}	response.Response
 //	@Failure		500	{object}	response.Response
-//	@Router			/m-role [get]
-func (h *MRoleHandler) MRolePage(c *fiber.Ctx) error {
+//	@Router			/m-biodata [get]
+func (h *MBiodataHandler) MBiodataPage(c *fiber.Ctx) error {
 	res := &response.Response{}
 
 	sortRequest := c.Query("sort", "[]")
@@ -257,14 +264,14 @@ func (h *MRoleHandler) MRolePage(c *fiber.Ctx) error {
 	var sorts []request.Sort
 	jsonUnmarshalErr := json.Unmarshal([]byte(sortRequest), &sorts)
 	if jsonUnmarshalErr != nil {
-		util.Log("ERROR", "controllers", "MRolePage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
+		util.Log("ERROR", "controllers", "MBiodataPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
 	}
 	var filters []request.Filter
 	jsonUnmarshalErr = json.Unmarshal([]byte(filterRequest), &filters)
 	if jsonUnmarshalErr != nil {
-		util.Log("ERROR", "controllers", "MRolePage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
+		util.Log("ERROR", "controllers", "MBiodataPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
 	}
@@ -278,7 +285,7 @@ func (h *MRoleHandler) MRolePage(c *fiber.Ctx) error {
 		sizeInt)
 
 	if err != nil {
-		util.Log("ERROR", "controllers", "MRolePage", "error: "+err.Error())
+		util.Log("ERROR", "controllers", "MBiodataPage", "error: "+err.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "get data error: "+err.Error())
 		return c.Status(res.Status).JSON(res)
 	}

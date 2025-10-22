@@ -27,16 +27,16 @@ clean:
 	rm -rf output/csv
 
 swag_init:
-	/home/mos/go/bin/swag init
+	~/go/bin/swag init
 	sed -i 's/LeftDelim:        "{{",//g' docs/docs.go
 	sed -i 's/RightDelim:       "}}",//g' docs/docs.go
 dev: swag_init
-	/home/mos/go/bin/CompileDaemon -command="./${BINARY_NAME}" -pattern="(.+\.go|.+\.c|.+\.html|.+\.css|.+\.js)"
+	~/go/bin/CompileDaemon -command="./${BINARY_NAME}" -pattern="(.+\.go|.+\.c|.+\.html|.+\.css|.+\.js)"
 
 # hot reload by air
 air:
 	swag_init
-	/home/mos/go/bin/air server --port 8080
+	~/go/bin/air server --port 8080
 
 migrate:
 	go run migrate/migrate.go
@@ -58,4 +58,4 @@ lint:
 
 # web
 web_run:
-	 /home/mos/go/bin/fyne serve
+	 ~/go/bin/fyne serve

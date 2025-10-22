@@ -111,6 +111,8 @@ func routes(app *fiber.App) {
 	// WEB MASTER BIODATA
 	mBiodataWebHandler := m_biodata.NewMBiodataWebHandler()
 	m_biodata_web := app.Group("/web/m-biodata")
+	m_biodata_web.Get("/datatable", mBiodataWebHandler.MBiodataDatatableWebIndex)
+	m_biodata_web.Get("/table", mBiodataWebHandler.MBiodataTableWebIndex)
 	m_biodata_web.Get("", mBiodataWebHandler.MBiodataWebIndex)
 
 	var validate = validator.New()

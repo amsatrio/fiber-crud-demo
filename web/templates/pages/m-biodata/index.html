@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {{template "components/sidebar" .}}
+        </div>
+        <div class="col">
+            {{template "components/header" .}}
+        </div>
+
+    </div>
+</div>
+
+<div>
+    <nav>
+        <a href="/web/m-biodata/datatable">Datatable</a>
+        <a href="/web/m-biodata/table">Table</a>
+    </nav>
+</div>
+
+{{template "components/toast" .}}
+{{template "components/footer" .}}

@@ -1,7 +1,13 @@
 @base_url=http://localhost:8005
 
 ### page
-GET {{base_url}}/m-biodata
+GET {{base_url}}/m-biodata?page=1&size=2
+
+### sort
+GET {{base_url}}/m-biodata?sort=[{"id":"fullname", "desc":true}]
+
+### filter
+GET {{base_url}}/m-biodata?filter=[{"id":"fullname", "value":"3", "matchMode": "CONTAINS", "dataType": "TEXT", "mode": "AND"}]
 
 ### index
 GET {{base_url}}/m-biodata/1
@@ -11,8 +17,8 @@ POST {{base_url}}/m-biodata
 Content-Type: application/json
 
 {
-    "id": 1,
-    "fullname":"my-name",
+    "id": 2,
+    "fullname":"my-name 2",
     "mobilePhone":"084321829345",
     "isDelete":false
 }

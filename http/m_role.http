@@ -11,10 +11,10 @@ POST {{base_url}}/m-role
 Content-Type: application/json
 
 {
-    "id": 1,
-    "name":"admin",
-    "code":"admin",
-    "level":1,
+    "id": 2,
+    "name":"user",
+    "code":"user",
+    "level":2,
     "isDelete":false
 }
 

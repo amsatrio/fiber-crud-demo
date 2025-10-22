@@ -67,10 +67,10 @@ func HelloWorldError(c *fiber.Ctx) error {
 	res.Ok(c.Path(), nil)
 
 	if error_type == "503" {
-		return fiber.NewError(fiber.StatusServiceUnavailable, "On vacation!")
+		res.Err(c.Path(), "On vacation!", fiber.StatusServiceUnavailable)
 	}
 	if error_type == "500" {
-		return fiber.NewError(fiber.StatusInternalServerError, "On vacation!")
+		res.Err(c.Path(), "On vacation!", fiber.StatusInternalServerError)
 	}
 
 	return c.Status(res.Status).JSON(res)

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"os"
+	"runtime"
 
 	_ "fiber-crud-demo/docs"
 	"fiber-crud-demo/dto/response"
@@ -67,6 +68,8 @@ func config() fiber.Config {
 }
 
 func main() {
+	runtime.GOMAXPROCS(1)
+
 	app := fiber.New(config())
 
 	// ### Middleware

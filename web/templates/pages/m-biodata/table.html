@@ -147,6 +147,7 @@
                 if (column.datatype === 'boolean') {
                     // Use a select/dropdown for boolean filters
                     input = document.createElement('select');
+                    input.type = 'boolean';
                     input.innerHTML = `
                     <option value="">All</option>
                     <option value="true">True</option>
@@ -215,10 +216,36 @@
     function applyFilters() {
         const filterInputs = document.querySelectorAll('.filter-input');
 
-        const filters = {};
+        currentFilteringArray = [];
+        let filters = {};
         filterInputs.forEach(input => {
-            filters[input.dataset.columnId] = input.value.toLowerCase();
+            console.log(input)
+            filters = {};
+            filters["id"] = camelToSnake(input.dataset.columnId)
+            filters["value"] = input.value;
+            filters["matchMode"] = "CONTAINS";
+            if (input.type === "text") {
+                filters["dataType"] = "TEXT";
+            } else if (input.type === "date") {
+                filters["dataType"] = "DATE";
+                filters["matchMode"] = "CONTAINS";
+            } else if (input.localName === "select") {
+                filters["dataType"] = "BOOLEAN";
+                filters["matchMode"] = "EQUALS";
+                if(input.value === "true") {
+                    filters["value"] = 1;
+                } else if(input.value === "false") {
+                    filters["value"] = 0;
+                }
+            }
+
+            filters["mode"] = "AND";
+            if (input.value != "") {
+                currentFilteringArray.push(filters);
+            }
+
         });
+        refreshTable();
     }
 
     function toggleFilters() {
@@ -262,7 +289,7 @@
         page: 0,
         size: 2
     }
-    let currentFiltering = {}
+    let currentFilteringArray = []
 
     async function initializeContentTable() {
         let url = "/m-biodata";
@@ -273,6 +300,10 @@
             const columnId = camelToSnake(currentSort.columnId);
             const sortParam = [{ "id": columnId, "desc": currentSort.direction === 'desc' ? true : false }]
             url = url + "&sort=" + encodeURIComponent(JSON.stringify(sortParam))
+        }
+        // url filter
+        if (currentFilteringArray != []) {
+            url = url + "&filter=" + encodeURIComponent(JSON.stringify(currentFilteringArray));
         }
 
         const result = await fetchData(url, "", "GET");

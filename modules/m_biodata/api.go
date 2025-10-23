@@ -275,6 +275,7 @@ func (h *MBiodataHandler) MBiodataPage(c *fiber.Ctx) error {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
 	}
+	util.Log("INFO", "m_biodata", "MBiodataPage", filterRequest)
 
 	result, err := h.service.GetPage(
 		sorts,

@@ -11,7 +11,7 @@
 </div>
 
 <div>
-    <table>
+    <table id="table-header-id" style="width: fit-content;">
         <tbody>
             <tr>
                 <td><button>Create</button></td>
@@ -21,9 +21,35 @@
             </tr>
         </tbody>
     </table>
-    <table id="table-id">
+    <table id="table-id" style="width: 100%;">
     </table>
-    <div id="table-footer-id"></div>
+    <div id="table-footer-id">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <div id="table-footer-info"></div>
+                    </td>
+                    <td>
+                        <div id="table-footer-page-length">
+                            <select id="page-length-select-id" onchange="applyPageLength()">
+                                <option value="2">2</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="100">100</option>
+                                <option value="-1">All</option>
+                            </select>
+                            <span>entries per page</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="table-footer-pagination">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
@@ -240,9 +266,9 @@
 
     async function initializeContentTable() {
         let url = "/m-biodata";
-        // pagination
+        // url pagination
         url = url + "?page=" + currentPagination.page + "&size=" + currentPagination.size;
-        // sort
+        // url sort
         if (currentSort.columnId !== null) {
             const columnId = camelToSnake(currentSort.columnId);
             const sortParam = [{ "id": columnId, "desc": currentSort.direction === 'desc' ? true : false }]
@@ -284,6 +310,56 @@
             }
             tbody.appendChild(tr);
         });
+
+        // INFO
+        const offsetStart = parseInt(currentPagination.page) * parseInt(currentPagination.size) + 1;
+        let offsetEnd = offsetStart + parseInt(currentPagination.size) - 1;
+        if (offsetEnd > parseInt(result.data.totalElements) || offsetEnd < 0) {
+            offsetEnd = parseInt(result.data.totalElements);
+        }
+        let tableFooterInfoContainer = document.getElementById("table-footer-info");
+        tableFooterInfoContainer.innerHTML = "Showing " + offsetStart + " to " + offsetEnd + " of " + result.data.totalElements + " entries";
+
+        // PAGINATION
+        const paginationContainer = document.getElementById('table-footer-pagination');
+        paginationContainer.innerHTML = '';
+        const paginationPreviousButton = document.createElement('button');
+        paginationPreviousButton.innerHTML = 'Previous';
+        paginationPreviousButton.disabled = result.data.first;
+        paginationPreviousButton.onclick = function () {
+            applyPagination(currentPagination.page - 1)
+        }
+        paginationContainer.appendChild(paginationPreviousButton);
+
+        for (i = 1; i <= result.data.totalPages; i++) {
+            const paginationNumberButton = document.createElement('button');
+            paginationNumberButton.innerHTML = i;
+            paginationNumberButton.onclick = function () {
+                applyPagination(parseInt(paginationNumberButton.innerHTML) - 1);
+            }
+            paginationNumberButton.disabled = parseInt(paginationNumberButton.innerHTML) - 1 === parseInt(currentPagination.page);
+            paginationContainer.appendChild(paginationNumberButton);
+        }
+
+        const paginationNextButton = document.createElement('button');
+        paginationNextButton.innerHTML = 'Next';
+        paginationNextButton.disabled = result.data.last;
+        paginationNextButton.onclick = function () {
+            applyPagination(currentPagination.page + 1)
+        }
+        paginationContainer.appendChild(paginationNextButton);
+    }
+
+    function applyPagination(page) {
+        currentPagination.page = page;
+        refreshTable();
+    }
+
+    function applyPageLength() {
+        const pageLengthSelectId = document.getElementById('page-length-select-id');
+        currentPagination.size = pageLengthSelectId.value;
+        // console.log(JSON.stringify(currentPagination));
+        refreshTable();
     }
 
     function refreshTable() {

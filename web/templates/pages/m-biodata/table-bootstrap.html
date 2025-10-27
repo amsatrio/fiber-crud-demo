@@ -1,0 +1,472 @@
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+<!-- Bootstrap Icon -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+<div class="m-3">
+    <div class="row mb-3">
+        <div class="col">
+            <div class="d-grid gap-2 d-md-block">
+                <td><button type="button" class="btn btn-primary"><i class="bi bi-plus-square"></i> Create</button></td>
+                <td><button type="button" class="btn btn-primary" onclick="refreshTable()"><i
+                            class="bi bi-arrow-clockwise"></i> Refresh</button></td>
+            </div>
+        </div>
+        <div class="col">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <td><button type="button" class="btn btn-primary" onclick="toggleFilters()"><i class="bi bi-filter"></i>
+                        Filter</button></td>
+                <td><button type="button" class="btn btn-primary"><i class="bi bi-file-earmark-text"></i>
+                        Export</button></td>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div>
+        <table id="table-id" class="table table-striped table-hover table-bordered table-sm">
+        </table>
+    </div>
+
+    <div id="table-footer-id">
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>
+                        <div id="table-footer-info"></div>
+                    </td>
+                    <td>
+                        <div id="table-footer-page-length">
+                            <select id="page-length-select-id" onchange="applyPageLength()">
+                                <option value="2">2</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="100">100</option>
+                                <option value="-1">All</option>
+                            </select>
+                            <span>entries per page</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="table-footer-pagination">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const camelToSnake = (input) => {
+        return input.replace(/([A-Z])/g, '_$1').toLowerCase();
+    };
+
+    const dataTable = [
+        {
+            "id": "id",
+            "title": "ID",
+            "sortable": true,
+            "filterable": true,
+            "datatype": "number",
+        },
+        {
+            "id": "fullname",
+            "title": "Full Name",
+            "sortable": true,
+            "filterable": true,
+            "datatype": "text",
+        },
+        {
+            "id": "mobilePhone",
+            "title": "Mobile Phone",
+            "sortable": true,
+            "filterable": true,
+            "datatype": "text",
+        },
+        {
+            "id": "imagePath",
+            "title": "Image Path",
+            "sortable": true,
+            "filterable": true,
+            "datatype": "text",
+        },
+        {
+            "id": "createdOn",
+            "title": "Created On",
+            "sortable": true,
+            "filterable": true,
+            "datatype": "date",
+        },
+        {
+            "id": "isDelete",
+            "title": "Is Delete",
+            "sortable": true,
+            "filterable": true,
+            "datatype": "boolean",
+        },
+        {
+            "id": "action",
+            "title": "Action",
+            "sortable": false,
+            "filterable": false,
+            "datatype": null,
+        },
+    ];
+    function initializeTable() {
+        const table = document.getElementById('table-id');
+        const thead = document.createElement('thead');
+        thead.classList.add("table-light")
+        const headerTitleRow = document.createElement('tr');
+        const headerFilterRow = document.createElement('tr');
+        headerFilterRow.id = 'data-table-column-filtering-id';
+
+        const tbody = document.createElement('tbody');
+        tbody.id = 'data-table-body';
+        table.appendChild(tbody);
+
+
+        for (const column of dataTable) {
+
+            // TITLE
+            const th = document.createElement('th');
+            th.textContent = column.title;
+            th.setAttribute('data-id', column.id);
+            th.setAttribute('data-column-id', column.id);
+            th.classList.add("p-1", "m-1")
+            headerTitleRow.appendChild(th);
+
+            // SORT
+            const sortSymbol = document.createElement('span');
+            sortSymbol.classList.add('sort-symbol');
+            th.appendChild(sortSymbol);
+            if (column.sortable) {
+                th.style.cursor = 'pointer';
+                th.addEventListener('click', () => {
+                    sortTable(column.id);
+                });
+            }
+
+            // FILTER
+            const td = document.createElement('td');
+            if (column.filterable) {
+                let input;
+                if (column.datatype === 'boolean') {
+                    // Use a select/dropdown for boolean filters
+                    input = document.createElement('select');
+                    input.type = 'boolean';
+                    input.innerHTML = `
+                    <option value="">All</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                `;
+                    input.addEventListener('change', applyFilters);
+                } else if (column.datatype === 'date') {
+                    input = document.createElement('input');
+                    input.type = 'date';
+                    input.addEventListener('change', applyFilters);
+                } else {
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.placeholder = `Filter ${column.title}..`;
+                    input.addEventListener('keyup', applyFilters);
+                }
+                input.classList.add('filter-input');
+                // Store the column ID on the input element
+                input.dataset.columnId = column.id;
+                // Attach the event listener for filtering
+                input.addEventListener('keyup', applyFilters);
+                td.appendChild(input);
+            }
+            headerFilterRow.appendChild(td);
+        }
+        thead.appendChild(headerTitleRow);
+        thead.appendChild(headerFilterRow);
+        table.appendChild(thead);
+    }
+
+    let currentSort = {
+        columnId: null,
+        direction: 'asc' // 'asc' or 'desc'
+    };
+    function updateSortSymbols(columnId, direction) {
+        document.querySelectorAll('.sort-symbol').forEach(span => {
+            span.innerHTML = ''; // Clear all symbols
+        });
+
+        const th = document.querySelector(`th[data-column-id="${columnId}"]`);
+        if (th) {
+            const symbolSpan = th.querySelector('.sort-symbol');
+            if (symbolSpan) {
+                symbolSpan.innerHTML = direction === 'asc' ? '&#9650;' : '&#9660;';
+            }
+        }
+    }
+    function sortTable(columnId) {
+        let newDirection = 'asc';
+        if (currentSort.columnId === columnId) {
+            // reset symbol
+            if (currentSort.direction === 'desc') {
+                columnId = null;
+            }
+            newDirection = currentSort.direction === 'asc' ? 'desc' : 'asc';
+        }
+
+        currentSort.columnId = columnId;
+        currentSort.direction = newDirection;
+
+        currentPagination.page = 0;
+        console.log(`Sorting by ${currentSort.columnId} in ${currentSort.direction} order.`);
+        initializeContentTable();
+        updateSortSymbols(currentSort.columnId, currentSort.direction);
+    }
+
+    function applyFilters() {
+        const filterInputs = document.querySelectorAll('.filter-input');
+
+        currentFilteringArray = [];
+        let filters = {};
+        filterInputs.forEach(input => {
+            console.log(input)
+            filters = {};
+            filters["id"] = camelToSnake(input.dataset.columnId)
+            filters["value"] = input.value;
+            filters["matchMode"] = "CONTAINS";
+            if (input.type === "text") {
+                filters["dataType"] = "TEXT";
+            } else if (input.type === "date") {
+                filters["dataType"] = "DATE";
+                filters["matchMode"] = "CONTAINS";
+            } else if (input.localName === "select") {
+                filters["dataType"] = "BOOLEAN";
+                filters["matchMode"] = "EQUALS";
+                if (input.value === "true") {
+                    filters["value"] = 1;
+                } else if (input.value === "false") {
+                    filters["value"] = 0;
+                }
+            }
+
+            filters["mode"] = "AND";
+            if (input.value != "") {
+                currentFilteringArray.push(filters);
+            }
+
+        });
+
+        currentPagination.page = 0;
+        refreshTable();
+    }
+
+    function toggleFilters() {
+        const columnFiltering = document.getElementById('data-table-column-filtering-id');
+        columnFiltering.hidden = !columnFiltering.hidden;
+    }
+
+    async function fetchData(url, data, method) {
+        try {
+            let response;
+            if (method === 'GET' || method === 'DELETE') {
+                response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } else {
+                response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+            }
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log('Success:', result);
+            return result;
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    let currentPagination = {
+        page: 0,
+        size: 2,
+        total: 10
+    }
+    let currentFilteringArray = []
+
+    async function initializeContentTable() {
+        let url = "/m-biodata";
+        // url pagination
+        if (!currentPagination.page) {
+            currentPagination.page = 0
+        }
+        if (currentPagination.page < 0) {
+            currentPagination.page = 0;
+        }
+        if (currentPagination.page > currentPagination.total) {
+            currentPagination.page = currentPagination.total;
+        }
+        url = url + "?page=" + currentPagination.page + "&size=" + currentPagination.size;
+        // url sort
+        if (currentSort.columnId !== null) {
+            const columnId = camelToSnake(currentSort.columnId);
+            const sortParam = [{ "id": columnId, "desc": currentSort.direction === 'desc' ? true : false }]
+            url = url + "&sort=" + encodeURIComponent(JSON.stringify(sortParam))
+        }
+        // url filter
+        if (currentFilteringArray != []) {
+            url = url + "&filter=" + encodeURIComponent(JSON.stringify(currentFilteringArray));
+        }
+
+        const result = await fetchData(url, "", "GET");
+        const data = result.data.content;
+
+        currentPagination.total = result.data.totalPages - 1;
+
+        const tbody = document.getElementById('data-table-body');
+        tbody.innerHTML = ''; // Clear existing rows
+
+        if (data.length === 0) {
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = dataTable.length;
+            td.textContent = 'No data found.';
+            td.style.textAlign = 'center';
+            tr.appendChild(td);
+            tbody.appendChild(tr);
+            return;
+        }
+
+        data.forEach(item => {
+            const tr = document.createElement('tr');
+            for (const column of dataTable) {
+                const td = document.createElement('td');
+                td.classList.add("p-1", "m-1")
+                const value = item[column.id];
+
+                if (column.id === 'action') {
+                    td.innerHTML = `
+                    <button class="btn btn-primary"><i class="bi bi-archive"></i> View</button>
+                    <button class="btn btn-warning"><i class="bi bi-pencil"></i> Edit</button>
+                    <button class="btn btn-danger"><i class="bi bi-trash"></i> Delete</button>`;
+                } else {
+                    td.textContent = value === undefined || value === null ? '' : String(value);
+                }
+                tr.appendChild(td);
+            }
+            tbody.appendChild(tr);
+        });
+
+        // INFO
+        const offsetStart = parseInt(currentPagination.page) * parseInt(currentPagination.size) + 1;
+        let offsetEnd = offsetStart + parseInt(currentPagination.size) - 1;
+        if (offsetEnd > parseInt(result.data.totalElements) || offsetEnd < 0) {
+            offsetEnd = parseInt(result.data.totalElements);
+        }
+        let tableFooterInfoContainer = document.getElementById("table-footer-info");
+        tableFooterInfoContainer.innerHTML = "Showing " + offsetStart + " to " + offsetEnd + " of " + result.data.totalElements + " entries";
+
+        // === PAGINATION
+        const paginationContainer = document.getElementById('table-footer-pagination');
+        paginationContainer.innerHTML = '';
+        const paginationUlContainer = document.createElement('ul');
+        paginationUlContainer.classList.add("pagination")
+        const paginationPreviousButton = document.createElement('li');
+        paginationPreviousButton.classList.add("page-item")
+        paginationPreviousButton.innerHTML = `
+        <a class="page-link" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+        `;
+        // paginationPreviousButton.disabled = result.data.first;
+        if (result.data.first) {
+            paginationPreviousButton.classList.add("active")
+            paginationPreviousButton.classList.add("disabled")
+        }
+        paginationPreviousButton.onclick = function () {
+            applyPagination(currentPagination.page - 1)
+        }
+        paginationUlContainer.appendChild(paginationPreviousButton);
+
+        for (i = 1; i <= result.data.totalPages; i++) {
+            isCurrentPage = parseInt(i) - 1 === parseInt(currentPagination.page)
+            if (i != 1 && i != result.data.totalPages) {
+                if (!isCurrentPage) {
+                    if (parseInt(currentPagination.page) + 3 < i || parseInt(currentPagination.page) - 1 > i) {
+                        continue;
+                    }
+                }
+            }
+
+            const paginationNumberButton = document.createElement('li');
+            paginationNumberButton.classList.add("page-item")
+            paginationNumberButton.innerHTML = `<p class="page-link">` + i + "</p>";
+            paginationNumberButton.setAttribute("value", i)
+            paginationNumberButton.onclick = function () {
+                applyPagination(parseInt(paginationNumberButton.getAttribute("value")) - 1);
+            }
+            // paginationNumberButton.disabled = isCurrentPage;
+            if (isCurrentPage) {
+                paginationNumberButton.classList.add("active")
+                paginationNumberButton.classList.add("disabled")
+            }
+            paginationUlContainer.appendChild(paginationNumberButton);
+        }
+
+        const paginationNextButton = document.createElement('li');
+        paginationNextButton.classList.add("page-item")
+        paginationNextButton.innerHTML = `
+        <a class="page-link" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+        `;
+        // paginationNextButton.disabled = result.data.last;
+        if (result.data.last) {
+            paginationNextButton.classList.add("active")
+            paginationNextButton.classList.add("disabled")
+        }
+        paginationNextButton.onclick = function () {
+            applyPagination(currentPagination.page + 1)
+        }
+        paginationUlContainer.appendChild(paginationNextButton);
+
+        paginationContainer.appendChild(paginationUlContainer);
+    }
+
+    function applyPagination(page) {
+        currentPagination.page = page;
+        refreshTable();
+    }
+
+    function applyPageLength() {
+        const pageLengthSelectId = document.getElementById('page-length-select-id');
+        currentPagination.size = pageLengthSelectId.value;
+        currentPagination.page = 0;
+        refreshTable();
+    }
+
+    function refreshTable() {
+        initializeContentTable();
+    }
+
+    initializeTable();
+    toggleFilters();
+    initializeContentTable();
+
+</script>
+
+{{template "components/toast" .}}
+{{template "components/footer" .}}

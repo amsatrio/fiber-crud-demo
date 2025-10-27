@@ -1,0 +1,5 @@
+@base_url=http://localhost:8005
+@size=1000
+
+###
+GET {{base_url}}/generator/m-biodata/{{size}}

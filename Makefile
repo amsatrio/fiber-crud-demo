@@ -35,7 +35,7 @@ dev: swag_init
 
 # hot reload by air
 air: swag_init
-	~/go/bin/air server --port 8080
+	~/go/bin/air
 
 migrate:
 	go run migrate/migrate.go

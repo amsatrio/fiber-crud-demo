@@ -33,32 +33,27 @@
         </table>
     </div>
 
-    <div id="table-footer-id">
-        <table style="width: 100%;">
-            <tbody>
-                <tr>
-                    <td>
-                        <div id="table-footer-info"></div>
-                    </td>
-                    <td>
-                        <div id="table-footer-page-length">
-                            <select id="page-length-select-id" onchange="applyPageLength()">
-                                <option value="2">2</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="100">100</option>
-                                <option value="-1">All</option>
-                            </select>
-                            <span>entries per page</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div id="table-footer-pagination">
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div id="table-footer-id" class="container">
+        <div class="row justify-content-between align-items-center">
+            <div class="col align-self-center">
+                <div id="table-footer-info"></div>
+              </div>
+              <div class="col align-self-center">
+                <div id="table-footer-page-length">
+                    <select id="page-length-select-id" onchange="applyPageLength()">
+                        <option value="2">2</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="100">100</option>
+                        <option value="-1">All</option>
+                    </select>
+                    <span>entries per page</span>
+                </div>
+              </div>
+              <div class="col align-self-center">
+                <div id="table-footer-pagination" class="mt-4 pt-2"></div>
+              </div>
+        </div>
     </div>
 </div>
 

@@ -4,11 +4,13 @@ import (
 	"errors"
 	"log"
 	"os"
+	"runtime"
 
 	_ "fiber-crud-demo/docs"
 	"fiber-crud-demo/dto/response"
 	"fiber-crud-demo/initializer"
 	"fiber-crud-demo/middleware"
+	"fiber-crud-demo/modules/generator"
 	"fiber-crud-demo/modules/health"
 	"fiber-crud-demo/modules/hello_world"
 	"fiber-crud-demo/modules/m_biodata"
@@ -67,6 +69,8 @@ func config() fiber.Config {
 }
 
 func main() {
+	runtime.GOMAXPROCS(1)
+
 	app := fiber.New(config())
 
 	// ### Middleware
@@ -111,8 +115,10 @@ func routes(app *fiber.App) {
 	// WEB MASTER BIODATA
 	mBiodataWebHandler := m_biodata.NewMBiodataWebHandler()
 	m_biodata_web := app.Group("/web/m-biodata")
-	m_biodata_web.Get("/datatable", mBiodataWebHandler.MBiodataDatatableWebIndex)
-	m_biodata_web.Get("/table", mBiodataWebHandler.MBiodataTableWebIndex)
+	m_biodata_web.Get("/table-datatable", mBiodataWebHandler.MBiodataTableDatatableWebIndex)
+	m_biodata_web.Get("/table-html", mBiodataWebHandler.MBiodataTableHTMLWebIndex)
+	m_biodata_web.Get("/table-bootstrap", mBiodataWebHandler.MBiodataTableBootstrapWebIndex)
+	m_biodata_web.Get("/table-tailwindcss", mBiodataWebHandler.MBiodataTableTailwindCSSWebIndex)
 	m_biodata_web.Get("", mBiodataWebHandler.MBiodataWebIndex)
 
 	var validate = validator.New()
@@ -160,4 +166,9 @@ func routes(app *fiber.App) {
 	m_module_api.Get(":id", mModuleHandler.MModuleIndex)
 	m_module_api.Get("", mModuleHandler.MModulePage)
 	m_module_api.Delete(":id", mModuleHandler.MModuleDelete)
+
+	// GENERATOR
+	generatorHandler := generator.NewGeneratorHandler(mBiodataService)
+	generatorApi := app.Group("/generator")
+	generatorApi.Get("/m-biodata/:size", generatorHandler.GenerateMBiodata)
 }

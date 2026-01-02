@@ -11,15 +11,29 @@ func NewMBiodataWebHandler() *MBiodataWebHandler {
 	return &MBiodataWebHandler{}
 }
 
-func (h *MBiodataWebHandler) MBiodataDatatableWebIndex(c *fiber.Ctx) error {
-	return c.Render("pages/m-biodata/datatable", fiber.Map{
+func (h *MBiodataWebHandler) MBiodataTableDatatableWebIndex(c *fiber.Ctx) error {
+	return c.Render("pages/m-biodata/table-datatable", fiber.Map{
 		"Title":      "Biodata CRUD",
 		"ModalTitle": "Biodata Details",
 	}, "layouts/main")
 }
 
-func (h *MBiodataWebHandler) MBiodataTableWebIndex(c *fiber.Ctx) error {
-	return c.Render("pages/m-biodata/table", fiber.Map{
+func (h *MBiodataWebHandler) MBiodataTableHTMLWebIndex(c *fiber.Ctx) error {
+	return c.Render("pages/m-biodata/table-html", fiber.Map{
+		"Title":      "Biodata CRUD",
+		"ModalTitle": "Biodata Details",
+	}, "layouts/main")
+}
+
+func (h *MBiodataWebHandler) MBiodataTableTailwindCSSWebIndex(c *fiber.Ctx) error {
+	return c.Render("pages/m-biodata/table-tailwindcss", fiber.Map{
+		"Title":      "Biodata CRUD",
+		"ModalTitle": "Biodata Details",
+	}, "layouts/main")
+}
+
+func (h *MBiodataWebHandler) MBiodataTableBootstrapWebIndex(c *fiber.Ctx) error {
+	return c.Render("pages/m-biodata/table-bootstrap", fiber.Map{
 		"Title":      "Biodata CRUD",
 		"ModalTitle": "Biodata Details",
 	}, "layouts/main")

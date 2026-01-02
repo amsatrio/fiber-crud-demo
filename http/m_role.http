@@ -1,13 +1,13 @@
 @base_url=http://localhost:8005
 
 ### page
-GET {{base_url}}/m-role
+GET {{base_url}}/v1/m-role
 
 ### index
-GET {{base_url}}/m-role/1
+GET {{base_url}}/v1/m-role/1
 
 ### new
-POST {{base_url}}/m-role
+POST {{base_url}}/v1/m-role
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ### update
-PUT {{base_url}}/m-role
+PUT {{base_url}}/v1/m-role
 Content-Type: application/json
 
 {
@@ -31,4 +31,4 @@ Content-Type: application/json
 }
 
 ### delete
-DELETE {{base_url}}/m-role/1
+DELETE {{base_url}}/v1/m-role/1

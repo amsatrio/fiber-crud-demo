@@ -1,16 +1,16 @@
 @base_url=http://localhost:8005
 
 ###
-GET {{base_url}}/hello-world
+GET {{base_url}}/v1/hello-world
 
 ### path
-GET {{base_url}}/hello-world/path/tess
+GET {{base_url}}/v1/hello-world/path/tess
 
 ### query
-GET {{base_url}}/hello-world/query?message=teewww
+GET {{base_url}}/v1/hello-world/query?message=teewww
 
 ### payload
-POST {{base_url}}/hello-world/payload
+POST {{base_url}}/v1/hello-world/payload
 Content-Type: application/json
 
 {
@@ -18,4 +18,4 @@ Content-Type: application/json
 }
 
 ### error
-GET {{base_url}}/hello-world/error/500
+GET {{base_url}}/v1/hello-world/error/500

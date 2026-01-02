@@ -1,5 +1,5 @@
 @base_url=http://localhost:8005
 
 ###
-GET {{base_url}}/health/status
+GET {{base_url}}/v1/health/status
 

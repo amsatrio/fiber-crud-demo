@@ -1,19 +1,19 @@
 @base_url=http://localhost:8005
 
 ### page
-GET {{base_url}}/m-biodata?page=1&size=2
+GET {{base_url}}/v1/m-biodata?page=1&size=2
 
 ### sort
-GET {{base_url}}/m-biodata?sort=[{"id":"fullname", "desc":true}]
+GET {{base_url}}/v1/m-biodata?sort=[{"id":"fullname", "desc":true}]
 
 ### filter
-GET {{base_url}}/m-biodata?filter=[{"id":"fullname", "value":"3", "matchMode": "CONTAINS", "dataType": "TEXT", "mode": "AND"}]
+GET {{base_url}}/v1/m-biodata?filter=[{"id":"fullname", "value":"3", "matchMode": "CONTAINS", "dataType": "TEXT", "mode": "AND"}]
 
 ### index
-GET {{base_url}}/m-biodata/1
+GET {{base_url}}/v1/m-biodata/1
 
 ### new
-POST {{base_url}}/m-biodata
+POST {{base_url}}/v1/m-biodata
 Content-Type: application/json
 
 {
@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ### update
-PUT {{base_url}}/m-biodata
+PUT {{base_url}}/v1/m-biodata
 Content-Type: application/json
 
 {
@@ -35,4 +35,4 @@ Content-Type: application/json
 }
 
 ### delete
-DELETE {{base_url}}/m-biodata/1
+DELETE {{base_url}}/v1/m-biodata/1

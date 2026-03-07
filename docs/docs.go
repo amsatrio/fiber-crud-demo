@@ -15,7 +15,623 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/m-biodata": {
+        "/v1/m-admin": {
+            "get": {
+                "description": "Get Page MAdmin",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mAdmin"
+                ],
+                "summary": "MAdminPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MAdmin",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mAdmin"
+                ],
+                "summary": "MAdminUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MAdminRequest",
+                        "name": "mAdmin",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_admin.MAdminRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MAdmin",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mAdmin"
+                ],
+                "summary": "MAdminCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MAdminRequest",
+                        "name": "mAdmin",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_admin.MAdminRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-admin/{id}": {
+            "get": {
+                "description": "Get MAdmin by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mAdmin"
+                ],
+                "summary": "MAdminIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MAdmin id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MAdmin by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mAdmin"
+                ],
+                "summary": "MAdminDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MAdmin id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-bank": {
+            "get": {
+                "description": "Get Page MBank",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBank"
+                ],
+                "summary": "MBankPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MBank",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBank"
+                ],
+                "summary": "MBankUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MBankRequest",
+                        "name": "mBank",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_bank.MBankRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MBank",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBank"
+                ],
+                "summary": "MBankCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MBankRequest",
+                        "name": "mBank",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_bank.MBankRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-bank/{id}": {
+            "get": {
+                "description": "Get MBank by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBank"
+                ],
+                "summary": "MBankIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MBank id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MBank by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBank"
+                ],
+                "summary": "MBankDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MBank id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-biodata": {
             "get": {
                 "description": "Get Page MBiodata",
                 "consumes": [
@@ -117,7 +733,7 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
-                        "description": "Add MBiodataRequest",
+                        "description": "Update MBiodataRequest",
                         "name": "mBiodata",
                         "in": "body",
                         "required": true,
@@ -211,7 +827,623 @@ const docTemplate = `{
                 }
             }
         },
-        "/m-biodata/{id}": {
+        "/v1/m-biodata-address": {
+            "get": {
+                "description": "Get Page MBiodataAddress",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodataAddress"
+                ],
+                "summary": "MBiodataAddressPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MBiodataAddress",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodataAddress"
+                ],
+                "summary": "MBiodataAddressUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MBiodataAddressRequest",
+                        "name": "mBiodataAddress",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_biodata_address.MBiodataAddressRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MBiodataAddress",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodataAddress"
+                ],
+                "summary": "MBiodataAddressCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MBiodataAddressRequest",
+                        "name": "mBiodataAddress",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_biodata_address.MBiodataAddressRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-biodata-address/{id}": {
+            "get": {
+                "description": "Get MBiodataAddress by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodataAddress"
+                ],
+                "summary": "MBiodataAddressIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MBiodataAddress id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MBiodataAddress by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodataAddress"
+                ],
+                "summary": "MBiodataAddressDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MBiodataAddress id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-biodata-attachment": {
+            "get": {
+                "description": "Get Page MBiodataAttachment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodataAttachment"
+                ],
+                "summary": "MBiodataAttachmentPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MBiodataAttachment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodataAttachment"
+                ],
+                "summary": "MBiodataAttachmentUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MBiodataAttachmentRequest",
+                        "name": "mBiodataAttachment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_biodata_attachment.MBiodataAttachmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MBiodataAttachment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodataAttachment"
+                ],
+                "summary": "MBiodataAttachmentCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MBiodataAttachmentRequest",
+                        "name": "mBiodataAttachment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_biodata_attachment.MBiodataAttachmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-biodata-attachment/{id}": {
+            "get": {
+                "description": "Get MBiodataAttachment by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodataAttachment"
+                ],
+                "summary": "MBiodataAttachmentIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MBiodataAttachment id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MBiodataAttachment by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mBiodataAttachment"
+                ],
+                "summary": "MBiodataAttachmentDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MBiodataAttachment id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-biodata/{id}": {
             "get": {
                 "description": "Get MBiodata by id",
                 "consumes": [
@@ -323,9 +1555,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/m-module": {
+        "/v1/m-blood-group": {
             "get": {
-                "description": "Get Page MModule",
+                "description": "Get Page MBloodGroup",
                 "consumes": [
                     "application/json"
                 ],
@@ -333,9 +1565,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "mModule"
+                    "mBloodGroup"
                 ],
-                "summary": "MModulePage",
+                "summary": "MBloodGroupPage",
                 "parameters": [
                     {
                         "type": "string",
@@ -405,7 +1637,7 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "Update MModule",
+                "description": "Update MBloodGroup",
                 "consumes": [
                     "application/json"
                 ],
@@ -413,9 +1645,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "mModule"
+                    "mBloodGroup"
                 ],
-                "summary": "MModuleUpdate",
+                "summary": "MBloodGroupUpdate",
                 "parameters": [
                     {
                         "type": "string",
@@ -425,12 +1657,12 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
-                        "description": "Add MModuleRequest",
-                        "name": "mModule",
+                        "description": "Update MBloodGroupRequest",
+                        "name": "mBloodGroup",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/m_module.MModuleRequest"
+                            "$ref": "#/definitions/m_blood_group.MBloodGroupRequest"
                         }
                     }
                 ],
@@ -462,7 +1694,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Create MModule",
+                "description": "Create MBloodGroup",
                 "consumes": [
                     "application/json"
                 ],
@@ -470,9 +1702,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "mModule"
+                    "mBloodGroup"
                 ],
-                "summary": "MModuleCreate",
+                "summary": "MBloodGroupCreate",
                 "parameters": [
                     {
                         "type": "string",
@@ -482,12 +1714,12 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
-                        "description": "Add MModuleRequest",
-                        "name": "mModule",
+                        "description": "Add MBloodGroupRequest",
+                        "name": "mBloodGroup",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/m_module.MModuleRequest"
+                            "$ref": "#/definitions/m_blood_group.MBloodGroupRequest"
                         }
                     }
                 ],
@@ -519,9 +1751,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/m-module/{id}": {
+        "/v1/m-blood-group/{id}": {
             "get": {
-                "description": "Get MModule by id",
+                "description": "Get MBloodGroup by id",
                 "consumes": [
                     "application/json"
                 ],
@@ -529,9 +1761,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "mModule"
+                    "mBloodGroup"
                 ],
-                "summary": "MModuleIndex",
+                "summary": "MBloodGroupIndex",
                 "parameters": [
                     {
                         "type": "string",
@@ -542,7 +1774,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "MModule id",
+                        "description": "MBloodGroup id",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -576,7 +1808,7 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Delete MModule by id",
+                "description": "Delete MBloodGroup by id",
                 "consumes": [
                     "application/json"
                 ],
@@ -584,9 +1816,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "mModule"
+                    "mBloodGroup"
                 ],
-                "summary": "MModuleDelete",
+                "summary": "MBloodGroupDelete",
                 "parameters": [
                     {
                         "type": "string",
@@ -597,7 +1829,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "MModule id",
+                        "description": "MBloodGroup id",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -631,7 +1863,5859 @@ const docTemplate = `{
                 }
             }
         },
-        "/m-role": {
+        "/v1/m-courier": {
+            "get": {
+                "description": "Get Page MCourier",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCourier"
+                ],
+                "summary": "MCourierPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MCourier",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCourier"
+                ],
+                "summary": "MCourierUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MCourierRequest",
+                        "name": "mCourier",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_courier.MCourierRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MCourier",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCourier"
+                ],
+                "summary": "MCourierCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MCourierRequest",
+                        "name": "mCourier",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_courier.MCourierRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-courier-type": {
+            "get": {
+                "description": "Get Page MCourierType",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCourierType"
+                ],
+                "summary": "MCourierTypePage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MCourierType",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCourierType"
+                ],
+                "summary": "MCourierTypeUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MCourierTypeRequest",
+                        "name": "mCourierType",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_courier_type.MCourierTypeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MCourierType",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCourierType"
+                ],
+                "summary": "MCourierTypeCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MCourierTypeRequest",
+                        "name": "mCourierType",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_courier_type.MCourierTypeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-courier-type/{id}": {
+            "get": {
+                "description": "Get MCourierType by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCourierType"
+                ],
+                "summary": "MCourierTypeIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MCourierType id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MCourierType by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCourierType"
+                ],
+                "summary": "MCourierTypeDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MCourierType id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-courier/{id}": {
+            "get": {
+                "description": "Get MCourier by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCourier"
+                ],
+                "summary": "MCourierIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MCourier id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MCourier by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCourier"
+                ],
+                "summary": "MCourierDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MCourier id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-customer": {
+            "get": {
+                "description": "Get Page MCustomer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomer"
+                ],
+                "summary": "MCustomerPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MCustomer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomer"
+                ],
+                "summary": "MCustomerUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MCustomerRequest",
+                        "name": "mCustomer",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_customer.MCustomerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MCustomer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomer"
+                ],
+                "summary": "MCustomerCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MCustomerRequest",
+                        "name": "mCustomer",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_customer.MCustomerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-customer-member": {
+            "get": {
+                "description": "Get Page MCustomerMember",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomerMember"
+                ],
+                "summary": "MCustomerMemberPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MCustomerMember",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomerMember"
+                ],
+                "summary": "MCustomerMemberUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MCustomerMemberRequest",
+                        "name": "mCustomerMember",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_customer_member.MCustomerMemberRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MCustomerMember",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomerMember"
+                ],
+                "summary": "MCustomerMemberCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MCustomerMemberRequest",
+                        "name": "mCustomerMember",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_customer_member.MCustomerMemberRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-customer-member/{id}": {
+            "get": {
+                "description": "Get MCustomerMember by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomerMember"
+                ],
+                "summary": "MCustomerMemberIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MCustomerMember id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MCustomerMember by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomerMember"
+                ],
+                "summary": "MCustomerMemberDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MCustomerMember id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-customer-relation": {
+            "get": {
+                "description": "Get Page MCustomerRelation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomerRelation"
+                ],
+                "summary": "MCustomerRelationPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MCustomerRelation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomerRelation"
+                ],
+                "summary": "MCustomerRelationUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MCustomerRelationRequest",
+                        "name": "mCustomerRelation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_customer_relation.MCustomerRelationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MCustomerRelation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomerRelation"
+                ],
+                "summary": "MCustomerRelationCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MCustomerRelationRequest",
+                        "name": "mCustomerRelation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_customer_relation.MCustomerRelationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-customer-relation/{id}": {
+            "get": {
+                "description": "Get MCustomerRelation by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomerRelation"
+                ],
+                "summary": "MCustomerRelationIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MCustomerRelation id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MCustomerRelation by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomerRelation"
+                ],
+                "summary": "MCustomerRelationDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MCustomerRelation id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-customer/{id}": {
+            "get": {
+                "description": "Get MCustomer by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomer"
+                ],
+                "summary": "MCustomerIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MCustomer id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MCustomer by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mCustomer"
+                ],
+                "summary": "MCustomerDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MCustomer id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-doctor": {
+            "get": {
+                "description": "Get Page MDoctor",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mDoctor"
+                ],
+                "summary": "MDoctorPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MDoctor",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mDoctor"
+                ],
+                "summary": "MDoctorUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MDoctorRequest",
+                        "name": "mDoctor",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_doctor.MDoctorRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MDoctor",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mDoctor"
+                ],
+                "summary": "MDoctorCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MDoctorRequest",
+                        "name": "mDoctor",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_doctor.MDoctorRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-doctor-education": {
+            "get": {
+                "description": "Get Page MDoctorEducation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mDoctorEducation"
+                ],
+                "summary": "MDoctorEducationPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MDoctorEducation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mDoctorEducation"
+                ],
+                "summary": "MDoctorEducationUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MDoctorEducationRequest",
+                        "name": "mDoctorEducation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_doctor_education.MDoctorEducationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MDoctorEducation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mDoctorEducation"
+                ],
+                "summary": "MDoctorEducationCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MDoctorEducationRequest",
+                        "name": "mDoctorEducation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_doctor_education.MDoctorEducationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-doctor-education/{id}": {
+            "get": {
+                "description": "Get MDoctorEducation by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mDoctorEducation"
+                ],
+                "summary": "MDoctorEducationIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MDoctorEducation id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MDoctorEducation by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mDoctorEducation"
+                ],
+                "summary": "MDoctorEducationDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MDoctorEducation id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-doctor/{id}": {
+            "get": {
+                "description": "Get MDoctor by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mDoctor"
+                ],
+                "summary": "MDoctorIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MDoctor id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MDoctor by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mDoctor"
+                ],
+                "summary": "MDoctorDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MDoctor id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-education-level": {
+            "get": {
+                "description": "Get Page MEducationLevel",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mEducationLevel"
+                ],
+                "summary": "MEducationLevelPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MEducationLevel",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mEducationLevel"
+                ],
+                "summary": "MEducationLevelUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MEducationLevelRequest",
+                        "name": "mEducationLevel",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_education_level.MEducationLevelRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MEducationLevel",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mEducationLevel"
+                ],
+                "summary": "MEducationLevelCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MEducationLevelRequest",
+                        "name": "mEducationLevel",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_education_level.MEducationLevelRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-education-level/{id}": {
+            "get": {
+                "description": "Get MEducationLevel by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mEducationLevel"
+                ],
+                "summary": "MEducationLevelIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MEducationLevel id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MEducationLevel by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mEducationLevel"
+                ],
+                "summary": "MEducationLevelDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MEducationLevel id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-location": {
+            "get": {
+                "description": "Get Page MLocation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mLocation"
+                ],
+                "summary": "MLocationPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MLocation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mLocation"
+                ],
+                "summary": "MLocationUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MLocationRequest",
+                        "name": "mLocation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_location.MLocationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MLocation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mLocation"
+                ],
+                "summary": "MLocationCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MLocationRequest",
+                        "name": "mLocation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_location.MLocationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-location-level": {
+            "get": {
+                "description": "Get Page MLocationLevel",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mLocationLevel"
+                ],
+                "summary": "MLocationLevelPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MLocationLevel",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mLocationLevel"
+                ],
+                "summary": "MLocationLevelUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MLocationLevelRequest",
+                        "name": "mLocationLevel",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_location_level.MLocationLevelRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MLocationLevel",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mLocationLevel"
+                ],
+                "summary": "MLocationLevelCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MLocationLevelRequest",
+                        "name": "mLocationLevel",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_location_level.MLocationLevelRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-location-level/{id}": {
+            "get": {
+                "description": "Get MLocationLevel by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mLocationLevel"
+                ],
+                "summary": "MLocationLevelIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MLocationLevel id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MLocationLevel by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mLocationLevel"
+                ],
+                "summary": "MLocationLevelDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MLocationLevel id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-location/{id}": {
+            "get": {
+                "description": "Get MLocation by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mLocation"
+                ],
+                "summary": "MLocationIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MLocation id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MLocation by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mLocation"
+                ],
+                "summary": "MLocationDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MLocation id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-facility": {
+            "get": {
+                "description": "Get Page MMedicalFacility",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacility"
+                ],
+                "summary": "MMedicalFacilityPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MMedicalFacility",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacility"
+                ],
+                "summary": "MMedicalFacilityUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MMedicalFacilityRequest",
+                        "name": "mMedicalFacility",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_facility.MMedicalFacilityRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MMedicalFacility",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacility"
+                ],
+                "summary": "MMedicalFacilityCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MMedicalFacilityRequest",
+                        "name": "mMedicalFacility",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_facility.MMedicalFacilityRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-facility-category": {
+            "get": {
+                "description": "Get Page MMedicalFacilityCategory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacilityCategory"
+                ],
+                "summary": "MMedicalFacilityCategoryPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MMedicalFacilityCategory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacilityCategory"
+                ],
+                "summary": "MMedicalFacilityCategoryUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MMedicalFacilityCategoryRequest",
+                        "name": "mMedicalFacilityCategory",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_facility_category.MMedicalFacilityCategoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MMedicalFacilityCategory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacilityCategory"
+                ],
+                "summary": "MMedicalFacilityCategoryCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MMedicalFacilityCategoryRequest",
+                        "name": "mMedicalFacilityCategory",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_facility_category.MMedicalFacilityCategoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-facility-category/{id}": {
+            "get": {
+                "description": "Get MMedicalFacilityCategory by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacilityCategory"
+                ],
+                "summary": "MMedicalFacilityCategoryIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalFacilityCategory id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MMedicalFacilityCategory by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacilityCategory"
+                ],
+                "summary": "MMedicalFacilityCategoryDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalFacilityCategory id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-facility-schedule": {
+            "get": {
+                "description": "Get Page MMedicalFacilitySchedule",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacilitySchedule"
+                ],
+                "summary": "MMedicalFacilitySchedulePage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MMedicalFacilitySchedule",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacilitySchedule"
+                ],
+                "summary": "MMedicalFacilityScheduleUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MMedicalFacilityScheduleRequest",
+                        "name": "mMedicalFacilitySchedule",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_facility_schedule.MMedicalFacilityScheduleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MMedicalFacilitySchedule",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacilitySchedule"
+                ],
+                "summary": "MMedicalFacilityScheduleCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MMedicalFacilityScheduleRequest",
+                        "name": "mMedicalFacilitySchedule",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_facility_schedule.MMedicalFacilityScheduleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-facility-schedule/{id}": {
+            "get": {
+                "description": "Get MMedicalFacilitySchedule by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacilitySchedule"
+                ],
+                "summary": "MMedicalFacilityScheduleIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalFacilitySchedule id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MMedicalFacilitySchedule by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacilitySchedule"
+                ],
+                "summary": "MMedicalFacilityScheduleDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalFacilitySchedule id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-facility/{id}": {
+            "get": {
+                "description": "Get MMedicalFacility by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacility"
+                ],
+                "summary": "MMedicalFacilityIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalFacility id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MMedicalFacility by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalFacility"
+                ],
+                "summary": "MMedicalFacilityDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalFacility id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-item": {
+            "get": {
+                "description": "Get Page MMedicalItem",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItem"
+                ],
+                "summary": "MMedicalItemPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MMedicalItem",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItem"
+                ],
+                "summary": "MMedicalItemUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MMedicalItemRequest",
+                        "name": "mMedicalItem",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_item.MMedicalItemRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MMedicalItem",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItem"
+                ],
+                "summary": "MMedicalItemCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MMedicalItemRequest",
+                        "name": "mMedicalItem",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_item.MMedicalItemRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-item-category": {
+            "get": {
+                "description": "Get Page MMedicalItemCategory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItemCategory"
+                ],
+                "summary": "MMedicalItemCategoryPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MMedicalItemCategory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItemCategory"
+                ],
+                "summary": "MMedicalItemCategoryUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MMedicalItemCategoryRequest",
+                        "name": "mMedicalItemCategory",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_item_category.MMedicalItemCategoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MMedicalItemCategory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItemCategory"
+                ],
+                "summary": "MMedicalItemCategoryCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MMedicalItemCategoryRequest",
+                        "name": "mMedicalItemCategory",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_item_category.MMedicalItemCategoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-item-category/{id}": {
+            "get": {
+                "description": "Get MMedicalItemCategory by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItemCategory"
+                ],
+                "summary": "MMedicalItemCategoryIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalItemCategory id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MMedicalItemCategory by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItemCategory"
+                ],
+                "summary": "MMedicalItemCategoryDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalItemCategory id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-item-segmentation": {
+            "get": {
+                "description": "Get Page MMedicalItemSegmentation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItemSegmentation"
+                ],
+                "summary": "MMedicalItemSegmentationPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MMedicalItemSegmentation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItemSegmentation"
+                ],
+                "summary": "MMedicalItemSegmentationUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MMedicalItemSegmentationRequest",
+                        "name": "mMedicalItemSegmentation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_item_segmentation.MMedicalItemSegmentationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MMedicalItemSegmentation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItemSegmentation"
+                ],
+                "summary": "MMedicalItemSegmentationCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MMedicalItemSegmentationRequest",
+                        "name": "mMedicalItemSegmentation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_medical_item_segmentation.MMedicalItemSegmentationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-item-segmentation/{id}": {
+            "get": {
+                "description": "Get MMedicalItemSegmentation by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItemSegmentation"
+                ],
+                "summary": "MMedicalItemSegmentationIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalItemSegmentation id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MMedicalItemSegmentation by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItemSegmentation"
+                ],
+                "summary": "MMedicalItemSegmentationDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalItemSegmentation id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-medical-item/{id}": {
+            "get": {
+                "description": "Get MMedicalItem by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItem"
+                ],
+                "summary": "MMedicalItemIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalItem id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MMedicalItem by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMedicalItem"
+                ],
+                "summary": "MMedicalItemDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMedicalItem id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-menu": {
+            "get": {
+                "description": "Get Page MMenu",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMenu"
+                ],
+                "summary": "MMenuPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MMenu",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMenu"
+                ],
+                "summary": "MMenuUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MMenuRequest",
+                        "name": "mMenu",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_menu.MMenuRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MMenu",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMenu"
+                ],
+                "summary": "MMenuCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MMenuRequest",
+                        "name": "mMenu",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_menu.MMenuRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-menu-role": {
+            "get": {
+                "description": "Get Page MMenuRole",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMenuRole"
+                ],
+                "summary": "MMenuRolePage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MMenuRole",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMenuRole"
+                ],
+                "summary": "MMenuRoleUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MMenuRoleRequest",
+                        "name": "mMenuRole",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_menu_role.MMenuRoleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MMenuRole",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMenuRole"
+                ],
+                "summary": "MMenuRoleCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MMenuRoleRequest",
+                        "name": "mMenuRole",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_menu_role.MMenuRoleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-menu-role/{id}": {
+            "get": {
+                "description": "Get MMenuRole by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMenuRole"
+                ],
+                "summary": "MMenuRoleIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMenuRole id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MMenuRole by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMenuRole"
+                ],
+                "summary": "MMenuRoleDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMenuRole id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-menu/{id}": {
+            "get": {
+                "description": "Get MMenu by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMenu"
+                ],
+                "summary": "MMenuIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMenu id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MMenu by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mMenu"
+                ],
+                "summary": "MMenuDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MMenu id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-payment-method": {
+            "get": {
+                "description": "Get Page MPaymentMethod",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mPaymentMethod"
+                ],
+                "summary": "MPaymentMethodPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MPaymentMethod",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mPaymentMethod"
+                ],
+                "summary": "MPaymentMethodUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MPaymentMethodRequest",
+                        "name": "mPaymentMethod",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_payment_method.MPaymentMethodRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MPaymentMethod",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mPaymentMethod"
+                ],
+                "summary": "MPaymentMethodCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MPaymentMethodRequest",
+                        "name": "mPaymentMethod",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_payment_method.MPaymentMethodRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-payment-method/{id}": {
+            "get": {
+                "description": "Get MPaymentMethod by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mPaymentMethod"
+                ],
+                "summary": "MPaymentMethodIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MPaymentMethod id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MPaymentMethod by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mPaymentMethod"
+                ],
+                "summary": "MPaymentMethodDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MPaymentMethod id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-role": {
             "get": {
                 "description": "Get Page MRole",
                 "consumes": [
@@ -733,7 +7817,7 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
-                        "description": "Add MRoleRequest",
+                        "description": "Update MRoleRequest",
                         "name": "mRole",
                         "in": "body",
                         "required": true,
@@ -827,7 +7911,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/m-role/{id}": {
+        "/v1/m-role/{id}": {
             "get": {
                 "description": "Get MRole by id",
                 "consumes": [
@@ -939,7 +8023,315 @@ const docTemplate = `{
                 }
             }
         },
-        "/m-user": {
+        "/v1/m-specialization": {
+            "get": {
+                "description": "Get Page MSpecialization",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mSpecialization"
+                ],
+                "summary": "MSpecializationPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MSpecialization",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mSpecialization"
+                ],
+                "summary": "MSpecializationUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MSpecializationRequest",
+                        "name": "mSpecialization",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_specialization.MSpecializationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MSpecialization",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mSpecialization"
+                ],
+                "summary": "MSpecializationCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MSpecializationRequest",
+                        "name": "mSpecialization",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_specialization.MSpecializationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-specialization/{id}": {
+            "get": {
+                "description": "Get MSpecialization by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mSpecialization"
+                ],
+                "summary": "MSpecializationIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MSpecialization id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MSpecialization by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mSpecialization"
+                ],
+                "summary": "MSpecializationDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MSpecialization id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-user": {
             "get": {
                 "description": "Get Page MUser",
                 "consumes": [
@@ -1041,7 +8433,7 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
-                        "description": "Add MUserRequest",
+                        "description": "Update MUserRequest",
                         "name": "mUser",
                         "in": "body",
                         "required": true,
@@ -1135,7 +8527,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/m-user/{id}": {
+        "/v1/m-user/{id}": {
             "get": {
                 "description": "Get MUser by id",
                 "consumes": [
@@ -1246,13 +8638,8044 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v1/m-wallet-default-nominal": {
+            "get": {
+                "description": "Get Page MWalletDefaultNominal",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mWalletDefaultNominal"
+                ],
+                "summary": "MWalletDefaultNominalPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update MWalletDefaultNominal",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mWalletDefaultNominal"
+                ],
+                "summary": "MWalletDefaultNominalUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update MWalletDefaultNominalRequest",
+                        "name": "mWalletDefaultNominal",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_wallet_default_nominal.MWalletDefaultNominalRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create MWalletDefaultNominal",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mWalletDefaultNominal"
+                ],
+                "summary": "MWalletDefaultNominalCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add MWalletDefaultNominalRequest",
+                        "name": "mWalletDefaultNominal",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/m_wallet_default_nominal.MWalletDefaultNominalRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/m-wallet-default-nominal/{id}": {
+            "get": {
+                "description": "Get MWalletDefaultNominal by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mWalletDefaultNominal"
+                ],
+                "summary": "MWalletDefaultNominalIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MWalletDefaultNominal id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete MWalletDefaultNominal by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mWalletDefaultNominal"
+                ],
+                "summary": "MWalletDefaultNominalDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MWalletDefaultNominal id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-appointment": {
+            "get": {
+                "description": "Get Page TAppointment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointment"
+                ],
+                "summary": "TAppointmentPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TAppointment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointment"
+                ],
+                "summary": "TAppointmentUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TAppointmentRequest",
+                        "name": "tAppointment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_appointment.TAppointmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TAppointment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointment"
+                ],
+                "summary": "TAppointmentCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TAppointmentRequest",
+                        "name": "tAppointment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_appointment.TAppointmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-appointment-cancellation": {
+            "get": {
+                "description": "Get Page TAppointmentCancellation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentCancellation"
+                ],
+                "summary": "TAppointmentCancellationPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TAppointmentCancellation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentCancellation"
+                ],
+                "summary": "TAppointmentCancellationUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TAppointmentCancellationRequest",
+                        "name": "tAppointmentCancellation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_appointment_cancellation.TAppointmentCancellationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TAppointmentCancellation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentCancellation"
+                ],
+                "summary": "TAppointmentCancellationCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TAppointmentCancellationRequest",
+                        "name": "tAppointmentCancellation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_appointment_cancellation.TAppointmentCancellationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-appointment-cancellation/{id}": {
+            "get": {
+                "description": "Get TAppointmentCancellation by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentCancellation"
+                ],
+                "summary": "TAppointmentCancellationIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TAppointmentCancellation id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TAppointmentCancellation by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentCancellation"
+                ],
+                "summary": "TAppointmentCancellationDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TAppointmentCancellation id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-appointment-done": {
+            "get": {
+                "description": "Get Page TAppointmentDone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentDone"
+                ],
+                "summary": "TAppointmentDonePage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TAppointmentDone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentDone"
+                ],
+                "summary": "TAppointmentDoneUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TAppointmentDoneRequest",
+                        "name": "tAppointmentDone",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_appointment_done.TAppointmentDoneRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TAppointmentDone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentDone"
+                ],
+                "summary": "TAppointmentDoneCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TAppointmentDoneRequest",
+                        "name": "tAppointmentDone",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_appointment_done.TAppointmentDoneRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-appointment-done/{id}": {
+            "get": {
+                "description": "Get TAppointmentDone by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentDone"
+                ],
+                "summary": "TAppointmentDoneIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TAppointmentDone id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TAppointmentDone by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentDone"
+                ],
+                "summary": "TAppointmentDoneDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TAppointmentDone id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-appointment-reschedule-history": {
+            "get": {
+                "description": "Get Page TAppointmentRescheduleHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentRescheduleHistory"
+                ],
+                "summary": "TAppointmentRescheduleHistoryPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TAppointmentRescheduleHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentRescheduleHistory"
+                ],
+                "summary": "TAppointmentRescheduleHistoryUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TAppointmentRescheduleHistoryRequest",
+                        "name": "tAppointmentRescheduleHistory",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_appointment_reschedule_history.TAppointmentRescheduleHistoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TAppointmentRescheduleHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentRescheduleHistory"
+                ],
+                "summary": "TAppointmentRescheduleHistoryCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TAppointmentRescheduleHistoryRequest",
+                        "name": "tAppointmentRescheduleHistory",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_appointment_reschedule_history.TAppointmentRescheduleHistoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-appointment-reschedule-history/{id}": {
+            "get": {
+                "description": "Get TAppointmentRescheduleHistory by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentRescheduleHistory"
+                ],
+                "summary": "TAppointmentRescheduleHistoryIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TAppointmentRescheduleHistory id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TAppointmentRescheduleHistory by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointmentRescheduleHistory"
+                ],
+                "summary": "TAppointmentRescheduleHistoryDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TAppointmentRescheduleHistory id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-appointment/{id}": {
+            "get": {
+                "description": "Get TAppointment by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointment"
+                ],
+                "summary": "TAppointmentIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TAppointment id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TAppointment by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tAppointment"
+                ],
+                "summary": "TAppointmentDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TAppointment id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-courier-discount": {
+            "get": {
+                "description": "Get Page TCourierDiscount",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCourierDiscount"
+                ],
+                "summary": "TCourierDiscountPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TCourierDiscount",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCourierDiscount"
+                ],
+                "summary": "TCourierDiscountUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TCourierDiscountRequest",
+                        "name": "tCourierDiscount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_courier_discount.TCourierDiscountRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TCourierDiscount",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCourierDiscount"
+                ],
+                "summary": "TCourierDiscountCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TCourierDiscountRequest",
+                        "name": "tCourierDiscount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_courier_discount.TCourierDiscountRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-courier-discount/{id}": {
+            "get": {
+                "description": "Get TCourierDiscount by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCourierDiscount"
+                ],
+                "summary": "TCourierDiscountIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCourierDiscount id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TCourierDiscount by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCourierDiscount"
+                ],
+                "summary": "TCourierDiscountDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCourierDiscount id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-current-doctor-specialization": {
+            "get": {
+                "description": "Get Page TCurrentDoctorSpecialization",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCurrentDoctorSpecialization"
+                ],
+                "summary": "TCurrentDoctorSpecializationPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TCurrentDoctorSpecialization",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCurrentDoctorSpecialization"
+                ],
+                "summary": "TCurrentDoctorSpecializationUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TCurrentDoctorSpecializationRequest",
+                        "name": "tCurrentDoctorSpecialization",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_current_doctor_specialization.TCurrentDoctorSpecializationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TCurrentDoctorSpecialization",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCurrentDoctorSpecialization"
+                ],
+                "summary": "TCurrentDoctorSpecializationCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TCurrentDoctorSpecializationRequest",
+                        "name": "tCurrentDoctorSpecialization",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_current_doctor_specialization.TCurrentDoctorSpecializationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-current-doctor-specialization/{id}": {
+            "get": {
+                "description": "Get TCurrentDoctorSpecialization by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCurrentDoctorSpecialization"
+                ],
+                "summary": "TCurrentDoctorSpecializationIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCurrentDoctorSpecialization id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TCurrentDoctorSpecialization by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCurrentDoctorSpecialization"
+                ],
+                "summary": "TCurrentDoctorSpecializationDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCurrentDoctorSpecialization id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-chat": {
+            "get": {
+                "description": "Get Page TCustomerChat",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerChat"
+                ],
+                "summary": "TCustomerChatPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TCustomerChat",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerChat"
+                ],
+                "summary": "TCustomerChatUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TCustomerChatRequest",
+                        "name": "tCustomerChat",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_chat.TCustomerChatRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TCustomerChat",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerChat"
+                ],
+                "summary": "TCustomerChatCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TCustomerChatRequest",
+                        "name": "tCustomerChat",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_chat.TCustomerChatRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-chat-history": {
+            "get": {
+                "description": "Get Page TCustomerChatHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerChatHistory"
+                ],
+                "summary": "TCustomerChatHistoryPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TCustomerChatHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerChatHistory"
+                ],
+                "summary": "TCustomerChatHistoryUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TCustomerChatHistoryRequest",
+                        "name": "tCustomerChatHistory",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_chat_history.TCustomerChatHistoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TCustomerChatHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerChatHistory"
+                ],
+                "summary": "TCustomerChatHistoryCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TCustomerChatHistoryRequest",
+                        "name": "tCustomerChatHistory",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_chat_history.TCustomerChatHistoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-chat-history/{id}": {
+            "get": {
+                "description": "Get TCustomerChatHistory by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerChatHistory"
+                ],
+                "summary": "TCustomerChatHistoryIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerChatHistory id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TCustomerChatHistory by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerChatHistory"
+                ],
+                "summary": "TCustomerChatHistoryDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerChatHistory id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-chat/{id}": {
+            "get": {
+                "description": "Get TCustomerChat by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerChat"
+                ],
+                "summary": "TCustomerChatIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerChat id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TCustomerChat by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerChat"
+                ],
+                "summary": "TCustomerChatDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerChat id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-custom-nominal": {
+            "get": {
+                "description": "Get Page TCustomerCustomNominal",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerCustomNominal"
+                ],
+                "summary": "TCustomerCustomNominalPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TCustomerCustomNominal",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerCustomNominal"
+                ],
+                "summary": "TCustomerCustomNominalUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TCustomerCustomNominalRequest",
+                        "name": "tCustomerCustomNominal",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_custom_nominal.TCustomerCustomNominalRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TCustomerCustomNominal",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerCustomNominal"
+                ],
+                "summary": "TCustomerCustomNominalCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TCustomerCustomNominalRequest",
+                        "name": "tCustomerCustomNominal",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_custom_nominal.TCustomerCustomNominalRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-custom-nominal/{id}": {
+            "get": {
+                "description": "Get TCustomerCustomNominal by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerCustomNominal"
+                ],
+                "summary": "TCustomerCustomNominalIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerCustomNominal id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TCustomerCustomNominal by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerCustomNominal"
+                ],
+                "summary": "TCustomerCustomNominalDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerCustomNominal id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-registered-card": {
+            "get": {
+                "description": "Get Page TCustomerRegisteredCard",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerRegisteredCard"
+                ],
+                "summary": "TCustomerRegisteredCardPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TCustomerRegisteredCard",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerRegisteredCard"
+                ],
+                "summary": "TCustomerRegisteredCardUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TCustomerRegisteredCardRequest",
+                        "name": "tCustomerRegisteredCard",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_registered_card.TCustomerRegisteredCardRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TCustomerRegisteredCard",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerRegisteredCard"
+                ],
+                "summary": "TCustomerRegisteredCardCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TCustomerRegisteredCardRequest",
+                        "name": "tCustomerRegisteredCard",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_registered_card.TCustomerRegisteredCardRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-registered-card/{id}": {
+            "get": {
+                "description": "Get TCustomerRegisteredCard by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerRegisteredCard"
+                ],
+                "summary": "TCustomerRegisteredCardIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerRegisteredCard id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TCustomerRegisteredCard by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerRegisteredCard"
+                ],
+                "summary": "TCustomerRegisteredCardDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerRegisteredCard id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-va": {
+            "get": {
+                "description": "Get Page TCustomerVa",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerVa"
+                ],
+                "summary": "TCustomerVaPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TCustomerVa",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerVa"
+                ],
+                "summary": "TCustomerVaUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TCustomerVaRequest",
+                        "name": "tCustomerVa",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_va.TCustomerVaRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TCustomerVa",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerVa"
+                ],
+                "summary": "TCustomerVaCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TCustomerVaRequest",
+                        "name": "tCustomerVa",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_va.TCustomerVaRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-va-history": {
+            "get": {
+                "description": "Get Page TCustomerVaHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerVaHistory"
+                ],
+                "summary": "TCustomerVaHistoryPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TCustomerVaHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerVaHistory"
+                ],
+                "summary": "TCustomerVaHistoryUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TCustomerVaHistoryRequest",
+                        "name": "tCustomerVaHistory",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_va_history.TCustomerVaHistoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TCustomerVaHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerVaHistory"
+                ],
+                "summary": "TCustomerVaHistoryCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TCustomerVaHistoryRequest",
+                        "name": "tCustomerVaHistory",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_va_history.TCustomerVaHistoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-va-history/{id}": {
+            "get": {
+                "description": "Get TCustomerVaHistory by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerVaHistory"
+                ],
+                "summary": "TCustomerVaHistoryIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerVaHistory id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TCustomerVaHistory by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerVaHistory"
+                ],
+                "summary": "TCustomerVaHistoryDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerVaHistory id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-va/{id}": {
+            "get": {
+                "description": "Get TCustomerVa by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerVa"
+                ],
+                "summary": "TCustomerVaIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerVa id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TCustomerVa by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerVa"
+                ],
+                "summary": "TCustomerVaDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerVa id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-wallet": {
+            "get": {
+                "description": "Get Page TCustomerWallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWallet"
+                ],
+                "summary": "TCustomerWalletPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TCustomerWallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWallet"
+                ],
+                "summary": "TCustomerWalletUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TCustomerWalletRequest",
+                        "name": "tCustomerWallet",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_wallet.TCustomerWalletRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TCustomerWallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWallet"
+                ],
+                "summary": "TCustomerWalletCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TCustomerWalletRequest",
+                        "name": "tCustomerWallet",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_wallet.TCustomerWalletRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-wallet-top-up": {
+            "get": {
+                "description": "Get Page TCustomerWalletTopUp",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWalletTopUp"
+                ],
+                "summary": "TCustomerWalletTopUpPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TCustomerWalletTopUp",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWalletTopUp"
+                ],
+                "summary": "TCustomerWalletTopUpUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TCustomerWalletTopUpRequest",
+                        "name": "tCustomerWalletTopUp",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_wallet_top_up.TCustomerWalletTopUpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TCustomerWalletTopUp",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWalletTopUp"
+                ],
+                "summary": "TCustomerWalletTopUpCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TCustomerWalletTopUpRequest",
+                        "name": "tCustomerWalletTopUp",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_wallet_top_up.TCustomerWalletTopUpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-wallet-top-up/{id}": {
+            "get": {
+                "description": "Get TCustomerWalletTopUp by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWalletTopUp"
+                ],
+                "summary": "TCustomerWalletTopUpIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerWalletTopUp id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TCustomerWalletTopUp by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWalletTopUp"
+                ],
+                "summary": "TCustomerWalletTopUpDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerWalletTopUp id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-wallet-withdraw": {
+            "get": {
+                "description": "Get Page TCustomerWalletWithdraw",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWalletWithdraw"
+                ],
+                "summary": "TCustomerWalletWithdrawPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TCustomerWalletWithdraw",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWalletWithdraw"
+                ],
+                "summary": "TCustomerWalletWithdrawUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TCustomerWalletWithdrawRequest",
+                        "name": "tCustomerWalletWithdraw",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_wallet_withdraw.TCustomerWalletWithdrawRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TCustomerWalletWithdraw",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWalletWithdraw"
+                ],
+                "summary": "TCustomerWalletWithdrawCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TCustomerWalletWithdrawRequest",
+                        "name": "tCustomerWalletWithdraw",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_customer_wallet_withdraw.TCustomerWalletWithdrawRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-wallet-withdraw/{id}": {
+            "get": {
+                "description": "Get TCustomerWalletWithdraw by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWalletWithdraw"
+                ],
+                "summary": "TCustomerWalletWithdrawIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerWalletWithdraw id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TCustomerWalletWithdraw by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWalletWithdraw"
+                ],
+                "summary": "TCustomerWalletWithdrawDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerWalletWithdraw id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-customer-wallet/{id}": {
+            "get": {
+                "description": "Get TCustomerWallet by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWallet"
+                ],
+                "summary": "TCustomerWalletIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerWallet id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TCustomerWallet by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tCustomerWallet"
+                ],
+                "summary": "TCustomerWalletDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TCustomerWallet id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-doctor-office": {
+            "get": {
+                "description": "Get Page TDoctorOffice",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOffice"
+                ],
+                "summary": "TDoctorOfficePage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TDoctorOffice",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOffice"
+                ],
+                "summary": "TDoctorOfficeUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TDoctorOfficeRequest",
+                        "name": "tDoctorOffice",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_doctor_office.TDoctorOfficeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TDoctorOffice",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOffice"
+                ],
+                "summary": "TDoctorOfficeCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TDoctorOfficeRequest",
+                        "name": "tDoctorOffice",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_doctor_office.TDoctorOfficeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-doctor-office-schedule": {
+            "get": {
+                "description": "Get Page TDoctorOfficeSchedule",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeSchedule"
+                ],
+                "summary": "TDoctorOfficeSchedulePage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TDoctorOfficeSchedule",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeSchedule"
+                ],
+                "summary": "TDoctorOfficeScheduleUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TDoctorOfficeScheduleRequest",
+                        "name": "tDoctorOfficeSchedule",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_doctor_office_schedule.TDoctorOfficeScheduleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TDoctorOfficeSchedule",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeSchedule"
+                ],
+                "summary": "TDoctorOfficeScheduleCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TDoctorOfficeScheduleRequest",
+                        "name": "tDoctorOfficeSchedule",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_doctor_office_schedule.TDoctorOfficeScheduleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-doctor-office-schedule/{id}": {
+            "get": {
+                "description": "Get TDoctorOfficeSchedule by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeSchedule"
+                ],
+                "summary": "TDoctorOfficeScheduleIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TDoctorOfficeSchedule id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TDoctorOfficeSchedule by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeSchedule"
+                ],
+                "summary": "TDoctorOfficeScheduleDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TDoctorOfficeSchedule id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-doctor-office-treatment": {
+            "get": {
+                "description": "Get Page TDoctorOfficeTreatment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeTreatment"
+                ],
+                "summary": "TDoctorOfficeTreatmentPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TDoctorOfficeTreatment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeTreatment"
+                ],
+                "summary": "TDoctorOfficeTreatmentUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TDoctorOfficeTreatmentRequest",
+                        "name": "tDoctorOfficeTreatment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_doctor_office_treatment.TDoctorOfficeTreatmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TDoctorOfficeTreatment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeTreatment"
+                ],
+                "summary": "TDoctorOfficeTreatmentCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TDoctorOfficeTreatmentRequest",
+                        "name": "tDoctorOfficeTreatment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_doctor_office_treatment.TDoctorOfficeTreatmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-doctor-office-treatment-price": {
+            "get": {
+                "description": "Get Page TDoctorOfficeTreatmentPrice",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeTreatmentPrice"
+                ],
+                "summary": "TDoctorOfficeTreatmentPricePage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TDoctorOfficeTreatmentPrice",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeTreatmentPrice"
+                ],
+                "summary": "TDoctorOfficeTreatmentPriceUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TDoctorOfficeTreatmentPriceRequest",
+                        "name": "tDoctorOfficeTreatmentPrice",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_doctor_office_treatment_price.TDoctorOfficeTreatmentPriceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TDoctorOfficeTreatmentPrice",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeTreatmentPrice"
+                ],
+                "summary": "TDoctorOfficeTreatmentPriceCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TDoctorOfficeTreatmentPriceRequest",
+                        "name": "tDoctorOfficeTreatmentPrice",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_doctor_office_treatment_price.TDoctorOfficeTreatmentPriceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-doctor-office-treatment-price/{id}": {
+            "get": {
+                "description": "Get TDoctorOfficeTreatmentPrice by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeTreatmentPrice"
+                ],
+                "summary": "TDoctorOfficeTreatmentPriceIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TDoctorOfficeTreatmentPrice id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TDoctorOfficeTreatmentPrice by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeTreatmentPrice"
+                ],
+                "summary": "TDoctorOfficeTreatmentPriceDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TDoctorOfficeTreatmentPrice id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-doctor-office-treatment/{id}": {
+            "get": {
+                "description": "Get TDoctorOfficeTreatment by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeTreatment"
+                ],
+                "summary": "TDoctorOfficeTreatmentIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TDoctorOfficeTreatment id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TDoctorOfficeTreatment by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOfficeTreatment"
+                ],
+                "summary": "TDoctorOfficeTreatmentDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TDoctorOfficeTreatment id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-doctor-office/{id}": {
+            "get": {
+                "description": "Get TDoctorOffice by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOffice"
+                ],
+                "summary": "TDoctorOfficeIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TDoctorOffice id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TDoctorOffice by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorOffice"
+                ],
+                "summary": "TDoctorOfficeDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TDoctorOffice id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-doctor-treatment": {
+            "get": {
+                "description": "Get Page TDoctorTreatment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorTreatment"
+                ],
+                "summary": "TDoctorTreatmentPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TDoctorTreatment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorTreatment"
+                ],
+                "summary": "TDoctorTreatmentUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TDoctorTreatmentRequest",
+                        "name": "tDoctorTreatment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_doctor_treatment.TDoctorTreatmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TDoctorTreatment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorTreatment"
+                ],
+                "summary": "TDoctorTreatmentCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TDoctorTreatmentRequest",
+                        "name": "tDoctorTreatment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_doctor_treatment.TDoctorTreatmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-doctor-treatment/{id}": {
+            "get": {
+                "description": "Get TDoctorTreatment by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorTreatment"
+                ],
+                "summary": "TDoctorTreatmentIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TDoctorTreatment id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TDoctorTreatment by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tDoctorTreatment"
+                ],
+                "summary": "TDoctorTreatmentDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TDoctorTreatment id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-medical-item-purchase": {
+            "get": {
+                "description": "Get Page TMedicalItemPurchase",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tMedicalItemPurchase"
+                ],
+                "summary": "TMedicalItemPurchasePage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TMedicalItemPurchase",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tMedicalItemPurchase"
+                ],
+                "summary": "TMedicalItemPurchaseUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TMedicalItemPurchaseRequest",
+                        "name": "tMedicalItemPurchase",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_medical_item_purchase.TMedicalItemPurchaseRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TMedicalItemPurchase",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tMedicalItemPurchase"
+                ],
+                "summary": "TMedicalItemPurchaseCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TMedicalItemPurchaseRequest",
+                        "name": "tMedicalItemPurchase",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_medical_item_purchase.TMedicalItemPurchaseRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-medical-item-purchase-detail": {
+            "get": {
+                "description": "Get Page TMedicalItemPurchaseDetail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tMedicalItemPurchaseDetail"
+                ],
+                "summary": "TMedicalItemPurchaseDetailPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TMedicalItemPurchaseDetail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tMedicalItemPurchaseDetail"
+                ],
+                "summary": "TMedicalItemPurchaseDetailUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TMedicalItemPurchaseDetailRequest",
+                        "name": "tMedicalItemPurchaseDetail",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_medical_item_purchase_detail.TMedicalItemPurchaseDetailRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TMedicalItemPurchaseDetail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tMedicalItemPurchaseDetail"
+                ],
+                "summary": "TMedicalItemPurchaseDetailCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TMedicalItemPurchaseDetailRequest",
+                        "name": "tMedicalItemPurchaseDetail",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_medical_item_purchase_detail.TMedicalItemPurchaseDetailRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-medical-item-purchase-detail/{id}": {
+            "get": {
+                "description": "Get TMedicalItemPurchaseDetail by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tMedicalItemPurchaseDetail"
+                ],
+                "summary": "TMedicalItemPurchaseDetailIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TMedicalItemPurchaseDetail id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TMedicalItemPurchaseDetail by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tMedicalItemPurchaseDetail"
+                ],
+                "summary": "TMedicalItemPurchaseDetailDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TMedicalItemPurchaseDetail id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-medical-item-purchase/{id}": {
+            "get": {
+                "description": "Get TMedicalItemPurchase by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tMedicalItemPurchase"
+                ],
+                "summary": "TMedicalItemPurchaseIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TMedicalItemPurchase id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TMedicalItemPurchase by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tMedicalItemPurchase"
+                ],
+                "summary": "TMedicalItemPurchaseDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TMedicalItemPurchase id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-reset-password": {
+            "get": {
+                "description": "Get Page TResetPassword",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tResetPassword"
+                ],
+                "summary": "TResetPasswordPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TResetPassword",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tResetPassword"
+                ],
+                "summary": "TResetPasswordUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TResetPasswordRequest",
+                        "name": "tResetPassword",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_reset_password.TResetPasswordRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TResetPassword",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tResetPassword"
+                ],
+                "summary": "TResetPasswordCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TResetPasswordRequest",
+                        "name": "tResetPassword",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_reset_password.TResetPasswordRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-reset-password/{id}": {
+            "get": {
+                "description": "Get TResetPassword by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tResetPassword"
+                ],
+                "summary": "TResetPasswordIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TResetPassword id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TResetPassword by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tResetPassword"
+                ],
+                "summary": "TResetPasswordDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TResetPassword id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-token": {
+            "get": {
+                "description": "Get Page TToken",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tToken"
+                ],
+                "summary": "TTokenPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TToken",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tToken"
+                ],
+                "summary": "TTokenUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TTokenRequest",
+                        "name": "tToken",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_token.TTokenRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TToken",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tToken"
+                ],
+                "summary": "TTokenCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TTokenRequest",
+                        "name": "tToken",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_token.TTokenRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-token/{id}": {
+            "get": {
+                "description": "Get TToken by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tToken"
+                ],
+                "summary": "TTokenIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TToken id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TToken by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tToken"
+                ],
+                "summary": "TTokenDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TToken id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-treatment-discount": {
+            "get": {
+                "description": "Get Page TTreatmentDiscount",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tTreatmentDiscount"
+                ],
+                "summary": "TTreatmentDiscountPage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "default": "0",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "5",
+                        "description": "size",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter",
+                        "name": "filter",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "global filter",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update TTreatmentDiscount",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tTreatmentDiscount"
+                ],
+                "summary": "TTreatmentDiscountUpdate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Update TTreatmentDiscountRequest",
+                        "name": "tTreatmentDiscount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_treatment_discount.TTreatmentDiscountRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create TTreatmentDiscount",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tTreatmentDiscount"
+                ],
+                "summary": "TTreatmentDiscountCreate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Add TTreatmentDiscountRequest",
+                        "name": "tTreatmentDiscount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/t_treatment_discount.TTreatmentDiscountRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/t-treatment-discount/{id}": {
+            "get": {
+                "description": "Get TTreatmentDiscount by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tTreatmentDiscount"
+                ],
+                "summary": "TTreatmentDiscountIndex",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TTreatmentDiscount id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete TTreatmentDiscount by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tTreatmentDiscount"
+                ],
+                "summary": "TTreatmentDiscountDelete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "gzip",
+                        "description": "gzip",
+                        "name": "Accept-Encoding",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TTreatmentDiscount id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "m_biodata.MBiodataRequest": {
-            "type": "object"
+        "dto.JSONTime": {
+            "type": "object",
+            "properties": {
+                "time.Time": {
+                    "type": "string"
+                }
+            }
         },
-        "m_module.MModuleRequest": {
+        "m_admin.MAdminRequest": {
+            "type": "object",
+            "properties": {
+                "biodataId": {
+                    "type": "integer"
+                },
+                "code": {
+                    "type": "string",
+                    "maxLength": 10
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "m_bank.MBankRequest": {
             "type": "object",
             "properties": {
                 "id": {
@@ -1264,6 +16687,486 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "maxLength": 100
+                },
+                "vaCode": {
+                    "type": "string",
+                    "maxLength": 10
+                }
+            }
+        },
+        "m_biodata.MBiodataRequest": {
+            "type": "object"
+        },
+        "m_biodata_address.MBiodataAddressRequest": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "biodataId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "label": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "locationId": {
+                    "type": "integer"
+                },
+                "postalCode": {
+                    "type": "string",
+                    "maxLength": 10
+                },
+                "recipient": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "recipientPhoneNumber": {
+                    "type": "string",
+                    "maxLength": 15
+                }
+            }
+        },
+        "m_biodata_attachment.MBiodataAttachmentRequest": {
+            "type": "object",
+            "properties": {
+                "biodataId": {
+                    "type": "integer"
+                },
+                "file": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "fileName": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "filePath": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "fileSize": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "m_blood_group.MBloodGroupRequest": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "maxLength": 5
+                },
+                "descrtiption": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "m_courier.MCourierRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
+        "m_courier_type.MCourierTypeRequest": {
+            "type": "object",
+            "properties": {
+                "courierId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 20
+                }
+            }
+        },
+        "m_customer.MCustomerRequest": {
+            "type": "object",
+            "properties": {
+                "biodataId": {
+                    "type": "integer"
+                },
+                "bloodGroupId": {
+                    "type": "integer"
+                },
+                "dob": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string",
+                    "maxLength": 1
+                },
+                "height": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "rhesusType": {
+                    "type": "string",
+                    "maxLength": 5
+                },
+                "weight": {
+                    "type": "string"
+                }
+            }
+        },
+        "m_customer_member.MCustomerMemberRequest": {
+            "type": "object",
+            "properties": {
+                "customerId": {
+                    "type": "integer"
+                },
+                "customerRelationId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "parentBiodataId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "m_customer_relation.MCustomerRelationRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
+        "m_doctor.MDoctorRequest": {
+            "type": "object",
+            "properties": {
+                "biodataId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "str": {
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
+        "m_doctor_education.MDoctorEducationRequest": {
+            "type": "object",
+            "properties": {
+                "doctorId": {
+                    "type": "integer"
+                },
+                "educationLevelId": {
+                    "type": "integer"
+                },
+                "endYear": {
+                    "type": "string",
+                    "maxLength": 4
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "institutionName": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "isLastEducation": {
+                    "type": "boolean"
+                },
+                "major": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "startYear": {
+                    "type": "string",
+                    "maxLength": 4
+                }
+            }
+        },
+        "m_education_level.MEducationLevelRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 10
+                }
+            }
+        },
+        "m_location.MLocationRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "locationLevelId": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "parentId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "m_location_level.MLocationLevelRequest": {
+            "type": "object",
+            "properties": {
+                "abbreviation": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
+        "m_medical_facility.MMedicalFacilityRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "fax": {
+                    "type": "string",
+                    "maxLength": 15
+                },
+                "fullAddress": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "locationId": {
+                    "type": "integer"
+                },
+                "medicalFacilityCategoryId": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "phone": {
+                    "type": "string",
+                    "maxLength": 15
+                },
+                "phoneCode": {
+                    "type": "string",
+                    "maxLength": 10
+                }
+            }
+        },
+        "m_medical_facility_category.MMedicalFacilityCategoryRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
+        "m_medical_facility_schedule.MMedicalFacilityScheduleRequest": {
+            "type": "object",
+            "properties": {
+                "day": {
+                    "type": "string",
+                    "maxLength": 10
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "medicalFacilityId": {
+                    "type": "integer"
+                },
+                "timeScheduleEnd": {
+                    "type": "string",
+                    "maxLength": 10
+                },
+                "timeScheduleStart": {
+                    "type": "string",
+                    "maxLength": 10
+                }
+            }
+        },
+        "m_medical_item.MMedicalItemRequest": {
+            "type": "object"
+        },
+        "m_medical_item_category.MMedicalItemCategoryRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
+        "m_medical_item_segmentation.MMedicalItemSegmentationRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
+        "m_menu.MMenuRequest": {
+            "type": "object",
+            "properties": {
+                "bigIcon": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 20
+                },
+                "parentId": {
+                    "type": "integer"
+                },
+                "smallIcon": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "url": {
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
+        "m_menu_role.MMenuRoleRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "menuId": {
+                    "type": "integer"
+                },
+                "roleId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "m_payment_method.MPaymentMethodRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 50
                 }
             }
         },
@@ -1280,20 +17183,29 @@ const docTemplate = `{
                 "isDelete": {
                     "type": "boolean"
                 },
-                "level": {
-                    "type": "integer"
-                },
                 "name": {
                     "type": "string",
                     "maxLength": 20
                 }
             }
         },
+        "m_specialization.MSpecializationRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
         "m_user.MUserRequest": {
             "type": "object",
-            "required": [
-                "id"
-            ],
             "properties": {
                 "biodataId": {
                     "type": "integer"
@@ -1312,8 +17224,7 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "lastLogin": {
-                    "type": "string",
-                    "example": "2024-02-16 10:33:10"
+                    "$ref": "#/definitions/dto.JSONTime"
                 },
                 "loginAttempt": {
                     "type": "integer"
@@ -1323,6 +17234,20 @@ const docTemplate = `{
                     "maxLength": 255
                 },
                 "roleId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "m_wallet_default_nominal.MWalletDefaultNominalRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "nominal": {
                     "type": "integer"
                 }
             }
@@ -1351,6 +17276,528 @@ const docTemplate = `{
                 "timestamp": {
                     "type": "string",
                     "example": "2024-02-16 10:33:10"
+                }
+            }
+        },
+        "t_appointment.TAppointmentRequest": {
+            "type": "object",
+            "properties": {
+                "appointmentDate": {
+                    "type": "string"
+                },
+                "customerId": {
+                    "type": "integer"
+                },
+                "doctorOfficeId": {
+                    "type": "integer"
+                },
+                "doctorOfficeScheduleId": {
+                    "type": "integer"
+                },
+                "doctorOfficeTreatmentId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "t_appointment_cancellation.TAppointmentCancellationRequest": {
+            "type": "object",
+            "properties": {
+                "appointmentId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "t_appointment_done.TAppointmentDoneRequest": {
+            "type": "object",
+            "properties": {
+                "appointmentId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "t_appointment_reschedule_history.TAppointmentRescheduleHistoryRequest": {
+            "type": "object",
+            "properties": {
+                "appointmentDate": {
+                    "type": "string"
+                },
+                "appointmentId": {
+                    "type": "integer"
+                },
+                "doctorOfficeScheduleId": {
+                    "type": "integer"
+                },
+                "doctorOfficeTreatmentId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "t_courier_discount.TCourierDiscountRequest": {
+            "type": "object",
+            "properties": {
+                "courierTypeId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "t_current_doctor_specialization.TCurrentDoctorSpecializationRequest": {
+            "type": "object",
+            "properties": {
+                "doctorId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "specializationId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "t_customer_chat.TCustomerChatRequest": {
+            "type": "object",
+            "properties": {
+                "customerId": {
+                    "type": "integer"
+                },
+                "doctorId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "t_customer_chat_history.TCustomerChatHistoryRequest": {
+            "type": "object",
+            "properties": {
+                "chatContent": {
+                    "type": "string"
+                },
+                "customerChatId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "t_customer_custom_nominal.TCustomerCustomNominalRequest": {
+            "type": "object",
+            "properties": {
+                "customerId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "nominal": {
+                    "type": "integer"
+                }
+            }
+        },
+        "t_customer_registered_card.TCustomerRegisteredCardRequest": {
+            "type": "object",
+            "properties": {
+                "cardNumber": {
+                    "type": "string",
+                    "maxLength": 20
+                },
+                "customerId": {
+                    "type": "integer"
+                },
+                "cvv": {
+                    "type": "string",
+                    "maxLength": 5
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "validityPeriod": {
+                    "type": "string"
+                }
+            }
+        },
+        "t_customer_va.TCustomerVaRequest": {
+            "type": "object",
+            "properties": {
+                "customerId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "vaNumber": {
+                    "type": "string",
+                    "maxLength": 30
+                }
+            }
+        },
+        "t_customer_va_history.TCustomerVaHistoryRequest": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "string"
+                },
+                "customerVaId": {
+                    "type": "integer"
+                },
+                "expiredOn": {
+                    "$ref": "#/definitions/dto.JSONTime"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "t_customer_wallet.TCustomerWalletRequest": {
+            "type": "object",
+            "properties": {
+                "balance": {
+                    "type": "string"
+                },
+                "barcode": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "customerId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "pin": {
+                    "type": "string",
+                    "maxLength": 6
+                },
+                "points": {
+                    "type": "string"
+                }
+            }
+        },
+        "t_customer_wallet_top_up.TCustomerWalletTopUpRequest": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "string"
+                },
+                "customerWalletId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "t_customer_wallet_withdraw.TCustomerWalletWithdrawRequest": {
+            "type": "object",
+            "properties": {
+                "accountName": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "accountNumber": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "amount": {
+                    "type": "integer"
+                },
+                "bankName": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "customerId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "otp": {
+                    "type": "integer"
+                },
+                "walletDefaultNominalId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "t_doctor_office.TDoctorOfficeRequest": {
+            "type": "object",
+            "properties": {
+                "doctorId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "medicalFacilityId": {
+                    "type": "integer"
+                },
+                "specialization": {
+                    "type": "string",
+                    "maxLength": 100
+                }
+            }
+        },
+        "t_doctor_office_schedule.TDoctorOfficeScheduleRequest": {
+            "type": "object",
+            "properties": {
+                "doctorId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "medicalFacilityScheduleId": {
+                    "type": "integer"
+                },
+                "slot": {
+                    "type": "integer"
+                }
+            }
+        },
+        "t_doctor_office_treatment.TDoctorOfficeTreatmentRequest": {
+            "type": "object",
+            "properties": {
+                "doctorOfficeId": {
+                    "type": "integer"
+                },
+                "doctorTreatmentId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "t_doctor_office_treatment_price.TDoctorOfficeTreatmentPriceRequest": {
+            "type": "object",
+            "properties": {
+                "doctorOfficeTreatmentId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "price": {
+                    "type": "string"
+                },
+                "priceStartFrom": {
+                    "type": "string"
+                },
+                "priceUntilFrom": {
+                    "type": "string"
+                }
+            }
+        },
+        "t_doctor_treatment.TDoctorTreatmentRequest": {
+            "type": "object",
+            "properties": {
+                "doctorId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
+        "t_medical_item_purchase.TMedicalItemPurchaseRequest": {
+            "type": "object",
+            "properties": {
+                "customerId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "paymentMethodId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "t_medical_item_purchase_detail.TMedicalItemPurchaseDetailRequest": {
+            "type": "object",
+            "properties": {
+                "courirId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "medicalFacilityId": {
+                    "type": "integer"
+                },
+                "medicalItemId": {
+                    "type": "integer"
+                },
+                "medicalItemPurchaseId": {
+                    "type": "integer"
+                },
+                "qty": {
+                    "type": "integer"
+                },
+                "subTotal": {
+                    "type": "string"
+                }
+            }
+        },
+        "t_reset_password.TResetPasswordRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "newPassword": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "oldPassword": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "resetFor": {
+                    "type": "string",
+                    "maxLength": 20
+                }
+            }
+        },
+        "t_token.TTokenRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "expiredOn": {
+                    "$ref": "#/definitions/dto.JSONTime"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "isExpired": {
+                    "type": "boolean"
+                },
+                "token": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "usedFor": {
+                    "type": "string",
+                    "maxLength": 20
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "t_treatment_discount.TTreatmentDiscountRequest": {
+            "type": "object",
+            "properties": {
+                "doctorOfficeTreatmentPriceId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDelete": {
+                    "type": "boolean"
+                },
+                "value": {
+                    "type": "string"
                 }
             }
         }

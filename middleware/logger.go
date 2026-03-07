@@ -4,10 +4,10 @@ import (
 	"fiber-crud-demo/util"
 	"time"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 )
 
-func LoggerMiddleware(c *fiber.Ctx) error {
+func LoggerMiddleware(c fiber.Ctx) error {
 	start := time.Now()
 
 	err := c.Next()

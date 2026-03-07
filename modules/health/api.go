@@ -4,10 +4,10 @@ import (
 	"fiber-crud-demo/dto/response"
 	"fiber-crud-demo/util"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 )
 
-func Status(c *fiber.Ctx) error {
+func Status(c fiber.Ctx) error {
 	util.Log("INFO", "health", "api", "Status()")
 
 	res := &response.Response{}

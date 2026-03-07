@@ -5,24 +5,24 @@ import (
 	"fiber-crud-demo/util"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 )
 
-func HelloWorld(c *fiber.Ctx) error {
+func HelloWorld(c fiber.Ctx) error {
 	res := &response.Response{}
 	res.Ok(c.Path(), "hello world!")
 
 	return c.Status(res.Status).JSON(res)
 }
 
-func HelloWorldPath(c *fiber.Ctx) error {
+func HelloWorldPath(c fiber.Ctx) error {
 	res := &response.Response{}
 	res.Ok(c.Path(), c.Params("message"))
 
 	return c.Status(res.Status).JSON(res)
 }
 
-func HelloWorldQuery(c *fiber.Ctx) error {
+func HelloWorldQuery(c fiber.Ctx) error {
 	res := &response.Response{}
 	res.Ok(c.Path(), c.Query("message"))
 
@@ -35,11 +35,11 @@ type HelloWorldRequest struct {
 
 var validate = validator.New()
 
-func HelloWorldPayload(c *fiber.Ctx) error {
+func HelloWorldPayload(c fiber.Ctx) error {
 	payload := new(HelloWorldRequest)
 
 	// parse payload
-	if err := c.BodyParser(payload); err != nil {
+	if err := c.Bind().JSON(payload); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "Cannot parse JSON, error: " + err.Error(),
 		})
@@ -61,7 +61,7 @@ func HelloWorldPayload(c *fiber.Ctx) error {
 	return c.Status(res.Status).JSON(res)
 }
 
-func HelloWorldError(c *fiber.Ctx) error {
+func HelloWorldError(c fiber.Ctx) error {
 	error_type := c.Params("type")
 	res := &response.Response{}
 	res.Ok(c.Path(), nil)

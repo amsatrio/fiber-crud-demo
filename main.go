@@ -10,23 +10,73 @@ import (
 	"fiber-crud-demo/dto/response"
 	"fiber-crud-demo/initializer"
 	"fiber-crud-demo/middleware"
-	"fiber-crud-demo/modules/generator"
 	"fiber-crud-demo/modules/health"
 	"fiber-crud-demo/modules/hello_world"
-	"fiber-crud-demo/modules/m_biodata"
-	"fiber-crud-demo/modules/m_file"
-	"fiber-crud-demo/modules/m_module"
-	"fiber-crud-demo/modules/m_role"
-	"fiber-crud-demo/modules/m_user"
+
+	"fiber-crud-demo/modules/hospital/m_admin"
+	"fiber-crud-demo/modules/hospital/m_bank"
+	"fiber-crud-demo/modules/hospital/m_biodata"
+	"fiber-crud-demo/modules/hospital/m_biodata_address"
+	"fiber-crud-demo/modules/hospital/m_biodata_attachment"
+	"fiber-crud-demo/modules/hospital/m_blood_group"
+	"fiber-crud-demo/modules/hospital/m_courier"
+	"fiber-crud-demo/modules/hospital/m_courier_type"
+	"fiber-crud-demo/modules/hospital/m_customer"
+	"fiber-crud-demo/modules/hospital/m_customer_member"
+	"fiber-crud-demo/modules/hospital/m_customer_relation"
+	"fiber-crud-demo/modules/hospital/m_doctor"
+	"fiber-crud-demo/modules/hospital/m_doctor_education"
+	"fiber-crud-demo/modules/hospital/m_education_level"
+	"fiber-crud-demo/modules/hospital/m_location"
+	"fiber-crud-demo/modules/hospital/m_location_level"
+	"fiber-crud-demo/modules/hospital/m_medical_facility"
+	"fiber-crud-demo/modules/hospital/m_medical_facility_category"
+	"fiber-crud-demo/modules/hospital/m_medical_facility_schedule"
+	"fiber-crud-demo/modules/hospital/m_medical_item"
+	"fiber-crud-demo/modules/hospital/m_medical_item_category"
+	"fiber-crud-demo/modules/hospital/m_medical_item_segmentation"
+	"fiber-crud-demo/modules/hospital/m_menu"
+	"fiber-crud-demo/modules/hospital/m_menu_role"
+	"fiber-crud-demo/modules/hospital/m_payment_method"
+	"fiber-crud-demo/modules/hospital/m_role"
+	"fiber-crud-demo/modules/hospital/m_specialization"
+	"fiber-crud-demo/modules/hospital/m_user"
+	"fiber-crud-demo/modules/hospital/m_wallet_default_nominal"
+	"fiber-crud-demo/modules/hospital/t_appointment"
+	"fiber-crud-demo/modules/hospital/t_appointment_cancellation"
+	"fiber-crud-demo/modules/hospital/t_appointment_done"
+	"fiber-crud-demo/modules/hospital/t_appointment_reschedule_history"
+	"fiber-crud-demo/modules/hospital/t_courier_discount"
+	"fiber-crud-demo/modules/hospital/t_current_doctor_specialization"
+	"fiber-crud-demo/modules/hospital/t_customer_chat"
+	"fiber-crud-demo/modules/hospital/t_customer_chat_history"
+	"fiber-crud-demo/modules/hospital/t_customer_custom_nominal"
+	"fiber-crud-demo/modules/hospital/t_customer_registered_card"
+	"fiber-crud-demo/modules/hospital/t_customer_va"
+	"fiber-crud-demo/modules/hospital/t_customer_va_history"
+	"fiber-crud-demo/modules/hospital/t_customer_wallet"
+	"fiber-crud-demo/modules/hospital/t_customer_wallet_top_up"
+	"fiber-crud-demo/modules/hospital/t_customer_wallet_withdraw"
+	"fiber-crud-demo/modules/hospital/t_doctor_office"
+	"fiber-crud-demo/modules/hospital/t_doctor_office_schedule"
+	"fiber-crud-demo/modules/hospital/t_doctor_office_treatment"
+	"fiber-crud-demo/modules/hospital/t_doctor_office_treatment_price"
+	"fiber-crud-demo/modules/hospital/t_doctor_treatment"
+	"fiber-crud-demo/modules/hospital/t_medical_item_purchase"
+	"fiber-crud-demo/modules/hospital/t_medical_item_purchase_detail"
+	"fiber-crud-demo/modules/hospital/t_reset_password"
+	"fiber-crud-demo/modules/hospital/t_token"
+	"fiber-crud-demo/modules/hospital/t_treatment_discount"
 
 	"fiber-crud-demo/util"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/goccy/go-json"
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/gofiber/swagger"
+	"github.com/gofiber/contrib/v3/swaggo"
+	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/cors"
+	"github.com/gofiber/fiber/v3/middleware/recover"
+	"github.com/gofiber/fiber/v3/middleware/static"
 	"github.com/gofiber/template/html/v2"
 )
 
@@ -39,20 +89,18 @@ func init() {
 func config() fiber.Config {
 	htmlEngine := html.New("./web/templates", ".html")
 	return fiber.Config{
-		Prefork:               true,
-		CaseSensitive:         true,
-		StrictRouting:         true,
-		BodyLimit:             4 * 1024 * 1024,
-		DisableStartupMessage: true,
-		ServerHeader:          "Fiber Audio Management",
-		AppName:               "Fiber Audio Management v0.0.1",
-		JSONEncoder:           json.Marshal,
-		JSONDecoder:           json.Unmarshal,
-		ErrorHandler: func(c *fiber.Ctx, err error) error {
-
+		// Prefork:               true,
+		CaseSensitive: true,
+		StrictRouting: true,
+		BodyLimit:     4 * 1024 * 1024,
+		// DisableStartupMessage: true,
+		ServerHeader: "Fiber Audio Management",
+		AppName:      "Fiber Audio Management v0.0.1",
+		JSONEncoder:  json.Marshal,
+		JSONDecoder:  json.Unmarshal,
+		ErrorHandler: func(c fiber.Ctx, err error) error {
 			code := fiber.StatusInternalServerError
 
-			// Retrieve the custom status code if it's a *fiber.Error
 			var e *fiber.Error
 			if errors.As(err, &e) {
 				code = e.Code
@@ -75,16 +123,17 @@ func main() {
 
 	// ### Middleware
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "*",
-		AllowHeaders: "*",
+		AllowOrigins: []string{"*"}, // v3 expects a slice of strings for origins
+		AllowHeaders: []string{"*"},
 	}))
 	// app.Use(cache.New())
 	app.Use(recover.New())
 	app.Use(middleware.LoggerMiddleware)
 
-	app.Get("/swagger/*", swagger.HandlerDefault) // default
+	// app.Get("/swagger/*", swagger.HandlerDefault) // default
+	app.Get("/swagger/*", swaggo.HandlerDefault)
 
-	app.Static("/public", "./web/public")
+	app.Get("/public/*", static.New("./web/public"))
 
 	// ### Routes
 	routes(app)
@@ -98,7 +147,6 @@ func main() {
 }
 
 func routes(app *fiber.App) {
-	mFileRepo := m_file.NewMFileRepository()
 
 	// HEALTH
 	health_api := app.Group("/v1/health")
@@ -112,63 +160,61 @@ func routes(app *fiber.App) {
 	hello_world_api.Post("/payload", hello_world.HelloWorldPayload)
 	hello_world_api.Get("/error/:type", hello_world.HelloWorldError)
 
-	// WEB MASTER BIODATA
-	mBiodataWebHandler := m_biodata.NewMBiodataWebHandler()
-	m_biodata_web := app.Group("/web/m-biodata")
-	m_biodata_web.Get("/table-datatable", mBiodataWebHandler.MBiodataTableDatatableWebIndex)
-	m_biodata_web.Get("/table-html", mBiodataWebHandler.MBiodataTableHTMLWebIndex)
-	m_biodata_web.Get("/table-bootstrap", mBiodataWebHandler.MBiodataTableBootstrapWebIndex)
-	m_biodata_web.Get("/table-tailwindcss", mBiodataWebHandler.MBiodataTableTailwindCSSWebIndex)
-	m_biodata_web.Get("", mBiodataWebHandler.MBiodataWebIndex)
-
 	var validate = validator.New()
 
-	// MASTER ROLE
-	mRoleRepo := m_role.NewMRoleRepository(initializer.DB)
-	mRoleService := m_role.NewMRoleService(mRoleRepo)
-	mRoleHandler := m_role.NewMRoleHandler(mRoleService, validate)
-	m_role_api := app.Group("/v1/m-role")
-	m_role_api.Post("", mRoleHandler.MRoleCreate)
-	m_role_api.Put("", mRoleHandler.MRoleUpdate)
-	m_role_api.Get(":id", mRoleHandler.MRoleIndex)
-	m_role_api.Get("", mRoleHandler.MRolePage)
-	m_role_api.Delete(":id", mRoleHandler.MRoleDelete)
+	m_admin.GetRouter(app, validate)
+	m_bank.GetRouter(app, validate)
+	m_biodata.GetRouter(app, validate)
+	m_biodata_address.GetRouter(app, validate)
+	m_blood_group.GetRouter(app, validate)
+	m_courier.GetRouter(app, validate)
+	m_customer.GetRouter(app, validate)
+	m_customer_member.GetRouter(app, validate)
+	m_customer_relation.GetRouter(app, validate)
+	m_doctor.GetRouter(app, validate)
+	m_doctor_education.GetRouter(app, validate)
+	m_education_level.GetRouter(app, validate)
+	m_location.GetRouter(app, validate)
+	m_location_level.GetRouter(app, validate)
+	m_medical_facility.GetRouter(app, validate)
+	m_medical_facility_category.GetRouter(app, validate)
+	m_medical_facility_schedule.GetRouter(app, validate)
+	m_medical_item.GetRouter(app, validate)
+	m_medical_item_category.GetRouter(app, validate)
+	m_medical_item_segmentation.GetRouter(app, validate)
+	m_menu.GetRouter(app, validate)
+	m_menu_role.GetRouter(app, validate)
+	m_payment_method.GetRouter(app, validate)
+	m_role.GetRouter(app, validate)
+	m_specialization.GetRouter(app, validate)
+	m_user.GetRouter(app, validate)
+	m_biodata_attachment.GetRouter(app, validate)
+	m_wallet_default_nominal.GetRouter(app, validate)
+	t_appointment.GetRouter(app, validate)
+	t_appointment_cancellation.GetRouter(app, validate)
+	t_appointment_done.GetRouter(app, validate)
+	t_appointment_reschedule_history.GetRouter(app, validate)
+	t_current_doctor_specialization.GetRouter(app, validate)
+	t_customer_chat.GetRouter(app, validate)
+	t_customer_chat_history.GetRouter(app, validate)
+	t_customer_custom_nominal.GetRouter(app, validate)
+	t_customer_registered_card.GetRouter(app, validate)
+	t_customer_va.GetRouter(app, validate)
+	t_customer_va_history.GetRouter(app, validate)
+	t_customer_wallet.GetRouter(app, validate)
+	t_customer_wallet_top_up.GetRouter(app, validate)
+	t_doctor_office.GetRouter(app, validate)
+	t_doctor_office_schedule.GetRouter(app, validate)
+	t_doctor_office_treatment.GetRouter(app, validate)
+	t_doctor_office_treatment_price.GetRouter(app, validate)
+	t_doctor_treatment.GetRouter(app, validate)
+	t_medical_item_purchase.GetRouter(app, validate)
+	t_medical_item_purchase_detail.GetRouter(app, validate)
+	t_reset_password.GetRouter(app, validate)
+	t_token.GetRouter(app, validate)
+	t_treatment_discount.GetRouter(app, validate)
+	m_courier_type.GetRouter(app, validate)
+	t_courier_discount.GetRouter(app, validate)
+	t_customer_wallet_withdraw.GetRouter(app, validate)
 
-	// MASTER BIODATA
-	mBiodataRepo := m_biodata.NewMBiodataRepository(initializer.DB)
-	mBiodataService := m_biodata.NewMBiodataService(mBiodataRepo, mFileRepo)
-	mBiodataHandler := m_biodata.NewMBiodataHandler(mBiodataService, validate)
-	m_biodata_api := app.Group("/v1/m-biodata")
-	m_biodata_api.Post("", mBiodataHandler.MBiodataCreate)
-	m_biodata_api.Put("", mBiodataHandler.MBiodataUpdate)
-	m_biodata_api.Get(":id", mBiodataHandler.MBiodataIndex)
-	m_biodata_api.Get("", mBiodataHandler.MBiodataPage)
-	m_biodata_api.Delete(":id", mBiodataHandler.MBiodataDelete)
-
-	// MASTER USER
-	mUserRepo := m_user.NewMUserRepository(initializer.DB)
-	mUserService := m_user.NewMUserService(mUserRepo)
-	mUserHandler := m_user.NewMUserHandler(mUserService, validate)
-	m_user_api := app.Group("/v1/m-user")
-	m_user_api.Post("", mUserHandler.MUserCreate)
-	m_user_api.Put("", mUserHandler.MUserUpdate)
-	m_user_api.Get(":id", mUserHandler.MUserIndex)
-	m_user_api.Get("", mUserHandler.MUserPage)
-	m_user_api.Delete(":id", mUserHandler.MUserDelete)
-
-	// MASTER MODULE
-	mModuleRepo := m_module.NewMModuleRepository(initializer.DB)
-	mModuleService := m_module.NewMModuleService(mModuleRepo)
-	mModuleHandler := m_module.NewMModuleHandler(mModuleService, validate)
-	m_module_api := app.Group("/v1/m-module")
-	m_module_api.Post("", mModuleHandler.MModuleCreate)
-	m_module_api.Put("", mModuleHandler.MModuleUpdate)
-	m_module_api.Get(":id", mModuleHandler.MModuleIndex)
-	m_module_api.Get("", mModuleHandler.MModulePage)
-	m_module_api.Delete(":id", mModuleHandler.MModuleDelete)
-
-	// GENERATOR
-	generatorHandler := generator.NewGeneratorHandler(mBiodataService)
-	generatorApi := app.Group("/generator")
-	generatorApi.Get("/m-biodata/:size", generatorHandler.GenerateMBiodata)
 }

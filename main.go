@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"log"
 	"os"
@@ -71,7 +72,6 @@ import (
 	"fiber-crud-demo/util"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/goccy/go-json"
 	"github.com/gofiber/contrib/v3/swaggo"
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"regexp"
-	"strconv"
 	"strings"
 	"unicode"
 
@@ -12,20 +11,14 @@ import (
 )
 
 func CamelCaseToSnakeCase(input string) string {
-	regexPattern := "([a-z0-9])"
-	regexOutput := "${1}"
+	var matchFirstCap = regexp.MustCompile("(.)([A-Z][a-z]+)")
+	var matchAllCap = regexp.MustCompile("([a-z0-9])([A-Z])")
 
-	totalCapitalLetters := countCapitalLetters(input)
-	if totalCapitalLetters > 0 {
-		for i := 0; i < totalCapitalLetters; i++ {
-			regexPattern = regexPattern + "([A-Z0-9])"
-			regexOutput = regexOutput + "_${" + strconv.Itoa(i+2) + "}"
-		}
-	}
+	snake := matchFirstCap.ReplaceAllString(input, "${1}_${2}")
 
-	re := regexp.MustCompile(regexPattern)
-	snakeCaseString := re.ReplaceAllString(input, regexOutput)
-	return strings.ToLower(snakeCaseString)
+	snake = matchAllCap.ReplaceAllString(snake, "${1}_${2}")
+
+	return strings.ToLower(snake)
 }
 
 func countCapitalLetters(input string) int {

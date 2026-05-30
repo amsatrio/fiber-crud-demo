@@ -14,6 +14,7 @@ build:
 	#GOARCH=amd64 GOOS=windows go build -o out/bin/${BINARY_NAME}-windows main.go
 
 start: build
+	cp -ar .env bin/.env
 	./bin/${BINARY_NAME}-linux
 
 clean:

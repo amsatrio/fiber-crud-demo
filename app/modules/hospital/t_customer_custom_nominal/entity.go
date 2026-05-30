@@ -1,0 +1,79 @@
+package t_customer_custom_nominal
+
+import (
+	"sync"
+	"time"
+
+	"github.com/amsatrio/fiber-crud-demo/app/dto"
+)
+
+type TCustomerCustomNominal struct {
+	Id         uint          `form:"id" json:"id" xml:"id" gorm:"primary_key;autoIncrement;not null;type:bigint" validate:"required"`
+	CustomerId *uint         `form:"customerId" json:"customerId" xml:"customerId" gorm:"type:bigint"`
+	Nominal    *int          `form:"nominal" json:"nominal" xml:"nominal" gorm:"type:int"`
+	CreatedBy  uint          `form:"createdBy" json:"createdBy" xml:"createdBy" gorm:"not null;type:bigint"`
+	CreatedOn  dto.JSONTime  `form:"createdOn" json:"createdOn" xml:"createdOn" gorm:"not null;type:datetime" swaggertype:"string" example:"2024-02-16 10:33:10"`
+	ModifiedBy *uint         `form:"modifiedBy" json:"modifiedBy" xml:"modifiedBy" gorm:"type:bigint"`
+	ModifiedOn *dto.JSONTime `form:"modifiedOn" json:"modifiedOn" xml:"modifiedOn" gorm:"type:datetime" swaggertype:"string" example:"2024-02-16 10:33:10"`
+	DeletedBy  *uint         `form:"deletedBy" json:"deletedBy" xml:"deletedBy" gorm:"type:bigint"`
+	DeletedOn  *dto.JSONTime `form:"deletedOn" json:"deletedOn" xml:"deletedOn" gorm:"type:datetime" swaggertype:"string" example:"2024-02-16 10:33:10"`
+	IsDelete   bool          `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"not null;type:boolean;comment:default FALSE"`
+}
+
+func (TCustomerCustomNominal) TableName() string {
+	return "t_customer_custom_nominal"
+}
+
+type TCustomerCustomNominalRequest struct {
+	Id         *uint `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment"`
+	CustomerId *uint `form:"customerId" json:"customerId" xml:"customerId" gorm:"type:bigint"`
+	Nominal    *int  `form:"nominal" json:"nominal" xml:"nominal" gorm:"type:int"`
+	IsDelete   *bool `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"type:boolean;comment:default FALSE"`
+}
+type TCustomerCustomNominalResponse struct {
+	Id         *uint `form:"id" json:"id" xml:"id"`
+	CustomerId *uint `form:"customerId" json:"customerId" xml:"customerId"`
+	Nominal    *int  `form:"nominal" json:"nominal" xml:"nominal"`
+	IsDelete   bool  `form:"isDelete" json:"isDelete" xml:"isDelete"`
+}
+
+func ToTCustomerCustomNominalEntity(req TCustomerCustomNominalRequest, imageData []byte, userId uint) TCustomerCustomNominal {
+	entity := TCustomerCustomNominal{
+		CustomerId: req.CustomerId,
+		Nominal:    req.Nominal,
+		CreatedBy:  userId,
+		CreatedOn:  dto.JSONTime{Time: time.Now()},
+		IsDelete:   false,
+	}
+	if req.Id != nil {
+		entity.Id = *req.Id
+	}
+	return entity
+}
+
+func ToTCustomerCustomNominalResponse(entity TCustomerCustomNominal) TCustomerCustomNominalResponse {
+	res := TCustomerCustomNominalResponse{
+		Id:         &entity.Id,
+		CustomerId: entity.CustomerId,
+		Nominal:    entity.Nominal,
+		IsDelete:   entity.IsDelete,
+	}
+	return res
+}
+func ToTCustomerCustomNominalResponsesParallel(entities []TCustomerCustomNominal) []TCustomerCustomNominalResponse {
+	numEntities := len(entities)
+	responses := make([]TCustomerCustomNominalResponse, numEntities)
+
+	var wg sync.WaitGroup
+	wg.Add(numEntities)
+
+	for i, e := range entities {
+		go func(index int, entity TCustomerCustomNominal) {
+			defer wg.Done()
+			responses[index] = ToTCustomerCustomNominalResponse(entity)
+		}(i, e)
+	}
+
+	wg.Wait()
+	return responses
+}

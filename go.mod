@@ -1,4 +1,4 @@
-module fiber-crud-demo
+module github.com/amsatrio/fiber-crud-demo
 
 go 1.25.0
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"regexp"
+	"strings"
 
 	"github.com/amsatrio/fiber-crud-demo/app/dto/request"
 
@@ -65,7 +66,7 @@ func ApplyGlobalSearch(db *gorm.DB, search string, modelMap map[string]string) *
 	searchQuery := ""
 	for key, value := range modelMap {
 		// Log("INFO", "util", "ApplyGlobalSearch", "key: "+key+", value: "+value)
-		if value != "string" {
+		if !strings.Contains(value, "string") {
 			continue
 		}
 

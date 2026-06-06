@@ -22,18 +22,21 @@ func ApplyPaginate(pageInt int, limitInt int) func(db *gorm.DB) *gorm.DB {
 }
 
 func ApplySorting(db *gorm.DB, sorts []request.Sort) *gorm.DB {
+	query := ""
 	for _, sort := range sorts {
+		key := CamelCaseToSnakeCase(sort.Id)
 		if sort.Desc {
-			return db.Order(sort.Id + " DESC")
+			query = key + " DESC"
+			break
 		}
-		return db.Order(sort.Id + " ASC")
+		query = key + " ASC"
 	}
-	return db
+	return db.Order(query)
 }
 
 func ApplyFiltering(db *gorm.DB, filter []request.Filter) *gorm.DB {
 	for _, condition := range filter {
-		key, value, operation := condition.Id, condition.Value, condition.MatchMode
+		key, value, operation := CamelCaseToSnakeCase(condition.Id), condition.Value, condition.MatchMode
 
 		valueString := ""
 

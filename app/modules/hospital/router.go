@@ -1,6 +1,7 @@
 package hospital
 
 import (
+	"github.com/amsatrio/fiber-crud-demo/app/modules/hospital/auth"
 	"github.com/amsatrio/fiber-crud-demo/app/modules/hospital/m_admin"
 	"github.com/amsatrio/fiber-crud-demo/app/modules/hospital/m_bank"
 	"github.com/amsatrio/fiber-crud-demo/app/modules/hospital/m_biodata"
@@ -64,6 +65,8 @@ func Router(app *fiber.App) {
 	var validate = validator.New()
 
 	api := app.Group("/v1/hospital")
+
+	auth.GetRouter(api, validate)
 
 	m_admin.GetRouter(api, validate)
 	m_bank.GetRouter(api, validate)

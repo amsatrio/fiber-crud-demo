@@ -47,6 +47,10 @@ func AuthenticationMiddleware(allowedRoles ...string) fiber.Handler {
 			c.Locals("userRole", role)
 		}
 
+		if userId, exists := claims["userId"]; exists {
+			c.Locals("userId", userId)
+		}
+
 		return c.Next()
 
 	}

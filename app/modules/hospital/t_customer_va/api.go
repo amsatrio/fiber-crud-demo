@@ -40,7 +40,7 @@ func NewTCustomerVaHandler(service TCustomerVaService, validate *validator.Valid
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-va [post]
+//	@Router         /v1/hospital/t-customer-va [post]
 func (h *TCustomerVaHandler) TCustomerVaCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TCustomerVaHandler) TCustomerVaCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-va [put]
+//	@Router         /v1/hospital/t-customer-va [put]
 func (h *TCustomerVaHandler) TCustomerVaUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TCustomerVaHandler) TCustomerVaUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-va/{id} [get]
+//	@Router         /v1/hospital/t-customer-va/{id} [get]
 func (h *TCustomerVaHandler) TCustomerVaIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TCustomerVaHandler) TCustomerVaIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-va/{id} [delete]
+//	@Router         /v1/hospital/t-customer-va/{id} [delete]
 func (h *TCustomerVaHandler) TCustomerVaDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TCustomerVaHandler) TCustomerVaDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-va [get]
+//	@Router         /v1/hospital/t-customer-va [get]
 func (h *TCustomerVaHandler) TCustomerVaPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TCustomerVaHandler) TCustomerVaPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "TCustomerVaPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

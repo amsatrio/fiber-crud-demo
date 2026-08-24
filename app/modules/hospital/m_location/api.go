@@ -40,7 +40,7 @@ func NewMLocationHandler(service MLocationService, validate *validator.Validate)
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-location [post]
+//	@Router         /v1/hospital/m-location [post]
 func (h *MLocationHandler) MLocationCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MLocationHandler) MLocationCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-location [put]
+//	@Router         /v1/hospital/m-location [put]
 func (h *MLocationHandler) MLocationUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MLocationHandler) MLocationUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-location/{id} [get]
+//	@Router         /v1/hospital/m-location/{id} [get]
 func (h *MLocationHandler) MLocationIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MLocationHandler) MLocationIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-location/{id} [delete]
+//	@Router         /v1/hospital/m-location/{id} [delete]
 func (h *MLocationHandler) MLocationDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MLocationHandler) MLocationDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-location [get]
+//	@Router         /v1/hospital/m-location [get]
 func (h *MLocationHandler) MLocationPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MLocationHandler) MLocationPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MLocationPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

@@ -40,7 +40,7 @@ func NewMMenuRoleHandler(service MMenuRoleService, validate *validator.Validate)
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-menu-role [post]
+//	@Router         /v1/hospital/m-menu-role [post]
 func (h *MMenuRoleHandler) MMenuRoleCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MMenuRoleHandler) MMenuRoleCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-menu-role [put]
+//	@Router         /v1/hospital/m-menu-role [put]
 func (h *MMenuRoleHandler) MMenuRoleUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MMenuRoleHandler) MMenuRoleUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-menu-role/{id} [get]
+//	@Router         /v1/hospital/m-menu-role/{id} [get]
 func (h *MMenuRoleHandler) MMenuRoleIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MMenuRoleHandler) MMenuRoleIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-menu-role/{id} [delete]
+//	@Router         /v1/hospital/m-menu-role/{id} [delete]
 func (h *MMenuRoleHandler) MMenuRoleDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MMenuRoleHandler) MMenuRoleDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-menu-role [get]
+//	@Router         /v1/hospital/m-menu-role [get]
 func (h *MMenuRoleHandler) MMenuRolePage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MMenuRoleHandler) MMenuRolePage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MMenuRolePage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

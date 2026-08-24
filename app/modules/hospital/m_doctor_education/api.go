@@ -40,7 +40,7 @@ func NewMDoctorEducationHandler(service MDoctorEducationService, validate *valid
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-doctor-education [post]
+//	@Router         /v1/hospital/m-doctor-education [post]
 func (h *MDoctorEducationHandler) MDoctorEducationCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MDoctorEducationHandler) MDoctorEducationCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-doctor-education [put]
+//	@Router         /v1/hospital/m-doctor-education [put]
 func (h *MDoctorEducationHandler) MDoctorEducationUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MDoctorEducationHandler) MDoctorEducationUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-doctor-education/{id} [get]
+//	@Router         /v1/hospital/m-doctor-education/{id} [get]
 func (h *MDoctorEducationHandler) MDoctorEducationIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MDoctorEducationHandler) MDoctorEducationIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-doctor-education/{id} [delete]
+//	@Router         /v1/hospital/m-doctor-education/{id} [delete]
 func (h *MDoctorEducationHandler) MDoctorEducationDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MDoctorEducationHandler) MDoctorEducationDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-doctor-education [get]
+//	@Router         /v1/hospital/m-doctor-education [get]
 func (h *MDoctorEducationHandler) MDoctorEducationPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MDoctorEducationHandler) MDoctorEducationPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MDoctorEducationPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

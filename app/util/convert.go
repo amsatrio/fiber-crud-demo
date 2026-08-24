@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"regexp"
 	"strings"
+	"unicode"
 
 	"github.com/amsatrio/fiber-crud-demo/app/dto/response"
 )
@@ -18,6 +19,18 @@ func CamelCaseToSnakeCase(input string) string {
 	snake = matchAllCap.ReplaceAllString(snake, "${1}_${2}")
 
 	return strings.ToLower(snake)
+}
+
+func countCapitalLetters(input string) int {
+	count := 0
+
+	for _, char := range input {
+		if unicode.IsUpper(char) {
+			count++
+		}
+	}
+
+	return count
 }
 
 func ResponseToByte(response response.Response) ([]byte, error) {

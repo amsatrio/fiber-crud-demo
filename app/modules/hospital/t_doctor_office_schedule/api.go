@@ -40,7 +40,7 @@ func NewTDoctorOfficeScheduleHandler(service TDoctorOfficeScheduleService, valid
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-office-schedule [post]
+//	@Router         /v1/hospital/t-doctor-office-schedule [post]
 func (h *TDoctorOfficeScheduleHandler) TDoctorOfficeScheduleCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TDoctorOfficeScheduleHandler) TDoctorOfficeScheduleCreate(c fiber.Ctx) 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-office-schedule [put]
+//	@Router         /v1/hospital/t-doctor-office-schedule [put]
 func (h *TDoctorOfficeScheduleHandler) TDoctorOfficeScheduleUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TDoctorOfficeScheduleHandler) TDoctorOfficeScheduleUpdate(c fiber.Ctx) 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-office-schedule/{id} [get]
+//	@Router         /v1/hospital/t-doctor-office-schedule/{id} [get]
 func (h *TDoctorOfficeScheduleHandler) TDoctorOfficeScheduleIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TDoctorOfficeScheduleHandler) TDoctorOfficeScheduleIndex(c fiber.Ctx) e
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-office-schedule/{id} [delete]
+//	@Router         /v1/hospital/t-doctor-office-schedule/{id} [delete]
 func (h *TDoctorOfficeScheduleHandler) TDoctorOfficeScheduleDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TDoctorOfficeScheduleHandler) TDoctorOfficeScheduleDelete(c fiber.Ctx) 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-office-schedule [get]
+//	@Router         /v1/hospital/t-doctor-office-schedule [get]
 func (h *TDoctorOfficeScheduleHandler) TDoctorOfficeSchedulePage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TDoctorOfficeScheduleHandler) TDoctorOfficeSchedulePage(c fiber.Ctx) er
 		util.Log("ERROR", "controllers", "TDoctorOfficeSchedulePage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

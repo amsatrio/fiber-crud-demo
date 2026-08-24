@@ -40,7 +40,7 @@ func NewTCustomerChatHistoryHandler(service TCustomerChatHistoryService, validat
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-chat-history [post]
+//	@Router         /v1/hospital/t-customer-chat-history [post]
 func (h *TCustomerChatHistoryHandler) TCustomerChatHistoryCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TCustomerChatHistoryHandler) TCustomerChatHistoryCreate(c fiber.Ctx) er
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-chat-history [put]
+//	@Router         /v1/hospital/t-customer-chat-history [put]
 func (h *TCustomerChatHistoryHandler) TCustomerChatHistoryUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TCustomerChatHistoryHandler) TCustomerChatHistoryUpdate(c fiber.Ctx) er
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-chat-history/{id} [get]
+//	@Router         /v1/hospital/t-customer-chat-history/{id} [get]
 func (h *TCustomerChatHistoryHandler) TCustomerChatHistoryIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TCustomerChatHistoryHandler) TCustomerChatHistoryIndex(c fiber.Ctx) err
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-chat-history/{id} [delete]
+//	@Router         /v1/hospital/t-customer-chat-history/{id} [delete]
 func (h *TCustomerChatHistoryHandler) TCustomerChatHistoryDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TCustomerChatHistoryHandler) TCustomerChatHistoryDelete(c fiber.Ctx) er
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-chat-history [get]
+//	@Router         /v1/hospital/t-customer-chat-history [get]
 func (h *TCustomerChatHistoryHandler) TCustomerChatHistoryPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TCustomerChatHistoryHandler) TCustomerChatHistoryPage(c fiber.Ctx) erro
 		util.Log("ERROR", "controllers", "TCustomerChatHistoryPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

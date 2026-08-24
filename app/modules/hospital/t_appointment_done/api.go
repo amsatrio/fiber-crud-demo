@@ -40,7 +40,7 @@ func NewTAppointmentDoneHandler(service TAppointmentDoneService, validate *valid
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-done [post]
+//	@Router         /v1/hospital/t-appointment-done [post]
 func (h *TAppointmentDoneHandler) TAppointmentDoneCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TAppointmentDoneHandler) TAppointmentDoneCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-done [put]
+//	@Router         /v1/hospital/t-appointment-done [put]
 func (h *TAppointmentDoneHandler) TAppointmentDoneUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TAppointmentDoneHandler) TAppointmentDoneUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-done/{id} [get]
+//	@Router         /v1/hospital/t-appointment-done/{id} [get]
 func (h *TAppointmentDoneHandler) TAppointmentDoneIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TAppointmentDoneHandler) TAppointmentDoneIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-done/{id} [delete]
+//	@Router         /v1/hospital/t-appointment-done/{id} [delete]
 func (h *TAppointmentDoneHandler) TAppointmentDoneDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TAppointmentDoneHandler) TAppointmentDoneDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-done [get]
+//	@Router         /v1/hospital/t-appointment-done [get]
 func (h *TAppointmentDoneHandler) TAppointmentDonePage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TAppointmentDoneHandler) TAppointmentDonePage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "TAppointmentDonePage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

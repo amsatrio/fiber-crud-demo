@@ -40,7 +40,7 @@ func NewTAppointmentCancellationHandler(service TAppointmentCancellationService,
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-cancellation [post]
+//	@Router         /v1/hospital/t-appointment-cancellation [post]
 func (h *TAppointmentCancellationHandler) TAppointmentCancellationCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TAppointmentCancellationHandler) TAppointmentCancellationCreate(c fiber
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-cancellation [put]
+//	@Router         /v1/hospital/t-appointment-cancellation [put]
 func (h *TAppointmentCancellationHandler) TAppointmentCancellationUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TAppointmentCancellationHandler) TAppointmentCancellationUpdate(c fiber
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-cancellation/{id} [get]
+//	@Router         /v1/hospital/t-appointment-cancellation/{id} [get]
 func (h *TAppointmentCancellationHandler) TAppointmentCancellationIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TAppointmentCancellationHandler) TAppointmentCancellationIndex(c fiber.
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-cancellation/{id} [delete]
+//	@Router         /v1/hospital/t-appointment-cancellation/{id} [delete]
 func (h *TAppointmentCancellationHandler) TAppointmentCancellationDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TAppointmentCancellationHandler) TAppointmentCancellationDelete(c fiber
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-cancellation [get]
+//	@Router         /v1/hospital/t-appointment-cancellation [get]
 func (h *TAppointmentCancellationHandler) TAppointmentCancellationPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TAppointmentCancellationHandler) TAppointmentCancellationPage(c fiber.C
 		util.Log("ERROR", "controllers", "TAppointmentCancellationPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

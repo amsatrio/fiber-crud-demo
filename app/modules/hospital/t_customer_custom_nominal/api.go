@@ -40,7 +40,7 @@ func NewTCustomerCustomNominalHandler(service TCustomerCustomNominalService, val
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-custom-nominal [post]
+//	@Router         /v1/hospital/t-customer-custom-nominal [post]
 func (h *TCustomerCustomNominalHandler) TCustomerCustomNominalCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TCustomerCustomNominalHandler) TCustomerCustomNominalCreate(c fiber.Ctx
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-custom-nominal [put]
+//	@Router         /v1/hospital/t-customer-custom-nominal [put]
 func (h *TCustomerCustomNominalHandler) TCustomerCustomNominalUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TCustomerCustomNominalHandler) TCustomerCustomNominalUpdate(c fiber.Ctx
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-custom-nominal/{id} [get]
+//	@Router         /v1/hospital/t-customer-custom-nominal/{id} [get]
 func (h *TCustomerCustomNominalHandler) TCustomerCustomNominalIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TCustomerCustomNominalHandler) TCustomerCustomNominalIndex(c fiber.Ctx)
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-custom-nominal/{id} [delete]
+//	@Router         /v1/hospital/t-customer-custom-nominal/{id} [delete]
 func (h *TCustomerCustomNominalHandler) TCustomerCustomNominalDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TCustomerCustomNominalHandler) TCustomerCustomNominalDelete(c fiber.Ctx
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-custom-nominal [get]
+//	@Router         /v1/hospital/t-customer-custom-nominal [get]
 func (h *TCustomerCustomNominalHandler) TCustomerCustomNominalPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TCustomerCustomNominalHandler) TCustomerCustomNominalPage(c fiber.Ctx) 
 		util.Log("ERROR", "controllers", "TCustomerCustomNominalPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

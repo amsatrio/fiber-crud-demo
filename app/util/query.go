@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"reflect"
 	"regexp"
-	"strings"
 
 	"github.com/amsatrio/fiber-crud-demo/app/dto/request"
 
@@ -22,21 +21,18 @@ func ApplyPaginate(pageInt int, limitInt int) func(db *gorm.DB) *gorm.DB {
 }
 
 func ApplySorting(db *gorm.DB, sorts []request.Sort) *gorm.DB {
-	query := ""
 	for _, sort := range sorts {
-		key := CamelCaseToSnakeCase(sort.Id)
 		if sort.Desc {
-			query = key + " DESC"
-			break
+			return db.Order(sort.Id + " DESC")
 		}
-		query = key + " ASC"
+		return db.Order(sort.Id + " ASC")
 	}
-	return db.Order(query)
+	return db
 }
 
 func ApplyFiltering(db *gorm.DB, filter []request.Filter) *gorm.DB {
 	for _, condition := range filter {
-		key, value, operation := CamelCaseToSnakeCase(condition.Id), condition.Value, condition.MatchMode
+		key, value, operation := condition.Id, condition.Value, condition.MatchMode
 
 		valueString := ""
 
@@ -69,7 +65,7 @@ func ApplyGlobalSearch(db *gorm.DB, search string, modelMap map[string]string) *
 	searchQuery := ""
 	for key, value := range modelMap {
 		// Log("INFO", "util", "ApplyGlobalSearch", "key: "+key+", value: "+value)
-		if !strings.Contains(value, "string") {
+		if value != "*string" {
 			continue
 		}
 
@@ -80,9 +76,8 @@ func ApplyGlobalSearch(db *gorm.DB, search string, modelMap map[string]string) *
 		}
 		searchQuery = searchQuery + key + " like " + "'%" + search + "%'"
 	}
-	if search != "" {
-		db = db.Where(searchQuery)
-	}
+	db = db.Where(searchQuery)
+
 	return db
 }
 

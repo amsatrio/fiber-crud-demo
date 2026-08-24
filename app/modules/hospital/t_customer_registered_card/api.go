@@ -40,7 +40,7 @@ func NewTCustomerRegisteredCardHandler(service TCustomerRegisteredCardService, v
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-registered-card [post]
+//	@Router         /v1/hospital/t-customer-registered-card [post]
 func (h *TCustomerRegisteredCardHandler) TCustomerRegisteredCardCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TCustomerRegisteredCardHandler) TCustomerRegisteredCardCreate(c fiber.C
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-registered-card [put]
+//	@Router         /v1/hospital/t-customer-registered-card [put]
 func (h *TCustomerRegisteredCardHandler) TCustomerRegisteredCardUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TCustomerRegisteredCardHandler) TCustomerRegisteredCardUpdate(c fiber.C
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-registered-card/{id} [get]
+//	@Router         /v1/hospital/t-customer-registered-card/{id} [get]
 func (h *TCustomerRegisteredCardHandler) TCustomerRegisteredCardIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TCustomerRegisteredCardHandler) TCustomerRegisteredCardIndex(c fiber.Ct
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-registered-card/{id} [delete]
+//	@Router         /v1/hospital/t-customer-registered-card/{id} [delete]
 func (h *TCustomerRegisteredCardHandler) TCustomerRegisteredCardDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TCustomerRegisteredCardHandler) TCustomerRegisteredCardDelete(c fiber.C
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-registered-card [get]
+//	@Router         /v1/hospital/t-customer-registered-card [get]
 func (h *TCustomerRegisteredCardHandler) TCustomerRegisteredCardPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TCustomerRegisteredCardHandler) TCustomerRegisteredCardPage(c fiber.Ctx
 		util.Log("ERROR", "controllers", "TCustomerRegisteredCardPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

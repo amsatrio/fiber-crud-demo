@@ -40,7 +40,7 @@ func NewMBiodataAttachmentHandler(service MBiodataAttachmentService, validate *v
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-biodata-attachment [post]
+//	@Router         /v1/hospital/m-biodata-attachment [post]
 func (h *MBiodataAttachmentHandler) MBiodataAttachmentCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MBiodataAttachmentHandler) MBiodataAttachmentCreate(c fiber.Ctx) error 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-biodata-attachment [put]
+//	@Router         /v1/hospital/m-biodata-attachment [put]
 func (h *MBiodataAttachmentHandler) MBiodataAttachmentUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MBiodataAttachmentHandler) MBiodataAttachmentUpdate(c fiber.Ctx) error 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-biodata-attachment/{id} [get]
+//	@Router         /v1/hospital/m-biodata-attachment/{id} [get]
 func (h *MBiodataAttachmentHandler) MBiodataAttachmentIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MBiodataAttachmentHandler) MBiodataAttachmentIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-biodata-attachment/{id} [delete]
+//	@Router         /v1/hospital/m-biodata-attachment/{id} [delete]
 func (h *MBiodataAttachmentHandler) MBiodataAttachmentDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MBiodataAttachmentHandler) MBiodataAttachmentDelete(c fiber.Ctx) error 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-biodata-attachment [get]
+//	@Router         /v1/hospital/m-biodata-attachment [get]
 func (h *MBiodataAttachmentHandler) MBiodataAttachmentPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MBiodataAttachmentHandler) MBiodataAttachmentPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MBiodataAttachmentPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

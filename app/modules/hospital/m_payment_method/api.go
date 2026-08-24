@@ -40,7 +40,7 @@ func NewMPaymentMethodHandler(service MPaymentMethodService, validate *validator
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-payment-method [post]
+//	@Router         /v1/hospital/m-payment-method [post]
 func (h *MPaymentMethodHandler) MPaymentMethodCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MPaymentMethodHandler) MPaymentMethodCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-payment-method [put]
+//	@Router         /v1/hospital/m-payment-method [put]
 func (h *MPaymentMethodHandler) MPaymentMethodUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MPaymentMethodHandler) MPaymentMethodUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-payment-method/{id} [get]
+//	@Router         /v1/hospital/m-payment-method/{id} [get]
 func (h *MPaymentMethodHandler) MPaymentMethodIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MPaymentMethodHandler) MPaymentMethodIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-payment-method/{id} [delete]
+//	@Router         /v1/hospital/m-payment-method/{id} [delete]
 func (h *MPaymentMethodHandler) MPaymentMethodDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MPaymentMethodHandler) MPaymentMethodDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-payment-method [get]
+//	@Router         /v1/hospital/m-payment-method [get]
 func (h *MPaymentMethodHandler) MPaymentMethodPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MPaymentMethodHandler) MPaymentMethodPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MPaymentMethodPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

@@ -40,7 +40,7 @@ func NewTDoctorOfficeTreatmentHandler(service TDoctorOfficeTreatmentService, val
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-office-treatment [post]
+//	@Router         /v1/hospital/t-doctor-office-treatment [post]
 func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentCreate(c fiber.Ctx
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-office-treatment [put]
+//	@Router         /v1/hospital/t-doctor-office-treatment [put]
 func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentUpdate(c fiber.Ctx
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-office-treatment/{id} [get]
+//	@Router         /v1/hospital/t-doctor-office-treatment/{id} [get]
 func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentIndex(c fiber.Ctx)
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-office-treatment/{id} [delete]
+//	@Router         /v1/hospital/t-doctor-office-treatment/{id} [delete]
 func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentDelete(c fiber.Ctx
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-office-treatment [get]
+//	@Router         /v1/hospital/t-doctor-office-treatment [get]
 func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentPage(c fiber.Ctx) 
 		util.Log("ERROR", "controllers", "TDoctorOfficeTreatmentPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

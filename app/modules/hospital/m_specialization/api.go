@@ -40,7 +40,7 @@ func NewMSpecializationHandler(service MSpecializationService, validate *validat
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-specialization [post]
+//	@Router         /v1/hospital/m-specialization [post]
 func (h *MSpecializationHandler) MSpecializationCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MSpecializationHandler) MSpecializationCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-specialization [put]
+//	@Router         /v1/hospital/m-specialization [put]
 func (h *MSpecializationHandler) MSpecializationUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MSpecializationHandler) MSpecializationUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-specialization/{id} [get]
+//	@Router         /v1/hospital/m-specialization/{id} [get]
 func (h *MSpecializationHandler) MSpecializationIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MSpecializationHandler) MSpecializationIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-specialization/{id} [delete]
+//	@Router         /v1/hospital/m-specialization/{id} [delete]
 func (h *MSpecializationHandler) MSpecializationDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MSpecializationHandler) MSpecializationDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-specialization [get]
+//	@Router         /v1/hospital/m-specialization [get]
 func (h *MSpecializationHandler) MSpecializationPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MSpecializationHandler) MSpecializationPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MSpecializationPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

@@ -40,7 +40,7 @@ func NewTMedicalItemPurchaseDetailHandler(service TMedicalItemPurchaseDetailServ
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-medical-item-purchase-detail [post]
+//	@Router         /v1/hospital/t-medical-item-purchase-detail [post]
 func (h *TMedicalItemPurchaseDetailHandler) TMedicalItemPurchaseDetailCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TMedicalItemPurchaseDetailHandler) TMedicalItemPurchaseDetailCreate(c f
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-medical-item-purchase-detail [put]
+//	@Router         /v1/hospital/t-medical-item-purchase-detail [put]
 func (h *TMedicalItemPurchaseDetailHandler) TMedicalItemPurchaseDetailUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TMedicalItemPurchaseDetailHandler) TMedicalItemPurchaseDetailUpdate(c f
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-medical-item-purchase-detail/{id} [get]
+//	@Router         /v1/hospital/t-medical-item-purchase-detail/{id} [get]
 func (h *TMedicalItemPurchaseDetailHandler) TMedicalItemPurchaseDetailIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TMedicalItemPurchaseDetailHandler) TMedicalItemPurchaseDetailIndex(c fi
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-medical-item-purchase-detail/{id} [delete]
+//	@Router         /v1/hospital/t-medical-item-purchase-detail/{id} [delete]
 func (h *TMedicalItemPurchaseDetailHandler) TMedicalItemPurchaseDetailDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TMedicalItemPurchaseDetailHandler) TMedicalItemPurchaseDetailDelete(c f
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-medical-item-purchase-detail [get]
+//	@Router         /v1/hospital/t-medical-item-purchase-detail [get]
 func (h *TMedicalItemPurchaseDetailHandler) TMedicalItemPurchaseDetailPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TMedicalItemPurchaseDetailHandler) TMedicalItemPurchaseDetailPage(c fib
 		util.Log("ERROR", "controllers", "TMedicalItemPurchaseDetailPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

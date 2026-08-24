@@ -10,7 +10,7 @@ import (
 type MDoctor struct {
 	Id         uint          `form:"id" json:"id" xml:"id" gorm:"primary_key;autoIncrement;not null;type:bigint" validate:"required"`
 	BiodataId  *uint         `form:"biodataId" json:"biodataId" xml:"biodataId" gorm:"type:bigint"`
-	Str        *string       `form:"str" json:"str" xml:"str" gorm:"size:50;type:varchar(50)" validate:"max=50"`
+	StrCode    *string       `form:"strCode" json:"strCode" xml:"strCode" gorm:"size:50;type:varchar(50)" validate:"max=50"`
 	CreatedBy  uint          `form:"createdBy" json:"createdBy" xml:"createdBy" gorm:"not null;type:bigint"`
 	CreatedOn  dto.JSONTime  `form:"createdOn" json:"createdOn" xml:"createdOn" gorm:"not null;type:datetime" swaggertype:"string" example:"2024-02-16 10:33:10"`
 	ModifiedBy *uint         `form:"modifiedBy" json:"modifiedBy" xml:"modifiedBy" gorm:"type:bigint"`
@@ -27,20 +27,20 @@ func (MDoctor) TableName() string {
 type MDoctorRequest struct {
 	Id        *uint   `form:"id" json:"id" xml:"id" gorm:"primary_key;not null;type:bigint;comment:Auto increment"`
 	BiodataId *uint   `form:"biodataId" json:"biodataId" xml:"biodataId" gorm:"type:bigint"`
-	Str       *string `form:"str" json:"str" xml:"str" gorm:"size:50;type:varchar(50)" validate:"max=50"`
+	StrCode   *string `form:"strCode" json:"strCode" xml:"strCode" gorm:"size:50;type:varchar(50)" validate:"max=50"`
 	IsDelete  *bool   `form:"isDelete" json:"isDelete" xml:"isDelete" gorm:"type:boolean;comment:default FALSE"`
 }
 type MDoctorResponse struct {
 	Id        *uint   `form:"id" json:"id" xml:"id"`
 	BiodataId *uint   `form:"biodataId" json:"biodataId" xml:"biodataId"`
-	Str       *string `form:"str" json:"str" xml:"str" validate:"max=50"`
+	StrCode   *string `form:"strCode" json:"strCode" xml:"strCode" validate:"max=50"`
 	IsDelete  bool    `form:"isDelete" json:"isDelete" xml:"isDelete"`
 }
 
 func ToMDoctorEntity(req MDoctorRequest, imageData []byte, userId uint) MDoctor {
 	entity := MDoctor{
 		BiodataId: req.BiodataId,
-		Str:       req.Str,
+		StrCode:   req.StrCode,
 		CreatedBy: userId,
 		CreatedOn: dto.JSONTime{Time: time.Now()},
 		IsDelete:  false,
@@ -55,7 +55,7 @@ func ToMDoctorResponse(entity MDoctor) MDoctorResponse {
 	res := MDoctorResponse{
 		Id:        &entity.Id,
 		BiodataId: entity.BiodataId,
-		Str:       entity.Str,
+		StrCode:   entity.StrCode,
 		IsDelete:  entity.IsDelete,
 	}
 	return res

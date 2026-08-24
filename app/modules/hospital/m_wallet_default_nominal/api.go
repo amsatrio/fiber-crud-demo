@@ -40,7 +40,7 @@ func NewMWalletDefaultNominalHandler(service MWalletDefaultNominalService, valid
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-wallet-default-nominal [post]
+//	@Router         /v1/hospital/m-wallet-default-nominal [post]
 func (h *MWalletDefaultNominalHandler) MWalletDefaultNominalCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MWalletDefaultNominalHandler) MWalletDefaultNominalCreate(c fiber.Ctx) 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-wallet-default-nominal [put]
+//	@Router         /v1/hospital/m-wallet-default-nominal [put]
 func (h *MWalletDefaultNominalHandler) MWalletDefaultNominalUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MWalletDefaultNominalHandler) MWalletDefaultNominalUpdate(c fiber.Ctx) 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-wallet-default-nominal/{id} [get]
+//	@Router         /v1/hospital/m-wallet-default-nominal/{id} [get]
 func (h *MWalletDefaultNominalHandler) MWalletDefaultNominalIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MWalletDefaultNominalHandler) MWalletDefaultNominalIndex(c fiber.Ctx) e
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-wallet-default-nominal/{id} [delete]
+//	@Router         /v1/hospital/m-wallet-default-nominal/{id} [delete]
 func (h *MWalletDefaultNominalHandler) MWalletDefaultNominalDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MWalletDefaultNominalHandler) MWalletDefaultNominalDelete(c fiber.Ctx) 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-wallet-default-nominal [get]
+//	@Router         /v1/hospital/m-wallet-default-nominal [get]
 func (h *MWalletDefaultNominalHandler) MWalletDefaultNominalPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MWalletDefaultNominalHandler) MWalletDefaultNominalPage(c fiber.Ctx) er
 		util.Log("ERROR", "controllers", "MWalletDefaultNominalPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1/m-admin": {
+        "/v1/hospital/m-admin": {
             "get": {
                 "description": "Get Page MAdmin",
                 "consumes": [
@@ -211,7 +211,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-admin/{id}": {
+        "/v1/hospital/m-admin/{id}": {
             "get": {
                 "description": "Get MAdmin by id",
                 "consumes": [
@@ -323,7 +323,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-bank": {
+        "/v1/hospital/m-bank": {
             "get": {
                 "description": "Get Page MBank",
                 "consumes": [
@@ -519,7 +519,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-bank/{id}": {
+        "/v1/hospital/m-bank/{id}": {
             "get": {
                 "description": "Get MBank by id",
                 "consumes": [
@@ -631,7 +631,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-biodata": {
+        "/v1/hospital/m-biodata": {
             "get": {
                 "description": "Get Page MBiodata",
                 "consumes": [
@@ -827,7 +827,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-biodata-address": {
+        "/v1/hospital/m-biodata-address": {
             "get": {
                 "description": "Get Page MBiodataAddress",
                 "consumes": [
@@ -1023,7 +1023,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-biodata-address/{id}": {
+        "/v1/hospital/m-biodata-address/{id}": {
             "get": {
                 "description": "Get MBiodataAddress by id",
                 "consumes": [
@@ -1135,7 +1135,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-biodata-attachment": {
+        "/v1/hospital/m-biodata-attachment": {
             "get": {
                 "description": "Get Page MBiodataAttachment",
                 "consumes": [
@@ -1331,7 +1331,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-biodata-attachment/{id}": {
+        "/v1/hospital/m-biodata-attachment/{id}": {
             "get": {
                 "description": "Get MBiodataAttachment by id",
                 "consumes": [
@@ -1443,7 +1443,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-biodata/{id}": {
+        "/v1/hospital/m-biodata/{id}": {
             "get": {
                 "description": "Get MBiodata by id",
                 "consumes": [
@@ -1555,7 +1555,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-blood-group": {
+        "/v1/hospital/m-blood-group": {
             "get": {
                 "description": "Get Page MBloodGroup",
                 "consumes": [
@@ -1751,7 +1751,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-blood-group/{id}": {
+        "/v1/hospital/m-blood-group/{id}": {
             "get": {
                 "description": "Get MBloodGroup by id",
                 "consumes": [
@@ -1863,7 +1863,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-courier": {
+        "/v1/hospital/m-courier": {
             "get": {
                 "description": "Get Page MCourier",
                 "consumes": [
@@ -2059,7 +2059,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-courier-type": {
+        "/v1/hospital/m-courier-type": {
             "get": {
                 "description": "Get Page MCourierType",
                 "consumes": [
@@ -2255,7 +2255,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-courier-type/{id}": {
+        "/v1/hospital/m-courier-type/{id}": {
             "get": {
                 "description": "Get MCourierType by id",
                 "consumes": [
@@ -2367,7 +2367,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-courier/{id}": {
+        "/v1/hospital/m-courier/{id}": {
             "get": {
                 "description": "Get MCourier by id",
                 "consumes": [
@@ -2479,7 +2479,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-customer": {
+        "/v1/hospital/m-customer": {
             "get": {
                 "description": "Get Page MCustomer",
                 "consumes": [
@@ -2675,7 +2675,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-customer-member": {
+        "/v1/hospital/m-customer-member": {
             "get": {
                 "description": "Get Page MCustomerMember",
                 "consumes": [
@@ -2871,7 +2871,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-customer-member/{id}": {
+        "/v1/hospital/m-customer-member/{id}": {
             "get": {
                 "description": "Get MCustomerMember by id",
                 "consumes": [
@@ -2983,7 +2983,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-customer-relation": {
+        "/v1/hospital/m-customer-relation": {
             "get": {
                 "description": "Get Page MCustomerRelation",
                 "consumes": [
@@ -3179,7 +3179,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-customer-relation/{id}": {
+        "/v1/hospital/m-customer-relation/{id}": {
             "get": {
                 "description": "Get MCustomerRelation by id",
                 "consumes": [
@@ -3291,7 +3291,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-customer/{id}": {
+        "/v1/hospital/m-customer/{id}": {
             "get": {
                 "description": "Get MCustomer by id",
                 "consumes": [
@@ -3403,7 +3403,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-doctor": {
+        "/v1/hospital/m-doctor": {
             "get": {
                 "description": "Get Page MDoctor",
                 "consumes": [
@@ -3599,7 +3599,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-doctor-education": {
+        "/v1/hospital/m-doctor-education": {
             "get": {
                 "description": "Get Page MDoctorEducation",
                 "consumes": [
@@ -3795,7 +3795,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-doctor-education/{id}": {
+        "/v1/hospital/m-doctor-education/{id}": {
             "get": {
                 "description": "Get MDoctorEducation by id",
                 "consumes": [
@@ -3907,7 +3907,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-doctor/{id}": {
+        "/v1/hospital/m-doctor/{id}": {
             "get": {
                 "description": "Get MDoctor by id",
                 "consumes": [
@@ -4019,7 +4019,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-education-level": {
+        "/v1/hospital/m-education-level": {
             "get": {
                 "description": "Get Page MEducationLevel",
                 "consumes": [
@@ -4215,7 +4215,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-education-level/{id}": {
+        "/v1/hospital/m-education-level/{id}": {
             "get": {
                 "description": "Get MEducationLevel by id",
                 "consumes": [
@@ -4327,7 +4327,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-location": {
+        "/v1/hospital/m-location": {
             "get": {
                 "description": "Get Page MLocation",
                 "consumes": [
@@ -4523,7 +4523,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-location-level": {
+        "/v1/hospital/m-location-level": {
             "get": {
                 "description": "Get Page MLocationLevel",
                 "consumes": [
@@ -4719,7 +4719,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-location-level/{id}": {
+        "/v1/hospital/m-location-level/{id}": {
             "get": {
                 "description": "Get MLocationLevel by id",
                 "consumes": [
@@ -4831,7 +4831,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-location/{id}": {
+        "/v1/hospital/m-location/{id}": {
             "get": {
                 "description": "Get MLocation by id",
                 "consumes": [
@@ -4943,7 +4943,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-facility": {
+        "/v1/hospital/m-medical-facility": {
             "get": {
                 "description": "Get Page MMedicalFacility",
                 "consumes": [
@@ -5139,7 +5139,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-facility-category": {
+        "/v1/hospital/m-medical-facility-category": {
             "get": {
                 "description": "Get Page MMedicalFacilityCategory",
                 "consumes": [
@@ -5335,7 +5335,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-facility-category/{id}": {
+        "/v1/hospital/m-medical-facility-category/{id}": {
             "get": {
                 "description": "Get MMedicalFacilityCategory by id",
                 "consumes": [
@@ -5447,7 +5447,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-facility-schedule": {
+        "/v1/hospital/m-medical-facility-schedule": {
             "get": {
                 "description": "Get Page MMedicalFacilitySchedule",
                 "consumes": [
@@ -5643,7 +5643,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-facility-schedule/{id}": {
+        "/v1/hospital/m-medical-facility-schedule/{id}": {
             "get": {
                 "description": "Get MMedicalFacilitySchedule by id",
                 "consumes": [
@@ -5755,7 +5755,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-facility/{id}": {
+        "/v1/hospital/m-medical-facility/{id}": {
             "get": {
                 "description": "Get MMedicalFacility by id",
                 "consumes": [
@@ -5867,7 +5867,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-item": {
+        "/v1/hospital/m-medical-item": {
             "get": {
                 "description": "Get Page MMedicalItem",
                 "consumes": [
@@ -6063,7 +6063,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-item-category": {
+        "/v1/hospital/m-medical-item-category": {
             "get": {
                 "description": "Get Page MMedicalItemCategory",
                 "consumes": [
@@ -6259,7 +6259,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-item-category/{id}": {
+        "/v1/hospital/m-medical-item-category/{id}": {
             "get": {
                 "description": "Get MMedicalItemCategory by id",
                 "consumes": [
@@ -6371,7 +6371,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-item-segmentation": {
+        "/v1/hospital/m-medical-item-segmentation": {
             "get": {
                 "description": "Get Page MMedicalItemSegmentation",
                 "consumes": [
@@ -6567,7 +6567,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-item-segmentation/{id}": {
+        "/v1/hospital/m-medical-item-segmentation/{id}": {
             "get": {
                 "description": "Get MMedicalItemSegmentation by id",
                 "consumes": [
@@ -6679,7 +6679,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-medical-item/{id}": {
+        "/v1/hospital/m-medical-item/{id}": {
             "get": {
                 "description": "Get MMedicalItem by id",
                 "consumes": [
@@ -6791,7 +6791,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-menu": {
+        "/v1/hospital/m-menu": {
             "get": {
                 "description": "Get Page MMenu",
                 "consumes": [
@@ -6987,7 +6987,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-menu-role": {
+        "/v1/hospital/m-menu-role": {
             "get": {
                 "description": "Get Page MMenuRole",
                 "consumes": [
@@ -7183,7 +7183,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-menu-role/{id}": {
+        "/v1/hospital/m-menu-role/{id}": {
             "get": {
                 "description": "Get MMenuRole by id",
                 "consumes": [
@@ -7295,7 +7295,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-menu/{id}": {
+        "/v1/hospital/m-menu/{id}": {
             "get": {
                 "description": "Get MMenu by id",
                 "consumes": [
@@ -7407,7 +7407,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-payment-method": {
+        "/v1/hospital/m-payment-method": {
             "get": {
                 "description": "Get Page MPaymentMethod",
                 "consumes": [
@@ -7603,7 +7603,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-payment-method/{id}": {
+        "/v1/hospital/m-payment-method/{id}": {
             "get": {
                 "description": "Get MPaymentMethod by id",
                 "consumes": [
@@ -7715,7 +7715,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-role": {
+        "/v1/hospital/m-role": {
             "get": {
                 "description": "Get Page MRole",
                 "consumes": [
@@ -7911,7 +7911,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-role/{id}": {
+        "/v1/hospital/m-role/{id}": {
             "get": {
                 "description": "Get MRole by id",
                 "consumes": [
@@ -8023,7 +8023,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-specialization": {
+        "/v1/hospital/m-specialization": {
             "get": {
                 "description": "Get Page MSpecialization",
                 "consumes": [
@@ -8219,7 +8219,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-specialization/{id}": {
+        "/v1/hospital/m-specialization/{id}": {
             "get": {
                 "description": "Get MSpecialization by id",
                 "consumes": [
@@ -8331,7 +8331,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-user": {
+        "/v1/hospital/m-user": {
             "get": {
                 "description": "Get Page MUser",
                 "consumes": [
@@ -8527,7 +8527,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-user/{id}": {
+        "/v1/hospital/m-user/{id}": {
             "get": {
                 "description": "Get MUser by id",
                 "consumes": [
@@ -8639,7 +8639,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-wallet-default-nominal": {
+        "/v1/hospital/m-wallet-default-nominal": {
             "get": {
                 "description": "Get Page MWalletDefaultNominal",
                 "consumes": [
@@ -8835,7 +8835,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/m-wallet-default-nominal/{id}": {
+        "/v1/hospital/m-wallet-default-nominal/{id}": {
             "get": {
                 "description": "Get MWalletDefaultNominal by id",
                 "consumes": [
@@ -8947,7 +8947,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-appointment": {
+        "/v1/hospital/t-appointment": {
             "get": {
                 "description": "Get Page TAppointment",
                 "consumes": [
@@ -9143,7 +9143,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-appointment-cancellation": {
+        "/v1/hospital/t-appointment-cancellation": {
             "get": {
                 "description": "Get Page TAppointmentCancellation",
                 "consumes": [
@@ -9339,7 +9339,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-appointment-cancellation/{id}": {
+        "/v1/hospital/t-appointment-cancellation/{id}": {
             "get": {
                 "description": "Get TAppointmentCancellation by id",
                 "consumes": [
@@ -9451,7 +9451,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-appointment-done": {
+        "/v1/hospital/t-appointment-done": {
             "get": {
                 "description": "Get Page TAppointmentDone",
                 "consumes": [
@@ -9647,7 +9647,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-appointment-done/{id}": {
+        "/v1/hospital/t-appointment-done/{id}": {
             "get": {
                 "description": "Get TAppointmentDone by id",
                 "consumes": [
@@ -9759,7 +9759,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-appointment-reschedule-history": {
+        "/v1/hospital/t-appointment-reschedule-history": {
             "get": {
                 "description": "Get Page TAppointmentRescheduleHistory",
                 "consumes": [
@@ -9955,7 +9955,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-appointment-reschedule-history/{id}": {
+        "/v1/hospital/t-appointment-reschedule-history/{id}": {
             "get": {
                 "description": "Get TAppointmentRescheduleHistory by id",
                 "consumes": [
@@ -10067,7 +10067,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-appointment/{id}": {
+        "/v1/hospital/t-appointment/{id}": {
             "get": {
                 "description": "Get TAppointment by id",
                 "consumes": [
@@ -10179,7 +10179,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-courier-discount": {
+        "/v1/hospital/t-courier-discount": {
             "get": {
                 "description": "Get Page TCourierDiscount",
                 "consumes": [
@@ -10375,7 +10375,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-courier-discount/{id}": {
+        "/v1/hospital/t-courier-discount/{id}": {
             "get": {
                 "description": "Get TCourierDiscount by id",
                 "consumes": [
@@ -10487,7 +10487,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-current-doctor-specialization": {
+        "/v1/hospital/t-current-doctor-specialization": {
             "get": {
                 "description": "Get Page TCurrentDoctorSpecialization",
                 "consumes": [
@@ -10683,7 +10683,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-current-doctor-specialization/{id}": {
+        "/v1/hospital/t-current-doctor-specialization/{id}": {
             "get": {
                 "description": "Get TCurrentDoctorSpecialization by id",
                 "consumes": [
@@ -10795,7 +10795,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-chat": {
+        "/v1/hospital/t-customer-chat": {
             "get": {
                 "description": "Get Page TCustomerChat",
                 "consumes": [
@@ -10991,7 +10991,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-chat-history": {
+        "/v1/hospital/t-customer-chat-history": {
             "get": {
                 "description": "Get Page TCustomerChatHistory",
                 "consumes": [
@@ -11187,7 +11187,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-chat-history/{id}": {
+        "/v1/hospital/t-customer-chat-history/{id}": {
             "get": {
                 "description": "Get TCustomerChatHistory by id",
                 "consumes": [
@@ -11299,7 +11299,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-chat/{id}": {
+        "/v1/hospital/t-customer-chat/{id}": {
             "get": {
                 "description": "Get TCustomerChat by id",
                 "consumes": [
@@ -11411,7 +11411,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-custom-nominal": {
+        "/v1/hospital/t-customer-custom-nominal": {
             "get": {
                 "description": "Get Page TCustomerCustomNominal",
                 "consumes": [
@@ -11607,7 +11607,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-custom-nominal/{id}": {
+        "/v1/hospital/t-customer-custom-nominal/{id}": {
             "get": {
                 "description": "Get TCustomerCustomNominal by id",
                 "consumes": [
@@ -11719,7 +11719,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-registered-card": {
+        "/v1/hospital/t-customer-registered-card": {
             "get": {
                 "description": "Get Page TCustomerRegisteredCard",
                 "consumes": [
@@ -11915,7 +11915,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-registered-card/{id}": {
+        "/v1/hospital/t-customer-registered-card/{id}": {
             "get": {
                 "description": "Get TCustomerRegisteredCard by id",
                 "consumes": [
@@ -12027,7 +12027,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-va": {
+        "/v1/hospital/t-customer-va": {
             "get": {
                 "description": "Get Page TCustomerVa",
                 "consumes": [
@@ -12223,7 +12223,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-va-history": {
+        "/v1/hospital/t-customer-va-history": {
             "get": {
                 "description": "Get Page TCustomerVaHistory",
                 "consumes": [
@@ -12419,7 +12419,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-va-history/{id}": {
+        "/v1/hospital/t-customer-va-history/{id}": {
             "get": {
                 "description": "Get TCustomerVaHistory by id",
                 "consumes": [
@@ -12531,7 +12531,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-va/{id}": {
+        "/v1/hospital/t-customer-va/{id}": {
             "get": {
                 "description": "Get TCustomerVa by id",
                 "consumes": [
@@ -12643,7 +12643,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-wallet": {
+        "/v1/hospital/t-customer-wallet": {
             "get": {
                 "description": "Get Page TCustomerWallet",
                 "consumes": [
@@ -12839,7 +12839,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-wallet-top-up": {
+        "/v1/hospital/t-customer-wallet-top-up": {
             "get": {
                 "description": "Get Page TCustomerWalletTopUp",
                 "consumes": [
@@ -13035,7 +13035,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-wallet-top-up/{id}": {
+        "/v1/hospital/t-customer-wallet-top-up/{id}": {
             "get": {
                 "description": "Get TCustomerWalletTopUp by id",
                 "consumes": [
@@ -13147,7 +13147,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-wallet-withdraw": {
+        "/v1/hospital/t-customer-wallet-withdraw": {
             "get": {
                 "description": "Get Page TCustomerWalletWithdraw",
                 "consumes": [
@@ -13343,7 +13343,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-wallet-withdraw/{id}": {
+        "/v1/hospital/t-customer-wallet-withdraw/{id}": {
             "get": {
                 "description": "Get TCustomerWalletWithdraw by id",
                 "consumes": [
@@ -13455,7 +13455,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-customer-wallet/{id}": {
+        "/v1/hospital/t-customer-wallet/{id}": {
             "get": {
                 "description": "Get TCustomerWallet by id",
                 "consumes": [
@@ -13567,7 +13567,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-doctor-office": {
+        "/v1/hospital/t-doctor-office": {
             "get": {
                 "description": "Get Page TDoctorOffice",
                 "consumes": [
@@ -13763,7 +13763,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-doctor-office-schedule": {
+        "/v1/hospital/t-doctor-office-schedule": {
             "get": {
                 "description": "Get Page TDoctorOfficeSchedule",
                 "consumes": [
@@ -13959,7 +13959,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-doctor-office-schedule/{id}": {
+        "/v1/hospital/t-doctor-office-schedule/{id}": {
             "get": {
                 "description": "Get TDoctorOfficeSchedule by id",
                 "consumes": [
@@ -14071,7 +14071,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-doctor-office-treatment": {
+        "/v1/hospital/t-doctor-office-treatment": {
             "get": {
                 "description": "Get Page TDoctorOfficeTreatment",
                 "consumes": [
@@ -14267,7 +14267,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-doctor-office-treatment-price": {
+        "/v1/hospital/t-doctor-office-treatment-price": {
             "get": {
                 "description": "Get Page TDoctorOfficeTreatmentPrice",
                 "consumes": [
@@ -14463,7 +14463,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-doctor-office-treatment-price/{id}": {
+        "/v1/hospital/t-doctor-office-treatment-price/{id}": {
             "get": {
                 "description": "Get TDoctorOfficeTreatmentPrice by id",
                 "consumes": [
@@ -14575,7 +14575,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-doctor-office-treatment/{id}": {
+        "/v1/hospital/t-doctor-office-treatment/{id}": {
             "get": {
                 "description": "Get TDoctorOfficeTreatment by id",
                 "consumes": [
@@ -14687,7 +14687,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-doctor-office/{id}": {
+        "/v1/hospital/t-doctor-office/{id}": {
             "get": {
                 "description": "Get TDoctorOffice by id",
                 "consumes": [
@@ -14799,7 +14799,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-doctor-treatment": {
+        "/v1/hospital/t-doctor-treatment": {
             "get": {
                 "description": "Get Page TDoctorTreatment",
                 "consumes": [
@@ -14995,7 +14995,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-doctor-treatment/{id}": {
+        "/v1/hospital/t-doctor-treatment/{id}": {
             "get": {
                 "description": "Get TDoctorTreatment by id",
                 "consumes": [
@@ -15107,7 +15107,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-medical-item-purchase": {
+        "/v1/hospital/t-medical-item-purchase": {
             "get": {
                 "description": "Get Page TMedicalItemPurchase",
                 "consumes": [
@@ -15303,7 +15303,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-medical-item-purchase-detail": {
+        "/v1/hospital/t-medical-item-purchase-detail": {
             "get": {
                 "description": "Get Page TMedicalItemPurchaseDetail",
                 "consumes": [
@@ -15499,7 +15499,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-medical-item-purchase-detail/{id}": {
+        "/v1/hospital/t-medical-item-purchase-detail/{id}": {
             "get": {
                 "description": "Get TMedicalItemPurchaseDetail by id",
                 "consumes": [
@@ -15611,7 +15611,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-medical-item-purchase/{id}": {
+        "/v1/hospital/t-medical-item-purchase/{id}": {
             "get": {
                 "description": "Get TMedicalItemPurchase by id",
                 "consumes": [
@@ -15723,7 +15723,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-reset-password": {
+        "/v1/hospital/t-reset-password": {
             "get": {
                 "description": "Get Page TResetPassword",
                 "consumes": [
@@ -15919,7 +15919,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-reset-password/{id}": {
+        "/v1/hospital/t-reset-password/{id}": {
             "get": {
                 "description": "Get TResetPassword by id",
                 "consumes": [
@@ -16031,7 +16031,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-token": {
+        "/v1/hospital/t-token": {
             "get": {
                 "description": "Get Page TToken",
                 "consumes": [
@@ -16227,7 +16227,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-token/{id}": {
+        "/v1/hospital/t-token/{id}": {
             "get": {
                 "description": "Get TToken by id",
                 "consumes": [
@@ -16339,7 +16339,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-treatment-discount": {
+        "/v1/hospital/t-treatment-discount": {
             "get": {
                 "description": "Get Page TTreatmentDiscount",
                 "consumes": [
@@ -16535,7 +16535,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/t-treatment-discount/{id}": {
+        "/v1/hospital/t-treatment-discount/{id}": {
             "get": {
                 "description": "Get TTreatmentDiscount by id",
                 "consumes": [
@@ -16897,7 +16897,7 @@ const docTemplate = `{
                 "isDelete": {
                     "type": "boolean"
                 },
-                "str": {
+                "strCode": {
                     "type": "string",
                     "maxLength": 50
                 }

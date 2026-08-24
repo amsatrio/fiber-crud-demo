@@ -40,7 +40,7 @@ func NewTResetPasswordHandler(service TResetPasswordService, validate *validator
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-reset-password [post]
+//	@Router         /v1/hospital/t-reset-password [post]
 func (h *TResetPasswordHandler) TResetPasswordCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TResetPasswordHandler) TResetPasswordCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-reset-password [put]
+//	@Router         /v1/hospital/t-reset-password [put]
 func (h *TResetPasswordHandler) TResetPasswordUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TResetPasswordHandler) TResetPasswordUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-reset-password/{id} [get]
+//	@Router         /v1/hospital/t-reset-password/{id} [get]
 func (h *TResetPasswordHandler) TResetPasswordIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TResetPasswordHandler) TResetPasswordIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-reset-password/{id} [delete]
+//	@Router         /v1/hospital/t-reset-password/{id} [delete]
 func (h *TResetPasswordHandler) TResetPasswordDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TResetPasswordHandler) TResetPasswordDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-reset-password [get]
+//	@Router         /v1/hospital/t-reset-password [get]
 func (h *TResetPasswordHandler) TResetPasswordPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TResetPasswordHandler) TResetPasswordPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "TResetPasswordPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

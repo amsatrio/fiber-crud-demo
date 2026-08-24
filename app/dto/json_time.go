@@ -13,11 +13,13 @@ type JSONTime struct {
 	time.Time
 }
 
+// MarshalJSON writes the time in "YYYY-MM-DD HH:mm:ss" format
 func (jt JSONTime) MarshalJSON() ([]byte, error) {
 	formatted := jt.Format(timeLayout)
 	return []byte(`"` + formatted + `"`), nil
 }
 
+// UnmarshalJSON parses the time from "YYYY-MM-DD HH:mm:ss" format
 func (jt *JSONTime) UnmarshalJSON(data []byte) error {
 	str := strings.Trim(string(data), `"`)
 	if str == "null" || str == "" {
@@ -33,6 +35,7 @@ func (jt *JSONTime) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Scan implements the sql.Scanner interface for database retrieval
 func (jt *JSONTime) Scan(value interface{}) error {
 	if value == nil {
 		jt.Time = time.Time{}
@@ -52,6 +55,7 @@ func (jt *JSONTime) Scan(value interface{}) error {
 	return nil
 }
 
+// Value implements the driver.Valuer interface for database insertion
 func (jt JSONTime) Value() (driver.Value, error) {
 	if jt.IsZero() {
 		return nil, nil

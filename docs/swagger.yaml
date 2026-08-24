@@ -166,7 +166,7 @@ definitions:
         type: integer
       isDelete:
         type: boolean
-      str:
+      strCode:
         maxLength: 50
         type: string
     type: object
@@ -774,7 +774,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /v1/m-admin:
+  /v1/hospital/m-admin:
     get:
       consumes:
       - application/json
@@ -905,7 +905,7 @@ paths:
       summary: MAdminUpdate
       tags:
       - mAdmin
-  /v1/m-admin/{id}:
+  /v1/hospital/m-admin/{id}:
     delete:
       consumes:
       - application/json
@@ -980,7 +980,7 @@ paths:
       summary: MAdminIndex
       tags:
       - mAdmin
-  /v1/m-bank:
+  /v1/hospital/m-bank:
     get:
       consumes:
       - application/json
@@ -1111,7 +1111,7 @@ paths:
       summary: MBankUpdate
       tags:
       - mBank
-  /v1/m-bank/{id}:
+  /v1/hospital/m-bank/{id}:
     delete:
       consumes:
       - application/json
@@ -1186,7 +1186,7 @@ paths:
       summary: MBankIndex
       tags:
       - mBank
-  /v1/m-biodata:
+  /v1/hospital/m-biodata:
     get:
       consumes:
       - application/json
@@ -1317,7 +1317,7 @@ paths:
       summary: MBiodataUpdate
       tags:
       - mBiodata
-  /v1/m-biodata-address:
+  /v1/hospital/m-biodata-address:
     get:
       consumes:
       - application/json
@@ -1448,7 +1448,7 @@ paths:
       summary: MBiodataAddressUpdate
       tags:
       - mBiodataAddress
-  /v1/m-biodata-address/{id}:
+  /v1/hospital/m-biodata-address/{id}:
     delete:
       consumes:
       - application/json
@@ -1523,7 +1523,7 @@ paths:
       summary: MBiodataAddressIndex
       tags:
       - mBiodataAddress
-  /v1/m-biodata-attachment:
+  /v1/hospital/m-biodata-attachment:
     get:
       consumes:
       - application/json
@@ -1654,7 +1654,7 @@ paths:
       summary: MBiodataAttachmentUpdate
       tags:
       - mBiodataAttachment
-  /v1/m-biodata-attachment/{id}:
+  /v1/hospital/m-biodata-attachment/{id}:
     delete:
       consumes:
       - application/json
@@ -1729,7 +1729,7 @@ paths:
       summary: MBiodataAttachmentIndex
       tags:
       - mBiodataAttachment
-  /v1/m-biodata/{id}:
+  /v1/hospital/m-biodata/{id}:
     delete:
       consumes:
       - application/json
@@ -1804,7 +1804,7 @@ paths:
       summary: MBiodataIndex
       tags:
       - mBiodata
-  /v1/m-blood-group:
+  /v1/hospital/m-blood-group:
     get:
       consumes:
       - application/json
@@ -1935,7 +1935,7 @@ paths:
       summary: MBloodGroupUpdate
       tags:
       - mBloodGroup
-  /v1/m-blood-group/{id}:
+  /v1/hospital/m-blood-group/{id}:
     delete:
       consumes:
       - application/json
@@ -2010,7 +2010,7 @@ paths:
       summary: MBloodGroupIndex
       tags:
       - mBloodGroup
-  /v1/m-courier:
+  /v1/hospital/m-courier:
     get:
       consumes:
       - application/json
@@ -2141,7 +2141,7 @@ paths:
       summary: MCourierUpdate
       tags:
       - mCourier
-  /v1/m-courier-type:
+  /v1/hospital/m-courier-type:
     get:
       consumes:
       - application/json
@@ -2272,7 +2272,7 @@ paths:
       summary: MCourierTypeUpdate
       tags:
       - mCourierType
-  /v1/m-courier-type/{id}:
+  /v1/hospital/m-courier-type/{id}:
     delete:
       consumes:
       - application/json
@@ -2347,7 +2347,7 @@ paths:
       summary: MCourierTypeIndex
       tags:
       - mCourierType
-  /v1/m-courier/{id}:
+  /v1/hospital/m-courier/{id}:
     delete:
       consumes:
       - application/json
@@ -2422,7 +2422,7 @@ paths:
       summary: MCourierIndex
       tags:
       - mCourier
-  /v1/m-customer:
+  /v1/hospital/m-customer:
     get:
       consumes:
       - application/json
@@ -2553,7 +2553,7 @@ paths:
       summary: MCustomerUpdate
       tags:
       - mCustomer
-  /v1/m-customer-member:
+  /v1/hospital/m-customer-member:
     get:
       consumes:
       - application/json
@@ -2684,7 +2684,7 @@ paths:
       summary: MCustomerMemberUpdate
       tags:
       - mCustomerMember
-  /v1/m-customer-member/{id}:
+  /v1/hospital/m-customer-member/{id}:
     delete:
       consumes:
       - application/json
@@ -2759,7 +2759,7 @@ paths:
       summary: MCustomerMemberIndex
       tags:
       - mCustomerMember
-  /v1/m-customer-relation:
+  /v1/hospital/m-customer-relation:
     get:
       consumes:
       - application/json
@@ -2890,7 +2890,7 @@ paths:
       summary: MCustomerRelationUpdate
       tags:
       - mCustomerRelation
-  /v1/m-customer-relation/{id}:
+  /v1/hospital/m-customer-relation/{id}:
     delete:
       consumes:
       - application/json
@@ -2965,7 +2965,7 @@ paths:
       summary: MCustomerRelationIndex
       tags:
       - mCustomerRelation
-  /v1/m-customer/{id}:
+  /v1/hospital/m-customer/{id}:
     delete:
       consumes:
       - application/json
@@ -3040,7 +3040,7 @@ paths:
       summary: MCustomerIndex
       tags:
       - mCustomer
-  /v1/m-doctor:
+  /v1/hospital/m-doctor:
     get:
       consumes:
       - application/json
@@ -3171,7 +3171,7 @@ paths:
       summary: MDoctorUpdate
       tags:
       - mDoctor
-  /v1/m-doctor-education:
+  /v1/hospital/m-doctor-education:
     get:
       consumes:
       - application/json
@@ -3302,7 +3302,7 @@ paths:
       summary: MDoctorEducationUpdate
       tags:
       - mDoctorEducation
-  /v1/m-doctor-education/{id}:
+  /v1/hospital/m-doctor-education/{id}:
     delete:
       consumes:
       - application/json
@@ -3377,7 +3377,7 @@ paths:
       summary: MDoctorEducationIndex
       tags:
       - mDoctorEducation
-  /v1/m-doctor/{id}:
+  /v1/hospital/m-doctor/{id}:
     delete:
       consumes:
       - application/json
@@ -3452,7 +3452,7 @@ paths:
       summary: MDoctorIndex
       tags:
       - mDoctor
-  /v1/m-education-level:
+  /v1/hospital/m-education-level:
     get:
       consumes:
       - application/json
@@ -3583,7 +3583,7 @@ paths:
       summary: MEducationLevelUpdate
       tags:
       - mEducationLevel
-  /v1/m-education-level/{id}:
+  /v1/hospital/m-education-level/{id}:
     delete:
       consumes:
       - application/json
@@ -3658,7 +3658,7 @@ paths:
       summary: MEducationLevelIndex
       tags:
       - mEducationLevel
-  /v1/m-location:
+  /v1/hospital/m-location:
     get:
       consumes:
       - application/json
@@ -3789,7 +3789,7 @@ paths:
       summary: MLocationUpdate
       tags:
       - mLocation
-  /v1/m-location-level:
+  /v1/hospital/m-location-level:
     get:
       consumes:
       - application/json
@@ -3920,7 +3920,7 @@ paths:
       summary: MLocationLevelUpdate
       tags:
       - mLocationLevel
-  /v1/m-location-level/{id}:
+  /v1/hospital/m-location-level/{id}:
     delete:
       consumes:
       - application/json
@@ -3995,7 +3995,7 @@ paths:
       summary: MLocationLevelIndex
       tags:
       - mLocationLevel
-  /v1/m-location/{id}:
+  /v1/hospital/m-location/{id}:
     delete:
       consumes:
       - application/json
@@ -4070,7 +4070,7 @@ paths:
       summary: MLocationIndex
       tags:
       - mLocation
-  /v1/m-medical-facility:
+  /v1/hospital/m-medical-facility:
     get:
       consumes:
       - application/json
@@ -4201,7 +4201,7 @@ paths:
       summary: MMedicalFacilityUpdate
       tags:
       - mMedicalFacility
-  /v1/m-medical-facility-category:
+  /v1/hospital/m-medical-facility-category:
     get:
       consumes:
       - application/json
@@ -4332,7 +4332,7 @@ paths:
       summary: MMedicalFacilityCategoryUpdate
       tags:
       - mMedicalFacilityCategory
-  /v1/m-medical-facility-category/{id}:
+  /v1/hospital/m-medical-facility-category/{id}:
     delete:
       consumes:
       - application/json
@@ -4407,7 +4407,7 @@ paths:
       summary: MMedicalFacilityCategoryIndex
       tags:
       - mMedicalFacilityCategory
-  /v1/m-medical-facility-schedule:
+  /v1/hospital/m-medical-facility-schedule:
     get:
       consumes:
       - application/json
@@ -4538,7 +4538,7 @@ paths:
       summary: MMedicalFacilityScheduleUpdate
       tags:
       - mMedicalFacilitySchedule
-  /v1/m-medical-facility-schedule/{id}:
+  /v1/hospital/m-medical-facility-schedule/{id}:
     delete:
       consumes:
       - application/json
@@ -4613,7 +4613,7 @@ paths:
       summary: MMedicalFacilityScheduleIndex
       tags:
       - mMedicalFacilitySchedule
-  /v1/m-medical-facility/{id}:
+  /v1/hospital/m-medical-facility/{id}:
     delete:
       consumes:
       - application/json
@@ -4688,7 +4688,7 @@ paths:
       summary: MMedicalFacilityIndex
       tags:
       - mMedicalFacility
-  /v1/m-medical-item:
+  /v1/hospital/m-medical-item:
     get:
       consumes:
       - application/json
@@ -4819,7 +4819,7 @@ paths:
       summary: MMedicalItemUpdate
       tags:
       - mMedicalItem
-  /v1/m-medical-item-category:
+  /v1/hospital/m-medical-item-category:
     get:
       consumes:
       - application/json
@@ -4950,7 +4950,7 @@ paths:
       summary: MMedicalItemCategoryUpdate
       tags:
       - mMedicalItemCategory
-  /v1/m-medical-item-category/{id}:
+  /v1/hospital/m-medical-item-category/{id}:
     delete:
       consumes:
       - application/json
@@ -5025,7 +5025,7 @@ paths:
       summary: MMedicalItemCategoryIndex
       tags:
       - mMedicalItemCategory
-  /v1/m-medical-item-segmentation:
+  /v1/hospital/m-medical-item-segmentation:
     get:
       consumes:
       - application/json
@@ -5156,7 +5156,7 @@ paths:
       summary: MMedicalItemSegmentationUpdate
       tags:
       - mMedicalItemSegmentation
-  /v1/m-medical-item-segmentation/{id}:
+  /v1/hospital/m-medical-item-segmentation/{id}:
     delete:
       consumes:
       - application/json
@@ -5231,7 +5231,7 @@ paths:
       summary: MMedicalItemSegmentationIndex
       tags:
       - mMedicalItemSegmentation
-  /v1/m-medical-item/{id}:
+  /v1/hospital/m-medical-item/{id}:
     delete:
       consumes:
       - application/json
@@ -5306,7 +5306,7 @@ paths:
       summary: MMedicalItemIndex
       tags:
       - mMedicalItem
-  /v1/m-menu:
+  /v1/hospital/m-menu:
     get:
       consumes:
       - application/json
@@ -5437,7 +5437,7 @@ paths:
       summary: MMenuUpdate
       tags:
       - mMenu
-  /v1/m-menu-role:
+  /v1/hospital/m-menu-role:
     get:
       consumes:
       - application/json
@@ -5568,7 +5568,7 @@ paths:
       summary: MMenuRoleUpdate
       tags:
       - mMenuRole
-  /v1/m-menu-role/{id}:
+  /v1/hospital/m-menu-role/{id}:
     delete:
       consumes:
       - application/json
@@ -5643,7 +5643,7 @@ paths:
       summary: MMenuRoleIndex
       tags:
       - mMenuRole
-  /v1/m-menu/{id}:
+  /v1/hospital/m-menu/{id}:
     delete:
       consumes:
       - application/json
@@ -5718,7 +5718,7 @@ paths:
       summary: MMenuIndex
       tags:
       - mMenu
-  /v1/m-payment-method:
+  /v1/hospital/m-payment-method:
     get:
       consumes:
       - application/json
@@ -5849,7 +5849,7 @@ paths:
       summary: MPaymentMethodUpdate
       tags:
       - mPaymentMethod
-  /v1/m-payment-method/{id}:
+  /v1/hospital/m-payment-method/{id}:
     delete:
       consumes:
       - application/json
@@ -5924,7 +5924,7 @@ paths:
       summary: MPaymentMethodIndex
       tags:
       - mPaymentMethod
-  /v1/m-role:
+  /v1/hospital/m-role:
     get:
       consumes:
       - application/json
@@ -6055,7 +6055,7 @@ paths:
       summary: MRoleUpdate
       tags:
       - mRole
-  /v1/m-role/{id}:
+  /v1/hospital/m-role/{id}:
     delete:
       consumes:
       - application/json
@@ -6130,7 +6130,7 @@ paths:
       summary: MRoleIndex
       tags:
       - mRole
-  /v1/m-specialization:
+  /v1/hospital/m-specialization:
     get:
       consumes:
       - application/json
@@ -6261,7 +6261,7 @@ paths:
       summary: MSpecializationUpdate
       tags:
       - mSpecialization
-  /v1/m-specialization/{id}:
+  /v1/hospital/m-specialization/{id}:
     delete:
       consumes:
       - application/json
@@ -6336,7 +6336,7 @@ paths:
       summary: MSpecializationIndex
       tags:
       - mSpecialization
-  /v1/m-user:
+  /v1/hospital/m-user:
     get:
       consumes:
       - application/json
@@ -6467,7 +6467,7 @@ paths:
       summary: MUserUpdate
       tags:
       - mUser
-  /v1/m-user/{id}:
+  /v1/hospital/m-user/{id}:
     delete:
       consumes:
       - application/json
@@ -6542,7 +6542,7 @@ paths:
       summary: MUserIndex
       tags:
       - mUser
-  /v1/m-wallet-default-nominal:
+  /v1/hospital/m-wallet-default-nominal:
     get:
       consumes:
       - application/json
@@ -6673,7 +6673,7 @@ paths:
       summary: MWalletDefaultNominalUpdate
       tags:
       - mWalletDefaultNominal
-  /v1/m-wallet-default-nominal/{id}:
+  /v1/hospital/m-wallet-default-nominal/{id}:
     delete:
       consumes:
       - application/json
@@ -6748,7 +6748,7 @@ paths:
       summary: MWalletDefaultNominalIndex
       tags:
       - mWalletDefaultNominal
-  /v1/t-appointment:
+  /v1/hospital/t-appointment:
     get:
       consumes:
       - application/json
@@ -6879,7 +6879,7 @@ paths:
       summary: TAppointmentUpdate
       tags:
       - tAppointment
-  /v1/t-appointment-cancellation:
+  /v1/hospital/t-appointment-cancellation:
     get:
       consumes:
       - application/json
@@ -7010,7 +7010,7 @@ paths:
       summary: TAppointmentCancellationUpdate
       tags:
       - tAppointmentCancellation
-  /v1/t-appointment-cancellation/{id}:
+  /v1/hospital/t-appointment-cancellation/{id}:
     delete:
       consumes:
       - application/json
@@ -7085,7 +7085,7 @@ paths:
       summary: TAppointmentCancellationIndex
       tags:
       - tAppointmentCancellation
-  /v1/t-appointment-done:
+  /v1/hospital/t-appointment-done:
     get:
       consumes:
       - application/json
@@ -7216,7 +7216,7 @@ paths:
       summary: TAppointmentDoneUpdate
       tags:
       - tAppointmentDone
-  /v1/t-appointment-done/{id}:
+  /v1/hospital/t-appointment-done/{id}:
     delete:
       consumes:
       - application/json
@@ -7291,7 +7291,7 @@ paths:
       summary: TAppointmentDoneIndex
       tags:
       - tAppointmentDone
-  /v1/t-appointment-reschedule-history:
+  /v1/hospital/t-appointment-reschedule-history:
     get:
       consumes:
       - application/json
@@ -7422,7 +7422,7 @@ paths:
       summary: TAppointmentRescheduleHistoryUpdate
       tags:
       - tAppointmentRescheduleHistory
-  /v1/t-appointment-reschedule-history/{id}:
+  /v1/hospital/t-appointment-reschedule-history/{id}:
     delete:
       consumes:
       - application/json
@@ -7497,7 +7497,7 @@ paths:
       summary: TAppointmentRescheduleHistoryIndex
       tags:
       - tAppointmentRescheduleHistory
-  /v1/t-appointment/{id}:
+  /v1/hospital/t-appointment/{id}:
     delete:
       consumes:
       - application/json
@@ -7572,7 +7572,7 @@ paths:
       summary: TAppointmentIndex
       tags:
       - tAppointment
-  /v1/t-courier-discount:
+  /v1/hospital/t-courier-discount:
     get:
       consumes:
       - application/json
@@ -7703,7 +7703,7 @@ paths:
       summary: TCourierDiscountUpdate
       tags:
       - tCourierDiscount
-  /v1/t-courier-discount/{id}:
+  /v1/hospital/t-courier-discount/{id}:
     delete:
       consumes:
       - application/json
@@ -7778,7 +7778,7 @@ paths:
       summary: TCourierDiscountIndex
       tags:
       - tCourierDiscount
-  /v1/t-current-doctor-specialization:
+  /v1/hospital/t-current-doctor-specialization:
     get:
       consumes:
       - application/json
@@ -7909,7 +7909,7 @@ paths:
       summary: TCurrentDoctorSpecializationUpdate
       tags:
       - tCurrentDoctorSpecialization
-  /v1/t-current-doctor-specialization/{id}:
+  /v1/hospital/t-current-doctor-specialization/{id}:
     delete:
       consumes:
       - application/json
@@ -7984,7 +7984,7 @@ paths:
       summary: TCurrentDoctorSpecializationIndex
       tags:
       - tCurrentDoctorSpecialization
-  /v1/t-customer-chat:
+  /v1/hospital/t-customer-chat:
     get:
       consumes:
       - application/json
@@ -8115,7 +8115,7 @@ paths:
       summary: TCustomerChatUpdate
       tags:
       - tCustomerChat
-  /v1/t-customer-chat-history:
+  /v1/hospital/t-customer-chat-history:
     get:
       consumes:
       - application/json
@@ -8246,7 +8246,7 @@ paths:
       summary: TCustomerChatHistoryUpdate
       tags:
       - tCustomerChatHistory
-  /v1/t-customer-chat-history/{id}:
+  /v1/hospital/t-customer-chat-history/{id}:
     delete:
       consumes:
       - application/json
@@ -8321,7 +8321,7 @@ paths:
       summary: TCustomerChatHistoryIndex
       tags:
       - tCustomerChatHistory
-  /v1/t-customer-chat/{id}:
+  /v1/hospital/t-customer-chat/{id}:
     delete:
       consumes:
       - application/json
@@ -8396,7 +8396,7 @@ paths:
       summary: TCustomerChatIndex
       tags:
       - tCustomerChat
-  /v1/t-customer-custom-nominal:
+  /v1/hospital/t-customer-custom-nominal:
     get:
       consumes:
       - application/json
@@ -8527,7 +8527,7 @@ paths:
       summary: TCustomerCustomNominalUpdate
       tags:
       - tCustomerCustomNominal
-  /v1/t-customer-custom-nominal/{id}:
+  /v1/hospital/t-customer-custom-nominal/{id}:
     delete:
       consumes:
       - application/json
@@ -8602,7 +8602,7 @@ paths:
       summary: TCustomerCustomNominalIndex
       tags:
       - tCustomerCustomNominal
-  /v1/t-customer-registered-card:
+  /v1/hospital/t-customer-registered-card:
     get:
       consumes:
       - application/json
@@ -8733,7 +8733,7 @@ paths:
       summary: TCustomerRegisteredCardUpdate
       tags:
       - tCustomerRegisteredCard
-  /v1/t-customer-registered-card/{id}:
+  /v1/hospital/t-customer-registered-card/{id}:
     delete:
       consumes:
       - application/json
@@ -8808,7 +8808,7 @@ paths:
       summary: TCustomerRegisteredCardIndex
       tags:
       - tCustomerRegisteredCard
-  /v1/t-customer-va:
+  /v1/hospital/t-customer-va:
     get:
       consumes:
       - application/json
@@ -8939,7 +8939,7 @@ paths:
       summary: TCustomerVaUpdate
       tags:
       - tCustomerVa
-  /v1/t-customer-va-history:
+  /v1/hospital/t-customer-va-history:
     get:
       consumes:
       - application/json
@@ -9070,7 +9070,7 @@ paths:
       summary: TCustomerVaHistoryUpdate
       tags:
       - tCustomerVaHistory
-  /v1/t-customer-va-history/{id}:
+  /v1/hospital/t-customer-va-history/{id}:
     delete:
       consumes:
       - application/json
@@ -9145,7 +9145,7 @@ paths:
       summary: TCustomerVaHistoryIndex
       tags:
       - tCustomerVaHistory
-  /v1/t-customer-va/{id}:
+  /v1/hospital/t-customer-va/{id}:
     delete:
       consumes:
       - application/json
@@ -9220,7 +9220,7 @@ paths:
       summary: TCustomerVaIndex
       tags:
       - tCustomerVa
-  /v1/t-customer-wallet:
+  /v1/hospital/t-customer-wallet:
     get:
       consumes:
       - application/json
@@ -9351,7 +9351,7 @@ paths:
       summary: TCustomerWalletUpdate
       tags:
       - tCustomerWallet
-  /v1/t-customer-wallet-top-up:
+  /v1/hospital/t-customer-wallet-top-up:
     get:
       consumes:
       - application/json
@@ -9482,7 +9482,7 @@ paths:
       summary: TCustomerWalletTopUpUpdate
       tags:
       - tCustomerWalletTopUp
-  /v1/t-customer-wallet-top-up/{id}:
+  /v1/hospital/t-customer-wallet-top-up/{id}:
     delete:
       consumes:
       - application/json
@@ -9557,7 +9557,7 @@ paths:
       summary: TCustomerWalletTopUpIndex
       tags:
       - tCustomerWalletTopUp
-  /v1/t-customer-wallet-withdraw:
+  /v1/hospital/t-customer-wallet-withdraw:
     get:
       consumes:
       - application/json
@@ -9688,7 +9688,7 @@ paths:
       summary: TCustomerWalletWithdrawUpdate
       tags:
       - tCustomerWalletWithdraw
-  /v1/t-customer-wallet-withdraw/{id}:
+  /v1/hospital/t-customer-wallet-withdraw/{id}:
     delete:
       consumes:
       - application/json
@@ -9763,7 +9763,7 @@ paths:
       summary: TCustomerWalletWithdrawIndex
       tags:
       - tCustomerWalletWithdraw
-  /v1/t-customer-wallet/{id}:
+  /v1/hospital/t-customer-wallet/{id}:
     delete:
       consumes:
       - application/json
@@ -9838,7 +9838,7 @@ paths:
       summary: TCustomerWalletIndex
       tags:
       - tCustomerWallet
-  /v1/t-doctor-office:
+  /v1/hospital/t-doctor-office:
     get:
       consumes:
       - application/json
@@ -9969,7 +9969,7 @@ paths:
       summary: TDoctorOfficeUpdate
       tags:
       - tDoctorOffice
-  /v1/t-doctor-office-schedule:
+  /v1/hospital/t-doctor-office-schedule:
     get:
       consumes:
       - application/json
@@ -10100,7 +10100,7 @@ paths:
       summary: TDoctorOfficeScheduleUpdate
       tags:
       - tDoctorOfficeSchedule
-  /v1/t-doctor-office-schedule/{id}:
+  /v1/hospital/t-doctor-office-schedule/{id}:
     delete:
       consumes:
       - application/json
@@ -10175,7 +10175,7 @@ paths:
       summary: TDoctorOfficeScheduleIndex
       tags:
       - tDoctorOfficeSchedule
-  /v1/t-doctor-office-treatment:
+  /v1/hospital/t-doctor-office-treatment:
     get:
       consumes:
       - application/json
@@ -10306,7 +10306,7 @@ paths:
       summary: TDoctorOfficeTreatmentUpdate
       tags:
       - tDoctorOfficeTreatment
-  /v1/t-doctor-office-treatment-price:
+  /v1/hospital/t-doctor-office-treatment-price:
     get:
       consumes:
       - application/json
@@ -10437,7 +10437,7 @@ paths:
       summary: TDoctorOfficeTreatmentPriceUpdate
       tags:
       - tDoctorOfficeTreatmentPrice
-  /v1/t-doctor-office-treatment-price/{id}:
+  /v1/hospital/t-doctor-office-treatment-price/{id}:
     delete:
       consumes:
       - application/json
@@ -10512,7 +10512,7 @@ paths:
       summary: TDoctorOfficeTreatmentPriceIndex
       tags:
       - tDoctorOfficeTreatmentPrice
-  /v1/t-doctor-office-treatment/{id}:
+  /v1/hospital/t-doctor-office-treatment/{id}:
     delete:
       consumes:
       - application/json
@@ -10587,7 +10587,7 @@ paths:
       summary: TDoctorOfficeTreatmentIndex
       tags:
       - tDoctorOfficeTreatment
-  /v1/t-doctor-office/{id}:
+  /v1/hospital/t-doctor-office/{id}:
     delete:
       consumes:
       - application/json
@@ -10662,7 +10662,7 @@ paths:
       summary: TDoctorOfficeIndex
       tags:
       - tDoctorOffice
-  /v1/t-doctor-treatment:
+  /v1/hospital/t-doctor-treatment:
     get:
       consumes:
       - application/json
@@ -10793,7 +10793,7 @@ paths:
       summary: TDoctorTreatmentUpdate
       tags:
       - tDoctorTreatment
-  /v1/t-doctor-treatment/{id}:
+  /v1/hospital/t-doctor-treatment/{id}:
     delete:
       consumes:
       - application/json
@@ -10868,7 +10868,7 @@ paths:
       summary: TDoctorTreatmentIndex
       tags:
       - tDoctorTreatment
-  /v1/t-medical-item-purchase:
+  /v1/hospital/t-medical-item-purchase:
     get:
       consumes:
       - application/json
@@ -10999,7 +10999,7 @@ paths:
       summary: TMedicalItemPurchaseUpdate
       tags:
       - tMedicalItemPurchase
-  /v1/t-medical-item-purchase-detail:
+  /v1/hospital/t-medical-item-purchase-detail:
     get:
       consumes:
       - application/json
@@ -11130,7 +11130,7 @@ paths:
       summary: TMedicalItemPurchaseDetailUpdate
       tags:
       - tMedicalItemPurchaseDetail
-  /v1/t-medical-item-purchase-detail/{id}:
+  /v1/hospital/t-medical-item-purchase-detail/{id}:
     delete:
       consumes:
       - application/json
@@ -11205,7 +11205,7 @@ paths:
       summary: TMedicalItemPurchaseDetailIndex
       tags:
       - tMedicalItemPurchaseDetail
-  /v1/t-medical-item-purchase/{id}:
+  /v1/hospital/t-medical-item-purchase/{id}:
     delete:
       consumes:
       - application/json
@@ -11280,7 +11280,7 @@ paths:
       summary: TMedicalItemPurchaseIndex
       tags:
       - tMedicalItemPurchase
-  /v1/t-reset-password:
+  /v1/hospital/t-reset-password:
     get:
       consumes:
       - application/json
@@ -11411,7 +11411,7 @@ paths:
       summary: TResetPasswordUpdate
       tags:
       - tResetPassword
-  /v1/t-reset-password/{id}:
+  /v1/hospital/t-reset-password/{id}:
     delete:
       consumes:
       - application/json
@@ -11486,7 +11486,7 @@ paths:
       summary: TResetPasswordIndex
       tags:
       - tResetPassword
-  /v1/t-token:
+  /v1/hospital/t-token:
     get:
       consumes:
       - application/json
@@ -11617,7 +11617,7 @@ paths:
       summary: TTokenUpdate
       tags:
       - tToken
-  /v1/t-token/{id}:
+  /v1/hospital/t-token/{id}:
     delete:
       consumes:
       - application/json
@@ -11692,7 +11692,7 @@ paths:
       summary: TTokenIndex
       tags:
       - tToken
-  /v1/t-treatment-discount:
+  /v1/hospital/t-treatment-discount:
     get:
       consumes:
       - application/json
@@ -11823,7 +11823,7 @@ paths:
       summary: TTreatmentDiscountUpdate
       tags:
       - tTreatmentDiscount
-  /v1/t-treatment-discount/{id}:
+  /v1/hospital/t-treatment-discount/{id}:
     delete:
       consumes:
       - application/json

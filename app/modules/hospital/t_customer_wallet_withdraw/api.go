@@ -40,7 +40,7 @@ func NewTCustomerWalletWithdrawHandler(service TCustomerWalletWithdrawService, v
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-wallet-withdraw [post]
+//	@Router         /v1/hospital/t-customer-wallet-withdraw [post]
 func (h *TCustomerWalletWithdrawHandler) TCustomerWalletWithdrawCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TCustomerWalletWithdrawHandler) TCustomerWalletWithdrawCreate(c fiber.C
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-wallet-withdraw [put]
+//	@Router         /v1/hospital/t-customer-wallet-withdraw [put]
 func (h *TCustomerWalletWithdrawHandler) TCustomerWalletWithdrawUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TCustomerWalletWithdrawHandler) TCustomerWalletWithdrawUpdate(c fiber.C
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-wallet-withdraw/{id} [get]
+//	@Router         /v1/hospital/t-customer-wallet-withdraw/{id} [get]
 func (h *TCustomerWalletWithdrawHandler) TCustomerWalletWithdrawIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TCustomerWalletWithdrawHandler) TCustomerWalletWithdrawIndex(c fiber.Ct
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-wallet-withdraw/{id} [delete]
+//	@Router         /v1/hospital/t-customer-wallet-withdraw/{id} [delete]
 func (h *TCustomerWalletWithdrawHandler) TCustomerWalletWithdrawDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TCustomerWalletWithdrawHandler) TCustomerWalletWithdrawDelete(c fiber.C
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-wallet-withdraw [get]
+//	@Router         /v1/hospital/t-customer-wallet-withdraw [get]
 func (h *TCustomerWalletWithdrawHandler) TCustomerWalletWithdrawPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TCustomerWalletWithdrawHandler) TCustomerWalletWithdrawPage(c fiber.Ctx
 		util.Log("ERROR", "controllers", "TCustomerWalletWithdrawPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

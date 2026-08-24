@@ -40,7 +40,7 @@ func NewMDoctorHandler(service MDoctorService, validate *validator.Validate) *MD
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-doctor [post]
+//	@Router         /v1/hospital/m-doctor [post]
 func (h *MDoctorHandler) MDoctorCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MDoctorHandler) MDoctorCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-doctor [put]
+//	@Router         /v1/hospital/m-doctor [put]
 func (h *MDoctorHandler) MDoctorUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MDoctorHandler) MDoctorUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-doctor/{id} [get]
+//	@Router         /v1/hospital/m-doctor/{id} [get]
 func (h *MDoctorHandler) MDoctorIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MDoctorHandler) MDoctorIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-doctor/{id} [delete]
+//	@Router         /v1/hospital/m-doctor/{id} [delete]
 func (h *MDoctorHandler) MDoctorDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MDoctorHandler) MDoctorDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-doctor [get]
+//	@Router         /v1/hospital/m-doctor [get]
 func (h *MDoctorHandler) MDoctorPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MDoctorHandler) MDoctorPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MDoctorPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

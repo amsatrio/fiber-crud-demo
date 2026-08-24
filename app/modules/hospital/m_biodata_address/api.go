@@ -40,7 +40,7 @@ func NewMBiodataAddressHandler(service MBiodataAddressService, validate *validat
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-biodata-address [post]
+//	@Router         /v1/hospital/m-biodata-address [post]
 func (h *MBiodataAddressHandler) MBiodataAddressCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MBiodataAddressHandler) MBiodataAddressCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-biodata-address [put]
+//	@Router         /v1/hospital/m-biodata-address [put]
 func (h *MBiodataAddressHandler) MBiodataAddressUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MBiodataAddressHandler) MBiodataAddressUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-biodata-address/{id} [get]
+//	@Router         /v1/hospital/m-biodata-address/{id} [get]
 func (h *MBiodataAddressHandler) MBiodataAddressIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MBiodataAddressHandler) MBiodataAddressIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-biodata-address/{id} [delete]
+//	@Router         /v1/hospital/m-biodata-address/{id} [delete]
 func (h *MBiodataAddressHandler) MBiodataAddressDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MBiodataAddressHandler) MBiodataAddressDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-biodata-address [get]
+//	@Router         /v1/hospital/m-biodata-address [get]
 func (h *MBiodataAddressHandler) MBiodataAddressPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MBiodataAddressHandler) MBiodataAddressPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MBiodataAddressPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

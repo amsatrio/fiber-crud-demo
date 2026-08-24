@@ -3,11 +3,11 @@ package t_customer_wallet_top_up
 import (
 	"errors"
 
+	"time"
+
 	"github.com/amsatrio/fiber-crud-demo/app/dto"
 	"github.com/amsatrio/fiber-crud-demo/app/dto/request"
 	"github.com/amsatrio/fiber-crud-demo/app/dto/response"
-
-	"time"
 )
 
 type TCustomerWalletTopUpService interface {

@@ -40,7 +40,7 @@ func NewMMedicalFacilityCategoryHandler(service MMedicalFacilityCategoryService,
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-facility-category [post]
+//	@Router         /v1/hospital/m-medical-facility-category [post]
 func (h *MMedicalFacilityCategoryHandler) MMedicalFacilityCategoryCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MMedicalFacilityCategoryHandler) MMedicalFacilityCategoryCreate(c fiber
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-facility-category [put]
+//	@Router         /v1/hospital/m-medical-facility-category [put]
 func (h *MMedicalFacilityCategoryHandler) MMedicalFacilityCategoryUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MMedicalFacilityCategoryHandler) MMedicalFacilityCategoryUpdate(c fiber
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-facility-category/{id} [get]
+//	@Router         /v1/hospital/m-medical-facility-category/{id} [get]
 func (h *MMedicalFacilityCategoryHandler) MMedicalFacilityCategoryIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MMedicalFacilityCategoryHandler) MMedicalFacilityCategoryIndex(c fiber.
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-facility-category/{id} [delete]
+//	@Router         /v1/hospital/m-medical-facility-category/{id} [delete]
 func (h *MMedicalFacilityCategoryHandler) MMedicalFacilityCategoryDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MMedicalFacilityCategoryHandler) MMedicalFacilityCategoryDelete(c fiber
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-facility-category [get]
+//	@Router         /v1/hospital/m-medical-facility-category [get]
 func (h *MMedicalFacilityCategoryHandler) MMedicalFacilityCategoryPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MMedicalFacilityCategoryHandler) MMedicalFacilityCategoryPage(c fiber.C
 		util.Log("ERROR", "controllers", "MMedicalFacilityCategoryPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

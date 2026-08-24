@@ -40,7 +40,7 @@ func NewMCustomerMemberHandler(service MCustomerMemberService, validate *validat
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-customer-member [post]
+//	@Router         /v1/hospital/m-customer-member [post]
 func (h *MCustomerMemberHandler) MCustomerMemberCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MCustomerMemberHandler) MCustomerMemberCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-customer-member [put]
+//	@Router         /v1/hospital/m-customer-member [put]
 func (h *MCustomerMemberHandler) MCustomerMemberUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MCustomerMemberHandler) MCustomerMemberUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-customer-member/{id} [get]
+//	@Router         /v1/hospital/m-customer-member/{id} [get]
 func (h *MCustomerMemberHandler) MCustomerMemberIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MCustomerMemberHandler) MCustomerMemberIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-customer-member/{id} [delete]
+//	@Router         /v1/hospital/m-customer-member/{id} [delete]
 func (h *MCustomerMemberHandler) MCustomerMemberDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MCustomerMemberHandler) MCustomerMemberDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-customer-member [get]
+//	@Router         /v1/hospital/m-customer-member [get]
 func (h *MCustomerMemberHandler) MCustomerMemberPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MCustomerMemberHandler) MCustomerMemberPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MCustomerMemberPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

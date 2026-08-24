@@ -40,7 +40,7 @@ func NewMMedicalItemHandler(service MMedicalItemService, validate *validator.Val
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-item [post]
+//	@Router         /v1/hospital/m-medical-item [post]
 func (h *MMedicalItemHandler) MMedicalItemCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MMedicalItemHandler) MMedicalItemCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-item [put]
+//	@Router         /v1/hospital/m-medical-item [put]
 func (h *MMedicalItemHandler) MMedicalItemUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MMedicalItemHandler) MMedicalItemUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-item/{id} [get]
+//	@Router         /v1/hospital/m-medical-item/{id} [get]
 func (h *MMedicalItemHandler) MMedicalItemIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MMedicalItemHandler) MMedicalItemIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-item/{id} [delete]
+//	@Router         /v1/hospital/m-medical-item/{id} [delete]
 func (h *MMedicalItemHandler) MMedicalItemDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MMedicalItemHandler) MMedicalItemDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-item [get]
+//	@Router         /v1/hospital/m-medical-item [get]
 func (h *MMedicalItemHandler) MMedicalItemPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MMedicalItemHandler) MMedicalItemPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MMedicalItemPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

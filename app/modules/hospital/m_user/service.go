@@ -3,11 +3,11 @@ package m_user
 import (
 	"errors"
 
+	"time"
+
 	"github.com/amsatrio/fiber-crud-demo/app/dto"
 	"github.com/amsatrio/fiber-crud-demo/app/dto/request"
 	"github.com/amsatrio/fiber-crud-demo/app/dto/response"
-
-	"time"
 )
 
 type MUserService interface {

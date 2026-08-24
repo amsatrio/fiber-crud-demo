@@ -3,11 +3,11 @@ package m_doctor
 import (
 	"errors"
 
+	"time"
+
 	"github.com/amsatrio/fiber-crud-demo/app/dto"
 	"github.com/amsatrio/fiber-crud-demo/app/dto/request"
 	"github.com/amsatrio/fiber-crud-demo/app/dto/response"
-
-	"time"
 )
 
 type MDoctorService interface {
@@ -70,7 +70,7 @@ func (s *MDoctorServiceImpl) Update(payload *MDoctorRequest, mUserId uint) error
 	}
 
 	existing.BiodataId = payload.BiodataId
-	existing.Str = payload.Str
+	existing.StrCode = payload.StrCode
 	existing.ModifiedBy = &mUserId
 	existing.ModifiedOn = &dto.JSONTime{Time: time.Now()}
 	existing.DeletedBy = nil

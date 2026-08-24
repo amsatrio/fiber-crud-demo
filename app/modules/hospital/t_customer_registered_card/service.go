@@ -3,11 +3,11 @@ package t_customer_registered_card
 import (
 	"errors"
 
+	"time"
+
 	"github.com/amsatrio/fiber-crud-demo/app/dto"
 	"github.com/amsatrio/fiber-crud-demo/app/dto/request"
 	"github.com/amsatrio/fiber-crud-demo/app/dto/response"
-
-	"time"
 )
 
 type TCustomerRegisteredCardService interface {

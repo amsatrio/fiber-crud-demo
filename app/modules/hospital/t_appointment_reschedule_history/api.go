@@ -40,7 +40,7 @@ func NewTAppointmentRescheduleHistoryHandler(service TAppointmentRescheduleHisto
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-reschedule-history [post]
+//	@Router         /v1/hospital/t-appointment-reschedule-history [post]
 func (h *TAppointmentRescheduleHistoryHandler) TAppointmentRescheduleHistoryCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TAppointmentRescheduleHistoryHandler) TAppointmentRescheduleHistoryCrea
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-reschedule-history [put]
+//	@Router         /v1/hospital/t-appointment-reschedule-history [put]
 func (h *TAppointmentRescheduleHistoryHandler) TAppointmentRescheduleHistoryUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TAppointmentRescheduleHistoryHandler) TAppointmentRescheduleHistoryUpda
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-reschedule-history/{id} [get]
+//	@Router         /v1/hospital/t-appointment-reschedule-history/{id} [get]
 func (h *TAppointmentRescheduleHistoryHandler) TAppointmentRescheduleHistoryIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TAppointmentRescheduleHistoryHandler) TAppointmentRescheduleHistoryInde
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-reschedule-history/{id} [delete]
+//	@Router         /v1/hospital/t-appointment-reschedule-history/{id} [delete]
 func (h *TAppointmentRescheduleHistoryHandler) TAppointmentRescheduleHistoryDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TAppointmentRescheduleHistoryHandler) TAppointmentRescheduleHistoryDele
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-appointment-reschedule-history [get]
+//	@Router         /v1/hospital/t-appointment-reschedule-history [get]
 func (h *TAppointmentRescheduleHistoryHandler) TAppointmentRescheduleHistoryPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TAppointmentRescheduleHistoryHandler) TAppointmentRescheduleHistoryPage
 		util.Log("ERROR", "controllers", "TAppointmentRescheduleHistoryPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

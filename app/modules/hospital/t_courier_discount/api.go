@@ -40,7 +40,7 @@ func NewTCourierDiscountHandler(service TCourierDiscountService, validate *valid
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-courier-discount [post]
+//	@Router         /v1/hospital/t-courier-discount [post]
 func (h *TCourierDiscountHandler) TCourierDiscountCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TCourierDiscountHandler) TCourierDiscountCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-courier-discount [put]
+//	@Router         /v1/hospital/t-courier-discount [put]
 func (h *TCourierDiscountHandler) TCourierDiscountUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TCourierDiscountHandler) TCourierDiscountUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-courier-discount/{id} [get]
+//	@Router         /v1/hospital/t-courier-discount/{id} [get]
 func (h *TCourierDiscountHandler) TCourierDiscountIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TCourierDiscountHandler) TCourierDiscountIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-courier-discount/{id} [delete]
+//	@Router         /v1/hospital/t-courier-discount/{id} [delete]
 func (h *TCourierDiscountHandler) TCourierDiscountDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TCourierDiscountHandler) TCourierDiscountDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-courier-discount [get]
+//	@Router         /v1/hospital/t-courier-discount [get]
 func (h *TCourierDiscountHandler) TCourierDiscountPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *TCourierDiscountHandler) TCourierDiscountPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "TCourierDiscountPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

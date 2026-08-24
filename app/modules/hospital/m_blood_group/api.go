@@ -40,7 +40,7 @@ func NewMBloodGroupHandler(service MBloodGroupService, validate *validator.Valid
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-blood-group [post]
+//	@Router         /v1/hospital/m-blood-group [post]
 func (h *MBloodGroupHandler) MBloodGroupCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MBloodGroupHandler) MBloodGroupCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-blood-group [put]
+//	@Router         /v1/hospital/m-blood-group [put]
 func (h *MBloodGroupHandler) MBloodGroupUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MBloodGroupHandler) MBloodGroupUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-blood-group/{id} [get]
+//	@Router         /v1/hospital/m-blood-group/{id} [get]
 func (h *MBloodGroupHandler) MBloodGroupIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MBloodGroupHandler) MBloodGroupIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-blood-group/{id} [delete]
+//	@Router         /v1/hospital/m-blood-group/{id} [delete]
 func (h *MBloodGroupHandler) MBloodGroupDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MBloodGroupHandler) MBloodGroupDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-blood-group [get]
+//	@Router         /v1/hospital/m-blood-group [get]
 func (h *MBloodGroupHandler) MBloodGroupPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MBloodGroupHandler) MBloodGroupPage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MBloodGroupPage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

@@ -40,7 +40,7 @@ func NewMCourierTypeHandler(service MCourierTypeService, validate *validator.Val
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-courier-type [post]
+//	@Router         /v1/hospital/m-courier-type [post]
 func (h *MCourierTypeHandler) MCourierTypeCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MCourierTypeHandler) MCourierTypeCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-courier-type [put]
+//	@Router         /v1/hospital/m-courier-type [put]
 func (h *MCourierTypeHandler) MCourierTypeUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MCourierTypeHandler) MCourierTypeUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-courier-type/{id} [get]
+//	@Router         /v1/hospital/m-courier-type/{id} [get]
 func (h *MCourierTypeHandler) MCourierTypeIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MCourierTypeHandler) MCourierTypeIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-courier-type/{id} [delete]
+//	@Router         /v1/hospital/m-courier-type/{id} [delete]
 func (h *MCourierTypeHandler) MCourierTypeDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MCourierTypeHandler) MCourierTypeDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-courier-type [get]
+//	@Router         /v1/hospital/m-courier-type [get]
 func (h *MCourierTypeHandler) MCourierTypePage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MCourierTypeHandler) MCourierTypePage(c fiber.Ctx) error {
 		util.Log("ERROR", "controllers", "MCourierTypePage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

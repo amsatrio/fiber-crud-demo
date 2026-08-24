@@ -40,7 +40,7 @@ func NewMMedicalFacilityScheduleHandler(service MMedicalFacilityScheduleService,
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-facility-schedule [post]
+//	@Router         /v1/hospital/m-medical-facility-schedule [post]
 func (h *MMedicalFacilityScheduleHandler) MMedicalFacilityScheduleCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MMedicalFacilityScheduleHandler) MMedicalFacilityScheduleCreate(c fiber
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-facility-schedule [put]
+//	@Router         /v1/hospital/m-medical-facility-schedule [put]
 func (h *MMedicalFacilityScheduleHandler) MMedicalFacilityScheduleUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MMedicalFacilityScheduleHandler) MMedicalFacilityScheduleUpdate(c fiber
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-facility-schedule/{id} [get]
+//	@Router         /v1/hospital/m-medical-facility-schedule/{id} [get]
 func (h *MMedicalFacilityScheduleHandler) MMedicalFacilityScheduleIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MMedicalFacilityScheduleHandler) MMedicalFacilityScheduleIndex(c fiber.
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-facility-schedule/{id} [delete]
+//	@Router         /v1/hospital/m-medical-facility-schedule/{id} [delete]
 func (h *MMedicalFacilityScheduleHandler) MMedicalFacilityScheduleDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MMedicalFacilityScheduleHandler) MMedicalFacilityScheduleDelete(c fiber
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-facility-schedule [get]
+//	@Router         /v1/hospital/m-medical-facility-schedule [get]
 func (h *MMedicalFacilityScheduleHandler) MMedicalFacilitySchedulePage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -255,6 +255,13 @@ func (h *MMedicalFacilityScheduleHandler) MMedicalFacilitySchedulePage(c fiber.C
 		util.Log("ERROR", "controllers", "MMedicalFacilitySchedulePage", "jsonUnmarshalErr error: "+jsonUnmarshalErr.Error())
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)

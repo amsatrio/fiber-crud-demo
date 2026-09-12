@@ -8,7 +8,7 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewMLocationLevelRepository(initializer.DB)
+	repo := NewMLocationLevelRepository(initializer.DB_HOSPITAL)
 	service := NewMLocationLevelService(repo)
 	handler := NewMLocationLevelHandler(service, validate)
 

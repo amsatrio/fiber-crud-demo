@@ -9,7 +9,9 @@ import (
 	"time"
 
 	"github.com/amsatrio/fiber-crud-demo/app/dto/response"
+	"github.com/amsatrio/fiber-crud-demo/app/initializer"
 	"github.com/amsatrio/fiber-crud-demo/app/middleware"
+	"github.com/amsatrio/fiber-crud-demo/app/modules/german_vocabulary/nomen"
 	"github.com/amsatrio/fiber-crud-demo/app/modules/health"
 	hello_world "github.com/amsatrio/fiber-crud-demo/app/modules/hello_world"
 	"github.com/amsatrio/fiber-crud-demo/app/modules/hospital"
@@ -22,6 +24,13 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/recover"
 	"github.com/gofiber/fiber/v3/middleware/static"
 )
+
+func Initialize() {
+	initializer.LoadEnvironmentVariables()
+	initializer.LoggerInit()
+	initializer.InitializeDatabaseGerman()
+	initializer.InitializeDatabaseHospital()
+}
 
 func Config() fiber.Config {
 	// engine := html.NewFileSystem(http.Dir("./html"), ".html")
@@ -61,7 +70,7 @@ func Middleware(app *fiber.App) {
 	app.Use(middleware.LoggerMiddleware)
 
 	app.Use(limiter.New(limiter.Config{
-		Max:               10,
+		Max:               100,
 		Expiration:        30 * time.Second,
 		LimiterMiddleware: limiter.SlidingWindow{},
 		LimitReached: func(c fiber.Ctx) error {
@@ -80,6 +89,7 @@ func Routes(app *fiber.App) {
 	hello_world.Router(api)
 	health.Router(api)
 	hospital.Router(app)
+	nomen.Router(api)
 
 	api.Get("/config", func(ctx fiber.Ctx) error {
 		return ctx.JSON(fiber.Map{

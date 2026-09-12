@@ -8,7 +8,7 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewTCustomerWalletRepository(initializer.DB)
+	repo := NewTCustomerWalletRepository(initializer.DB_HOSPITAL)
 	service := NewTCustomerWalletService(repo)
 	handler := NewTCustomerWalletHandler(service, validate)
 

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/amsatrio/fiber-crud-demo/app/dto"
@@ -150,7 +151,48 @@ func (a *AuthServiceImpl) RefreshToken(token string) (*Auth, error) {
 
 // Register implements [AuthService].
 func (a *AuthServiceImpl) Register(username string, password string) error {
-	panic("unimplemented")
+	if username == "" {
+		return errors.New("username is required")
+	}
+	if password == "" {
+		return errors.New("password is required")
+	}
+
+	// Ensure username/email is not already taken
+	existing, err := a.repo.FindByUsername(username)
+	if err == nil && existing != nil {
+		return errors.New("username already exists")
+	}
+
+	// Assign a default role (configurable via env, falls back to nil)
+	var roleId *uint
+	if rawRole := os.Getenv("DEFAULT_ROLE_ID"); rawRole != "" {
+		if parsed, parseErr := strconv.ParseUint(rawRole, 10, 64); parseErr == nil {
+			id := uint(parsed)
+			roleId = &id
+		}
+	}
+
+	now := dto.JSONTime{Time: time.Now()}
+	loginAttempt := 0
+	isLocked := false
+
+	user := m_user.MUser{
+		RoleId:       roleId,
+		Email:        &username,
+		Password:     &password,
+		LoginAttempt: &loginAttempt,
+		IsLocked:     &isLocked,
+		CreatedBy:    0, // system-created user
+		CreatedOn:    now,
+		IsDelete:     false,
+	}
+
+	if err := a.mUserRepository.Create(&user); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // ResetPassword implements [AuthService].

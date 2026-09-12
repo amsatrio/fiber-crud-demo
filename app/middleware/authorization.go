@@ -6,13 +6,16 @@ import (
 	"strings"
 
 	"github.com/amsatrio/fiber-crud-demo/app/dto/response"
+	"github.com/amsatrio/fiber-crud-demo/app/initializer"
+	"github.com/amsatrio/fiber-crud-demo/app/modules/hospital/m_menu"
+	"github.com/amsatrio/fiber-crud-demo/app/modules/hospital/m_menu_role"
 	"github.com/gofiber/fiber/v3"
 	"github.com/golang-jwt/jwt/v5"
 )
 
 var jwtSecret = []byte(os.Getenv("AUTH_SECRET_TOKEN"))
 
-func AuthenticationMiddleware(allowedRoles ...string) fiber.Handler {
+func AuthenticationMiddleware() fiber.Handler {
 	return func(c fiber.Ctx) error {
 		res := &response.Response{}
 
@@ -56,7 +59,7 @@ func AuthenticationMiddleware(allowedRoles ...string) fiber.Handler {
 	}
 }
 
-func AuthorizationMiddleware(allowedRoles ...int64) fiber.Handler {
+func AuthorizationMiddleware() fiber.Handler {
 	return func(c fiber.Ctx) error {
 		res := &response.Response{}
 
@@ -66,12 +69,28 @@ func AuthorizationMiddleware(allowedRoles ...int64) fiber.Handler {
 			return c.Status(res.Status).JSON(res)
 		}
 
-		userRole, _ := localRole.(float64)
+		userRole, ok := localRole.(float64)
+		if !ok {
+			res.ErrMessage(c.Path(), fiber.StatusForbidden, "Access Denied: Invalid role format.")
+			return c.Status(res.Status).JSON(res)
+		}
 
-		for _, role := range allowedRoles {
-			if int64(userRole) == role {
-				return c.Next()
-			}
+		roleID := uint(userRole)
+		urlPath := c.OriginalURL()
+
+		var menu m_menu.MMenu
+		result := initializer.DB_HOSPITAL.Where("url = ? AND is_delete = 0", urlPath).First(&menu)
+		if result.Error != nil {
+			return c.Next()
+		}
+
+		var count int64
+		initializer.DB_HOSPITAL.Model(&m_menu_role.MMenuRole{}).
+			Where("menu_id = ? AND role_id = ? AND is_delete = 0", menu.Id, roleID).
+			Count(&count)
+
+		if count > 0 {
+			return c.Next()
 		}
 
 		res.ErrMessage(c.Path(), fiber.StatusForbidden, "Access Denied: Insufficient permissions.")

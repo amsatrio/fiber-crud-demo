@@ -4,17 +4,13 @@ import (
 	"log"
 	"os"
 
-	"github.com/amsatrio/fiber-crud-demo/app/initializer"
 	"github.com/amsatrio/fiber-crud-demo/app/util"
 	"github.com/amsatrio/fiber-crud-demo/cmd"
 	"github.com/gofiber/fiber/v3"
 )
 
 func init() {
-	initializer.LoadEnvironmentVariables()
-	initializer.LoggerInit()
-	initializer.InitializeDatabase()
-	initializer.InitializeDatabaseFileManagement()
+	cmd.Initialize()
 }
 
 func main() {

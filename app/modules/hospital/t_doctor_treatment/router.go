@@ -8,7 +8,7 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewTDoctorTreatmentRepository(initializer.DB)
+	repo := NewTDoctorTreatmentRepository(initializer.DB_HOSPITAL)
 	service := NewTDoctorTreatmentService(repo)
 	handler := NewTDoctorTreatmentHandler(service, validate)
 

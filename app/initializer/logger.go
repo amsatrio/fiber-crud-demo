@@ -26,6 +26,7 @@ func LoggerInit() {
 
 	logType := os.Getenv("LOG_TYPE")
 	if logType == "stdout" {
+		log.SetOutput(os.Stdout)
 		log.Println(asciiArt)
 		return
 	}
@@ -58,12 +59,6 @@ func LoggerInit() {
 	logFileName := logDir + "/app_" + requestTime + ".log"
 	logFile, err := os.OpenFile(logFileName, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
-		defer func(logFile *os.File) {
-			err := logFile.Close()
-			if err != nil {
-				log.Println(err)
-			}
-		}(logFile)
 		log.Fatal("Failed to create or open log file:", err)
 		return
 	}
@@ -72,4 +67,6 @@ func LoggerInit() {
 	log.SetOutput(logFile)
 
 	log.Println(asciiArt)
+
+	defer logFile.Close()
 }

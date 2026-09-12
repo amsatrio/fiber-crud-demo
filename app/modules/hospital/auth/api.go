@@ -100,7 +100,39 @@ func (a *AuthHandler) AuthResetPassword(c fiber.Ctx) error {
 func (a *AuthHandler) AuthRegister(c fiber.Ctx) error {
 	res := &response.Response{}
 
-	res.Ok(c.Path(), nil)
+	payload := new(AuthRegisterRequest)
+
+	if err := c.Bind().Body(payload); err != nil {
+		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse body error: "+err.Error())
+		return c.Status(fiber.StatusBadRequest).JSON(res)
+	}
+
+	if payload.Username == nil || *payload.Username == "" {
+		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "username is required")
+		return c.Status(fiber.StatusBadRequest).JSON(res)
+	}
+
+	if payload.Password == nil || *payload.Password == "" {
+		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "password is required")
+		return c.Status(fiber.StatusBadRequest).JSON(res)
+	}
+
+	if a.validate != nil {
+		if err := a.validate.Struct(payload); err != nil {
+			validationErrors, _ := util.ValidateError(err)
+			res.Err(c.Path(), validationErrors, fiber.StatusBadRequest)
+			return c.Status(res.Status).JSON(res)
+		}
+	}
+
+	err := a.service.Register(*payload.Username, *payload.Password)
+	if err != nil {
+		util.Log("ERROR", "controllers", "AuthRegister", err.Error())
+		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "register error: "+err.Error())
+		return c.Status(res.Status).JSON(res)
+	}
+
+	res.Ok(c.Path(), "user registered successfully")
 	return c.Status(res.Status).JSON(res)
 }
 

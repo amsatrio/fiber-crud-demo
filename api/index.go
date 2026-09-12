@@ -15,6 +15,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func handler() http.HandlerFunc {
+	cmd.Initialize()
+
 	app := fiber.New(cmd.Config())
 
 	cmd.Middleware(app)

@@ -8,7 +8,7 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewTResetPasswordRepository(initializer.DB)
+	repo := NewTResetPasswordRepository(initializer.DB_HOSPITAL)
 	service := NewTResetPasswordService(repo)
 	handler := NewTResetPasswordHandler(service, validate)
 

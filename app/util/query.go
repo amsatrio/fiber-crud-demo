@@ -21,13 +21,17 @@ func ApplyPaginate(pageInt int, limitInt int) func(db *gorm.DB) *gorm.DB {
 }
 
 func ApplySorting(db *gorm.DB, sorts []request.Sort) *gorm.DB {
+	if len(sorts) == 0 {
+		return db.Order("id ASC")
+	}
+	id := "id"
 	for _, sort := range sorts {
 		if sort.Desc {
 			return db.Order(sort.Id + " DESC")
 		}
-		return db.Order(sort.Id + " ASC")
+		id = sort.Id
 	}
-	return db
+	return db.Order(id + " ASC")
 }
 
 func ApplyFiltering(db *gorm.DB, filter []request.Filter) *gorm.DB {

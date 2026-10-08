@@ -65,7 +65,14 @@ func Middleware(app *fiber.App) {
 		AllowOrigins: []string{"*"}, // v3 expects a slice of strings for origins
 		AllowHeaders: []string{"*"},
 	}))
-	app.Use(cache.New())
+	app.Use(cache.New(cache.Config{
+		Next: func(c fiber.Ctx) bool {
+			return c.Method() != fiber.MethodGet
+		},
+		KeyGenerator: func(c fiber.Ctx) string {
+			return c.OriginalURL()
+		},
+	}))
 	app.Use(recover.New())
 	app.Use(middleware.LoggerMiddleware)
 

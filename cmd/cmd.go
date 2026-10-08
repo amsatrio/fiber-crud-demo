@@ -30,6 +30,7 @@ func Initialize() {
 	initializer.LoggerInit()
 	initializer.InitializeDatabaseGerman()
 	initializer.InitializeDatabaseHospital()
+	initializer.InitializeDatabaseTwitterClone()
 }
 
 func Config() fiber.Config {

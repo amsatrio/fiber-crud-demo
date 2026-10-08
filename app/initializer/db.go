@@ -15,6 +15,7 @@ import (
 
 var DB_GERMAN *gorm.DB
 var DB_HOSPITAL *gorm.DB
+var DB_TWITTER_CLONE *gorm.DB
 
 func getGormLogLevel() logger.LogLevel {
 	logMode := os.Getenv("LOG_MODE")
@@ -139,4 +140,13 @@ func InitializeDatabaseHospital() {
 		return
 	}
 	DB_HOSPITAL = db
+}
+
+func InitializeDatabaseTwitterClone() {
+	db, err := openDB("DB_TWITTER_CLONE_URL", "logs/gorm-db-twitter-clone.log")
+	if err != nil {
+		log.Printf("error: failed to connect to DB_TWITTER_CLONE: %v\n", err)
+		return
+	}
+	DB_TWITTER_CLONE = db
 }

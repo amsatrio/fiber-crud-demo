@@ -66,12 +66,7 @@ func Middleware(app *fiber.App) {
 		AllowHeaders: []string{"*"},
 	}))
 	app.Use(cache.New(cache.Config{
-		Next: func(c fiber.Ctx) bool {
-			return c.Method() != fiber.MethodGet
-		},
-		KeyGenerator: func(c fiber.Ctx) string {
-			return c.OriginalURL()
-		},
+		Methods: []string{fiber.MethodGet},
 	}))
 	app.Use(recover.New())
 	app.Use(middleware.LoggerMiddleware)
@@ -104,11 +99,10 @@ func Routes(app *fiber.App) {
 		})
 	})
 
-	// Static assets
 	app.Get("/*", static.New("./public"))
-
-	// SPA fallback  -  catches everything else
-	app.Get("*", static.New("./public/index.html"))
+	app.Get("/*", func(c fiber.Ctx) error {
+		return c.SendFile("./public/index.html")
+	})
 }
 
 func LoadEnv() error {

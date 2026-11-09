@@ -38,7 +38,7 @@ dev: swag_init
 air: swag_init
 	~/go/bin/air
 
-migrate:
+db_migrate:
 	go run migrate/migrate.go
 
 test_dev:

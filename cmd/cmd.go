@@ -66,9 +66,14 @@ func Config() fiber.Config {
 func Middleware(app *fiber.App) {
 	// 1. Security headers on every response
 	app.Use(helmet.New(helmet.Config{
-		HSTSMaxAge:            63072000,
-		HSTSPreloadEnabled:    false,
-		ContentSecurityPolicy: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'",
+		HSTSMaxAge:         63072000,
+		HSTSPreloadEnabled: true,
+		ContentSecurityPolicy: "default-src 'self'; " +
+			"script-src 'self' 'unsafe-inline'; " +
+			"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+			"font-src 'self' https://fonts.gstatic.com; " +
+			"img-src 'self' data:; " +
+			"connect-src 'self'",
 	}))
 
 	// 2. CORS for cross-origin access
@@ -79,9 +84,7 @@ func Middleware(app *fiber.App) {
 		MaxAge is 3600 (1 hour) so browsers cache preflight results instead of making an OPTIONS request before every POST.
 	*/
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: []string{
-			"*",
-		},
+		AllowOrigins:     parseOrigins(os.Getenv("CORS_ALLOW_ORIGINS")),
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization", "X-Csrf-Token"},
 		AllowCredentials: false,
 		MaxAge:           3600,
@@ -177,4 +180,22 @@ func LoadEnv() error {
 	}
 
 	return scanner.Err()
+}
+
+func parseOrigins(raw string) []string {
+	if strings.TrimSpace(raw) == "" {
+		return []string{"*"}
+	}
+
+	parts := strings.Split(raw, ",")
+	origins := make([]string, 0, len(parts))
+	for _, part := range parts {
+		if origin := strings.TrimSpace(part); origin != "" {
+			origins = append(origins, origin)
+		}
+	}
+	if len(origins) == 0 {
+		return []string{"*"}
+	}
+	return origins
 }

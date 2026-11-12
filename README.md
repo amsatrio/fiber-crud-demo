@@ -3,6 +3,15 @@
 ## create new project
 go mod init fiber-crud-demo
 
+## tls
+  mkdir -p certs && openssl req -x509 -newkey rsa:4096 \
+    -keyout certs/ssl.key \
+    -out certs/ssl.cert \
+    -days 365 \
+    -nodes \
+    -subj "/CN=localhost" \
+    -addext "subjectAltName=DNS:localhost,IP:127.0.0.1"
+    
 ## dependencies
 go get github.com/gofiber/fiber/v2
 go get github.com/gofiber/fiber/v2/middleware/cache

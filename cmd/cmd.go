@@ -18,8 +18,11 @@ import (
 	_ "github.com/amsatrio/fiber-crud-demo/docs"
 	"github.com/gofiber/contrib/v3/swaggo"
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/extractors"
 	"github.com/gofiber/fiber/v3/middleware/cache"
 	"github.com/gofiber/fiber/v3/middleware/cors"
+	"github.com/gofiber/fiber/v3/middleware/csrf"
+	"github.com/gofiber/fiber/v3/middleware/helmet"
 	"github.com/gofiber/fiber/v3/middleware/limiter"
 	"github.com/gofiber/fiber/v3/middleware/recover"
 	"github.com/gofiber/fiber/v3/middleware/static"
@@ -62,17 +65,56 @@ func Config() fiber.Config {
 }
 
 func Middleware(app *fiber.App) {
-	app.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"*"}, // v3 expects a slice of strings for origins
-		AllowHeaders: []string{"*"},
+	// 1. Security headers on every response
+	app.Use(helmet.New(helmet.Config{
+		HSTSMaxAge:         63072000,
+		HSTSPreloadEnabled: true,
+		ContentSecurityPolicy: "default-src 'self'; " +
+			"script-src 'self' 'unsafe-inline'; " +
+			"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+			"font-src 'self' https://fonts.gstatic.com; " +
+			"img-src 'self' data:; " +
+			"connect-src 'self'",
 	}))
+
+	// 2. CORS for cross-origin access
+	/*
+		AllowOrigins lists the exact domains that need access. No wildcards when using credentials.
+		AllowHeaders must include X-Csrf-Token if you are using CSRF with header extraction.
+		AllowCredentials is true because your frontend sends cookies.
+		MaxAge is 3600 (1 hour) so browsers cache preflight results instead of making an OPTIONS request before every POST.
+	*/
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     parseOrigins(os.Getenv("CORS_ALLOW_ORIGINS")),
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization", "X-Csrf-Token"},
+		AllowCredentials: false,
+		MaxAge:           3600,
+	}))
+
+	// 3. CSRF protection for state-changing requests
+	/*
+		__Host- prefix: Browsers enforce that __Host- cookies are secure, have no domain, and have a path of /. This prevents cookie injection attacks.
+		CookieSecure: true: The cookie is only sent over HTTPS.
+		CookieHTTPOnly: false: Your JavaScript needs to read the cookie to send the token in a header. This is the necessary trade-off for SPAs.
+		CookieSameSite: "Lax": The cookie is sent with top-level navigations but not with cross-site requests. This is the baseline CSRF protection.
+		Extractor from header: The CSRF token comes from the X-Csrf-Token header, not from the cookie itself. This is the Double Submit Cookie pattern.
+		TrustedOrigins: needed when the SPA origin differs from the API host (e.g. direct calls without a same-origin proxy).
+	*/
+	app.Use(csrf.New(csrf.Config{
+		CookieName:        "__Host-csrf_",
+		CookieSecure:      true,
+		CookieHTTPOnly:    false, // SPAs need JavaScript access
+		CookieSameSite:    "Lax",
+		CookieSessionOnly: true,
+		Extractor:         extractors.FromHeader("X-Csrf-Token"),
+		TrustedOrigins: []string{
+			"https://localhost:3001",
+			"http://localhost:3001",
+		},
+	}))
+
 	app.Use(cache.New(cache.Config{
-		Next: func(c fiber.Ctx) bool {
-			return c.Method() != fiber.MethodGet
-		},
-		KeyGenerator: func(c fiber.Ctx) string {
-			return c.OriginalURL()
-		},
+		Methods: []string{fiber.MethodGet},
 	}))
 	app.Use(recover.New())
 	app.Use(middleware.LoggerMiddleware)
@@ -105,11 +147,10 @@ func Routes(app *fiber.App) {
 		})
 	})
 
-	// Static assets
 	app.Get("/*", static.New("./public"))
-
-	// SPA fallback  -  catches everything else
-	app.Get("*", static.New("./public/index.html"))
+	app.Get("/*", func(c fiber.Ctx) error {
+		return c.SendFile("./public/index.html")
+	})
 }
 
 func LoadEnv() error {
@@ -140,4 +181,22 @@ func LoadEnv() error {
 	}
 
 	return scanner.Err()
+}
+
+func parseOrigins(raw string) []string {
+	if strings.TrimSpace(raw) == "" {
+		return []string{"*"}
+	}
+
+	parts := strings.Split(raw, ",")
+	origins := make([]string, 0, len(parts))
+	for _, part := range parts {
+		if origin := strings.TrimSpace(part); origin != "" {
+			origins = append(origins, origin)
+		}
+	}
+	if len(origins) == 0 {
+		return []string{"*"}
+	}
+	return origins
 }

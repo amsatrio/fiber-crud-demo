@@ -15,6 +15,7 @@ import (
 	"github.com/amsatrio/fiber-crud-demo/app/modules/health"
 	hello_world "github.com/amsatrio/fiber-crud-demo/app/modules/hello_world"
 	"github.com/amsatrio/fiber-crud-demo/app/modules/hospital"
+	twitterclone "github.com/amsatrio/fiber-crud-demo/app/modules/twitter_clone"
 	_ "github.com/amsatrio/fiber-crud-demo/docs"
 	"github.com/gofiber/contrib/v3/swaggo"
 	"github.com/gofiber/fiber/v3"
@@ -140,6 +141,7 @@ func Routes(app *fiber.App) {
 	health.Router(api)
 	hospital.Router(app)
 	nomen.Router(api)
+	twitterclone.Router(app)
 
 	api.Get("/config", func(ctx fiber.Ctx) error {
 		return ctx.JSON(fiber.Map{

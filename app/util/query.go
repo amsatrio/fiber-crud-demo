@@ -92,6 +92,9 @@ func GetJSONFieldTypes(s interface{}) map[string]string {
 
 	for i := 0; i < val.NumField(); i++ {
 		field := typ.Field(i)
+		if field.Tag.Get("gorm") == "-" {
+			continue
+		}
 		tag := field.Tag.Get("json")
 		fieldType := val.Field(i).Type().String()
 

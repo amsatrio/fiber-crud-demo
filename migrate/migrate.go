@@ -59,6 +59,10 @@ import (
 	"github.com/amsatrio/fiber-crud-demo/app/modules/hospital/t_reset_password"
 	"github.com/amsatrio/fiber-crud-demo/app/modules/hospital/t_token"
 	"github.com/amsatrio/fiber-crud-demo/app/modules/hospital/t_treatment_discount"
+	"github.com/amsatrio/fiber-crud-demo/app/modules/twitter_clone/follow"
+	"github.com/amsatrio/fiber-crud-demo/app/modules/twitter_clone/like"
+	"github.com/amsatrio/fiber-crud-demo/app/modules/twitter_clone/tweet"
+	"github.com/amsatrio/fiber-crud-demo/app/modules/twitter_clone/user"
 	"gorm.io/gorm"
 )
 
@@ -66,9 +70,11 @@ func main() {
 	initializer.LoadEnvironmentVariables()
 	initializer.InitializeDatabaseGerman()
 	initializer.InitializeDatabaseHospital()
+	initializer.InitializeDatabaseTwitterClone()
 
 	migrateGerman()
 	migrateHospital()
+	migrateTwitterClone()
 
 	log.Println("migration completed successfully")
 }
@@ -152,6 +158,23 @@ func migrateHospital() {
 		log.Fatalf("DB_HOSPITAL migration failed: %v", err)
 	}
 	log.Println("DB_HOSPITAL migration done")
+}
+
+func migrateTwitterClone() {
+	if initializer.DB_TWITTER_CLONE == nil {
+		log.Fatal("DB_TWITTER_CLONE is not connected")
+	}
+
+	log.Println("migrating DB_TWITTER_CLONE...")
+	if err := autoMigrate(initializer.DB_TWITTER_CLONE,
+		&user.User{},
+		&tweet.Tweet{},
+		&follow.Follow{},
+		&like.Like{},
+	); err != nil {
+		log.Fatalf("DB_TWITTER_CLONE migration failed: %v", err)
+	}
+	log.Println("DB_TWITTER_CLONE migration done")
 }
 
 func autoMigrate(db *gorm.DB, models ...interface{}) error {
